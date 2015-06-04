@@ -14,7 +14,6 @@ namespace School.Lybrary.Utils
             _index = index;
         }
 
-
         #endregion
 
 
@@ -33,6 +32,16 @@ namespace School.Lybrary.Utils
         bool IArrayItemProxy.Is_Equal_to_value( int value )
         {
             return _array.Compare( Value(), value ) == 0;
+        }
+
+        public bool Is_Greater_than_value( int value )
+        {
+            return _array.Compare( Value(), value ) > 0;
+        }
+
+        public bool Is_Less_than_value( int value )
+        {
+            return _array.Compare( Value(), value ) < 0;
         }
 
         #endregion

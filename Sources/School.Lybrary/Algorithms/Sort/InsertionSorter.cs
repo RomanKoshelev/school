@@ -4,7 +4,7 @@
 
 using School.Lybrary.Types;
 
-namespace School.Lybrary.Algorithms.Sorters
+namespace School.Lybrary.Algorithms.Sort
 {
     // ReSharper disable All
     public class InsertionSorter : Sorter
@@ -20,8 +20,8 @@ namespace School.Lybrary.Algorithms.Sorters
                 var inputValue = array[ inputIndex ];
                 var searchIndex = inputIndex - 1;
                 while( searchIndex >= 0 ) {
-                    if( In( array ).Item( searchIndex ).Is_Greater_than_item( searchIndex + 1 ) ) {
-                        Then.In( array ).Swap( searchIndex, searchIndex + 1 );
+                    if( From( array ).Item( searchIndex ).Is_Greater_than_item( searchIndex + 1 ) ) {
+                        Then.From( array ).Swap( searchIndex, searchIndex + 1 );
                     }
                     searchIndex--;
                 }

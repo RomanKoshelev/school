@@ -4,7 +4,7 @@
 
 using School.Lybrary.Types;
 
-namespace School.Lybrary.Algorithms.Sorters
+namespace School.Lybrary.Algorithms.Sort
 {
     // ReSharper disable All
     public class QuickSorter : Sorter
@@ -27,18 +27,18 @@ namespace School.Lybrary.Algorithms.Sorters
         {
             var pivotIndex = ChoosePivotIndex( array, first, last );
             var pivotValue = array[ pivotIndex ];
-            In( array ).Swap( pivotIndex, last );
+            From( array ).Swap( pivotIndex, last );
 
             var partition = first;
 
             foreach( var index in Range( first, last - 1 ) ) {
-                if( In( array ).Item( index ).Is_LessOrEqual_than_value( pivotValue ) ) {
-                    Then.In( array ).Swap( partition, index );
+                if( From( array ).Item( index ).Is_LessOrEqual_than_value( pivotValue ) ) {
+                    Then.From( array ).Swap( partition, index );
                     partition++;
                 }
             }
 
-            In( array ).Swap( pivotIndex, partition );
+            From( array ).Swap( pivotIndex, partition );
 
             return partition;
         }

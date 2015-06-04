@@ -3,7 +3,7 @@
 // Sorter_Tests.cs
 
 using NUnit.Framework;
-using School.Lybrary.Algorithms.Sorters;
+using School.Lybrary.Algorithms.Sort;
 using School.Nunit.Bases;
 using School.Nunit.Utils;
 

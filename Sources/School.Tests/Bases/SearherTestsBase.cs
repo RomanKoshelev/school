@@ -4,7 +4,7 @@
 
 using System;
 using NUnit.Framework;
-using School.Lybrary.Algorithms.Sorters;
+using School.Lybrary.Algorithms.Sort;
 using School.Lybrary.Types;
 using School.Nunit.Utils;
 
@@ -41,8 +41,8 @@ namespace School.Nunit.Bases
 
         private static void Assert_wrong_values_not_found( ISearcher searcher, int[] array )
         {
-            Assert.AreEqual( Searcher.NotFound, searcher.Search( array, Int32.MaxValue ) );
-            Assert.AreEqual( Searcher.NotFound, searcher.Search( array, Int32.MinValue ) );
+            Assert.AreEqual( Searcher.KeyNotFound, searcher.Search( array, Int32.MaxValue ) );
+            Assert.AreEqual( Searcher.KeyNotFound, searcher.Search( array, Int32.MinValue ) );
         }
 
         private static void Assert_bounds_found( ISearcher searcher, int[] array )

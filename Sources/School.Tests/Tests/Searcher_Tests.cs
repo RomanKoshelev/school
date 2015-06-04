@@ -3,7 +3,7 @@
 // Searcher_Tests.cs
 
 using NUnit.Framework;
-using School.Lybrary.Algorithms.Searchers;
+using School.Lybrary.Algorithms.Search;
 using School.Nunit.Bases;
 
 // ReSharper disable All

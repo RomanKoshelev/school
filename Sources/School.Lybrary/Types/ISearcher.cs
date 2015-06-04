@@ -6,7 +6,7 @@ namespace School.Lybrary.Types
 {
     public interface ISearcher
     {
-        int Search( int[] array, int value );
+        int Search( int[] array, int key );
         IAlgorithm Algorithm { get; }
     }
 }

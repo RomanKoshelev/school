@@ -4,24 +4,24 @@
 
 using School.Lybrary.Types;
 
-namespace School.Lybrary.Algorithms.Searchers
+namespace School.Lybrary.Algorithms.Search
 {
     // ReSharper disable All
     public class LinearSearcher : Searcher
     {
-        protected override int DoSearch( int[] array, int value )
+        protected override int DoSearch( int[] array, int key )
         {
-            return LinearSearch( array, value );
+            return LinearSearch( array, key );
         }
 
-        private int LinearSearch( int[] array, int value )
+        private int LinearSearch( int[] array, int key )
         {
             foreach( var index in Range( 0, array.Length - 1 ) ) {
-                if( In( array ).Item( index ).Is_Equal_to_value( value ) ) {
+                if( From( array ).Item( index ).Is_Equal_to_value( key ) ) {
                     return index;
                 }
             }
-            return NotFound;
+            return KeyNotFound;
         }
     }
 }

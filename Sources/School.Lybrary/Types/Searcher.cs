@@ -9,17 +9,17 @@ namespace School.Lybrary.Types
     {
         #region Constatns
 
-        public const int NotFound = int.MinValue;
+        public const int KeyNotFound = int.MinValue;
 
         #endregion
 
 
         #region ISearcher
 
-        int ISearcher.Search( int[] array, int value )
+        int ISearcher.Search( int[] array, int key )
         {
             base.Init( array );
-            return DoSearch( array, value );
+            return DoSearch( array, key );
         }
 
         IAlgorithm ISearcher.Algorithm
@@ -32,7 +32,7 @@ namespace School.Lybrary.Types
 
         #region Abstracts
 
-        protected abstract int DoSearch( int[] array, int value );
+        protected abstract int DoSearch( int[] array, int key );
 
         #endregion
     }

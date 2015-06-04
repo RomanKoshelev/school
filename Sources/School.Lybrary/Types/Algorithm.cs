@@ -37,7 +37,7 @@ namespace School.Lybrary.Types
             get { return this; }
         }
 
-        protected internal IArrayProxy In( int[] array )
+        protected internal IArrayProxy From( int[] array )
         {
             return new ArrayProxy( array, _statistics );
         }

@@ -5,7 +5,7 @@
 namespace School.Lybrary.Utils
 {
     // ReSharper disable All
-    public class ArrayProxy: IArrayProxy
+    public class ArrayProxy : IArrayProxy
     {
         #region Ctor
 

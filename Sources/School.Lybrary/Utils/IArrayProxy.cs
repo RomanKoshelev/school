@@ -4,7 +4,8 @@
 
 namespace School.Lybrary.Utils
 {
-    public interface IArrayProxy {
+    public interface IArrayProxy
+    {
         int Value( int index );
         void Swap( int i, int j );
         int Compare( int a, int b );

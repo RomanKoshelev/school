@@ -27,7 +27,7 @@ namespace School.Nunit.Utils
             for( var i = 0; i < array.Length; i++ ) {
                 Console.Write( "{0} ", array[ i ] );
             }
-            Console.WriteLine("\n");
+            Console.WriteLine( "\n" );
         }
 
         public static void Print( IStatistics statistics )
