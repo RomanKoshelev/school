@@ -1,6 +1,6 @@
 // School (c) 2015 Krokodev
 // School.Tests
-// BaseSorterTests.cs
+// SorterTestsBase.cs
 
 using System;
 using NUnit.Framework;
@@ -9,7 +9,7 @@ using School.Lybrary.Utils;
 
 // ReSharper disable All
 
-namespace School.Tests.Sorters
+namespace School.Tests.Bases
 {
     public class SorterTestsBase
     {

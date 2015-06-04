@@ -4,8 +4,8 @@
 
 namespace School.Lybrary.Utils
 {
-    public class Statistics {
-
+    public class Statistics
+    {
         public Statistics( int size )
         {
             _size = size;

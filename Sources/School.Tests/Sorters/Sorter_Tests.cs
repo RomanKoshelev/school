@@ -4,6 +4,7 @@
 
 using NUnit.Framework;
 using School.Lybrary.Sorters;
+using School.Tests.Bases;
 
 // ReSharper disable All
 

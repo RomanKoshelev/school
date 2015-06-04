@@ -14,7 +14,6 @@ namespace School.Lybrary.Sorters
             QuickSort( array, 0, array.Length - 1 );
         }
 
-
         private void QuickSort( int[] array, int lo, int hi )
         {
             if( lo < hi ) {
