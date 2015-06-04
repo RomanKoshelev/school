@@ -6,20 +6,15 @@
 
 using School.Lybrary.Types;
 
-namespace School.Lybrary.Searchers
+namespace School.Lybrary.Algorithms.Searchers
 {
-    public class BinarySearcher : Searcher
+    public class BinarySearcherIterative : Searcher
     {
         protected override int DoSearch( int[] array, int value )
         {
-            return BinarySearchRecursive( array, value );
+            return BinarySearchIterative( array, value );
         }
 
-        private int BinarySearchRecursive( int[] array, int value )
-        {
-            // Todo:> BinarySearch http://en.wikipedia.org/wiki/Binary_search_algorithm
-            return 0;
-        }
         private int BinarySearchIterative( int[] array, int value )
         {
             // Todo:> BinarySearch http://en.wikipedia.org/wiki/Binary_search_algorithm

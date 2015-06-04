@@ -4,7 +4,7 @@
 
 using School.Lybrary.Types;
 
-namespace School.Lybrary.Sorters
+namespace School.Lybrary.Algorithms.Sorters
 {
     // ReSharper disable All
     public class InsertionSorter : Sorter

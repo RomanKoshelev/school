@@ -4,7 +4,7 @@
 
 using School.Lybrary.Types;
 
-namespace School.Lybrary.Searchers
+namespace School.Lybrary.Algorithms.Searchers
 {
     // ReSharper disable All
     public class LinearSearcher : Searcher

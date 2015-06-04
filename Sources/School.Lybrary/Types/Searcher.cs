@@ -2,8 +2,6 @@
 // School.Lybrary
 // Searcher.cs
 
-using School.Lybrary.Searchers;
-
 namespace School.Lybrary.Types
 {
     // ReSharper disable All

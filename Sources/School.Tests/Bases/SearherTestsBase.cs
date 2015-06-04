@@ -4,7 +4,7 @@
 
 using System;
 using NUnit.Framework;
-using School.Lybrary.Sorters;
+using School.Lybrary.Algorithms.Sorters;
 using School.Lybrary.Types;
 using School.Tests.Utils;
 

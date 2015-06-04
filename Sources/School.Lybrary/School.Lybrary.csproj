@@ -39,19 +39,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Searchers\LinearSearcher.cs" />
+    <Compile Include="Algorithms\Searchers\BinarySearcherRecursive.cs" />
+    <Compile Include="Algorithms\Searchers\LinearSearcher.cs" />
     <Compile Include="Types\Algorithm.cs" />
     <Compile Include="Types\IAlgorithm.cs" />
     <Compile Include="Types\Searcher.cs" />
-    <Compile Include="Searchers\BinarySearcher.cs" />
+    <Compile Include="Algorithms\Searchers\BinarySearcherIterative.cs" />
     <Compile Include="Types\ISearcher.cs" />
     <Compile Include="Types\ISorter.cs" />
     <Compile Include="Utils\ArrayItemProxy.cs" />
     <Compile Include="Utils\ArrayProxy.cs" />
     <Compile Include="Types\Sorter.cs" />
-    <Compile Include="Sorters\InsertionSorter.cs" />
-    <Compile Include="Sorters\BubbleSorter.cs" />
-    <Compile Include="Sorters\QuickSorter.cs" />
+    <Compile Include="Algorithms\Sorters\InsertionSorter.cs" />
+    <Compile Include="Algorithms\Sorters\BubbleSorter.cs" />
+    <Compile Include="Algorithms\Sorters\QuickSorter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\IArrayItemProxy.cs" />
     <Compile Include="Utils\IArrayProxy.cs" />
