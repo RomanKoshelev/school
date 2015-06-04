@@ -20,20 +20,21 @@ namespace School.Lybrary.Sorters
                 Sort( array, p + 1, hi );
             }
         }
+
         private static int Partition( int[] array, int lo, int hi )
         {
             var pivotIndex = ChoosePivotIndex( array, lo, hi );
             var pivotValue = array[ pivotIndex ];
-            Swap( array, pivotIndex, hi );
+            In( array ).Swap( pivotIndex, hi );
 
             var partition = lo;
             for( var index = lo; index <= ( hi - 1 ); index++ ) {
-                if( array[ index ] <= pivotValue ) {
-                    Swap( array, partition, index );
+                if( In( array ).Item( index ).Less_or_equal_than( pivotValue ) ) {
+                    In( array ).Swap( partition, index );
                     partition++;
                 }
             }
-            Swap( array, partition, pivotIndex );
+            In( array ).Swap( partition, pivotIndex );
             return partition;
         }
 

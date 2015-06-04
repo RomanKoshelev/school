@@ -14,8 +14,8 @@ namespace School.Lybrary.Sorters
             do {
                 swapped = false;
                 for( var index = 0; index < array.Length - 1; index++ ) {
-                    if( array[ index ] > array[ index + 1 ] ) {
-                        Swap( array, index, index + 1 );
+                    if( In( array ).Item( index ).Greater_than_item( index + 1 ) ) {
+                        In( array ).Swap( index, index + 1 );
                         swapped = true;
                     }
                 }

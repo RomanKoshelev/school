@@ -2,16 +2,18 @@
 // School.Lybrary
 // BaseSorter.cs
 
+using School.Lybrary.Utils;
+
 namespace School.Lybrary.Sorters
 {
     // ReSharper disable All
     public abstract class BaseSorter
     {
-        protected static void Swap( int[] array, int i, int j )
+        private static Statistics statistics;
+
+        protected static ArrayProxy In( int[] array )
         {
-            var array_i = array[ i ];
-            array[ i ] = array[ j ];
-            array[ j ] = array_i;
+            return new ArrayProxy( array, statistics );
         }
     }
 }
