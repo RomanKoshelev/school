@@ -37,14 +37,12 @@ namespace School.Tests.Sorters
             Array_is_sorted_in_ascending_order( new QuickSorter(), CreateRandomArray() );
         }
 
-        [Ignore]
         [Test]
         public void Insertion_9876543210()
         {
             Array_is_sorted_in_ascending_order( new InsertionSorter(), CreateArrayFrom9to0() );
         }
 
-        [Ignore]
         [Test]
         public void Insertion_RandomArray()
         {

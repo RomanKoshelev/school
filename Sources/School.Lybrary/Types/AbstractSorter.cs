@@ -45,11 +45,11 @@ namespace School.Lybrary.Types
             get { return this; }
         }
 
-        protected static IEnumerable< int > Range( int start, int end )
+        protected static IEnumerable< int > Range( int first, int last )
         {
-            var range = new int[end - start + 1];
+            var range = new int[last - first + 1];
             for( var i = 0; i < range.Length; i++ ) {
-                range[ i ] = start + i;
+                range[ i ] = first + i;
             }
             return range;
         }
