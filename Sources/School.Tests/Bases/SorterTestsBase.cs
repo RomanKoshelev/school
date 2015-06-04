@@ -32,7 +32,7 @@ namespace School.Tests.Bases
             Console.WriteLine();
         }
 
-        protected void Print( Statistics statistics )
+        protected void Print( IStatistics statistics )
         {
             Console.WriteLine( statistics );
         }
@@ -42,7 +42,7 @@ namespace School.Tests.Bases
             sorter.Sort( array );
             Print( array );
             Console.WriteLine();
-            Print( sorter.Algorithm.GetStatistics() );
+            Print( sorter.Algorithm.Statistics );
             Assert_is_ascending( array );
         }
 

@@ -7,6 +7,6 @@ namespace School.Lybrary.Types
     public interface ISorter
     {
         void Sort( int[] array );
-        IAlgorithm Algorithm { get; set; }
+        IAlgorithm Algorithm { get; }
     }
 }

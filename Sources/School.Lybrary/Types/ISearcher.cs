@@ -2,10 +2,11 @@
 // School.Lybrary
 // ISearcher.cs
 
-namespace School.Lybrary.Searchers
+namespace School.Lybrary.Types
 {
     public interface ISearcher
     {
         int Search( int[] array, int value );
+        IAlgorithm Algorithm { get; }
     }
 }

@@ -36,11 +36,9 @@ namespace School.Lybrary.Utils
         public override string ToString()
         {
             var str = "";
-            str += string.Format( "Size: {0}", _size );
-            str += "\n";
-            str += string.Format( "Comparisons: {0}", _comparisons );
-            str += "\n";
-            str += string.Format( "Swaps: {0}", _swaps );
+            str += ToString( "Size", _size );
+            str += ToString( "Comparisons", _comparisons );
+            str += ToString( "Swaps", _swaps );
             return str;
         }
 
@@ -52,6 +50,16 @@ namespace School.Lybrary.Utils
         private int _comparisons;
         private int _swaps;
         private readonly int _size;
+
+        #endregion
+
+
+        #region Utils
+
+        private static string ToString( string name, int value )
+        {
+            return value == 0 ? "" : string.Format( "{0}: {1}\n", name, value );
+        }
 
         #endregion
     }

@@ -15,10 +15,9 @@ namespace School.Lybrary.Types
             DoSort( array );
         }
 
-        public IAlgorithm Algorithm
+        IAlgorithm ISorter.Algorithm
         {
             get { return this; }
-            set { }
         }
 
         #endregion

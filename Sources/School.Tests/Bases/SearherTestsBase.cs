@@ -4,7 +4,6 @@
 
 using System;
 using NUnit.Framework;
-using School.Lybrary.Searchers;
 using School.Lybrary.Sorters;
 using School.Lybrary.Types;
 using School.Tests.Utils;
@@ -12,7 +11,8 @@ using School.Tests.Utils;
 namespace School.Tests.Bases
 {
     // ReSharper disable All
-    public class SearherTestsBase {
+    public class SearherTestsBase
+    {
         protected int[] CreateSortedRandomArray()
         {
             var array = TestHelper.CreateRandomArray( 1000 );
@@ -30,10 +30,12 @@ namespace School.Tests.Bases
 
             Console.WriteLine( "array[{0}]={1}", index, value );
             Console.WriteLine( "found[{0}]={1}", found, array[ found ] );
+            Console.WriteLine();
+            Console.WriteLine( searcher.Algorithm.Statistics.ToString() );
 
             Assert.AreEqual( value, array[ found ] );
-            Assert.AreEqual( Searcher.NotFound, searcher.Search( array, Int32.MaxValue) );
-            Assert.AreEqual( Searcher.NotFound, searcher.Search( array, Int32.MinValue) );
+            Assert.AreEqual( Searcher.NotFound, searcher.Search( array, Int32.MaxValue ) );
+            Assert.AreEqual( Searcher.NotFound, searcher.Search( array, Int32.MinValue ) );
         }
     }
 }

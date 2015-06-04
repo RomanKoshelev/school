@@ -8,6 +8,6 @@ namespace School.Lybrary.Types
 {
     public interface IAlgorithm
     {
-        Statistics GetStatistics();
+        IStatistics Statistics { get; }
     }
 }

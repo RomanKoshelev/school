@@ -12,9 +12,9 @@ namespace School.Lybrary.Types
     {
         #region IAlgorithm
 
-        Statistics IAlgorithm.GetStatistics()
+        IStatistics IAlgorithm.Statistics
         {
-            return _statistics;
+            get { return _statistics; }
         }
 
         #endregion

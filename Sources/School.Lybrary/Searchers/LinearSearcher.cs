@@ -6,6 +6,7 @@ using School.Lybrary.Types;
 
 namespace School.Lybrary.Searchers
 {
+    // ReSharper disable All
     public class LinearSearcher : Searcher
     {
         protected override int DoSearch( int[] array, int value )
@@ -16,8 +17,9 @@ namespace School.Lybrary.Searchers
         private int BinarySearch( int[] array, int value )
         {
             foreach( var index in Indices( array ) ) {
-                if(In(array).Item( index ).Is_Equal_to_value( value ))
-                { }
+                if( In( array ).Item( index ).Is_Equal_to_value( value ) ) {
+                    return index;
+                }
             }
             return NotFound;
         }

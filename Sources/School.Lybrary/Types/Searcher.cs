@@ -24,6 +24,11 @@ namespace School.Lybrary.Types
             return DoSearch( array, value );
         }
 
+        IAlgorithm ISearcher.Algorithm
+        {
+            get { return this; }
+        }
+
         #endregion
 
 
