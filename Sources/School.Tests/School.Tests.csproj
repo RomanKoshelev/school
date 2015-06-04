@@ -54,6 +54,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Sorters\BaseSorterTests.cs" />
+    <Compile Include="Sorters\QuickSorter_Tests.cs" />
     <Compile Include="Sorters\BubbleSorter_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

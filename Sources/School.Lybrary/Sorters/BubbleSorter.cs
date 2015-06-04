@@ -5,28 +5,21 @@
 namespace School.Lybrary.Sorters
 {
     // ReSharper disable All
-    public class BubbleSorter
+    public class BubbleSorter : BaseSorter
     {
-        public static void Sort( int[] arr )
+        public static void Sort( int[] array )
         {
             bool swapped;
 
             do {
                 swapped = false;
-                for( var i = 0; i < arr.Length - 1; i++ ) {
-                    if( arr[ i ] > arr[ i + 1 ] ) {
-                        Swap( arr, i, i + 1 );
+                for( var index = 0; index < array.Length - 1; index++ ) {
+                    if( array[ index ] > array[ index + 1 ] ) {
+                        Swap( array, index, index + 1 );
                         swapped = true;
                     }
                 }
             } while( swapped );
-        }
-
-        private static void Swap( int[] arr, int i, int j )
-        {
-            var arr_i = arr[ i ];
-            arr[ i ] = arr[ j ];
-            arr[ j ] = arr_i;
         }
     }
 }
