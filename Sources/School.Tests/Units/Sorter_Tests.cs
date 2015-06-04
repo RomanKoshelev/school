@@ -5,10 +5,11 @@
 using NUnit.Framework;
 using School.Lybrary.Sorters;
 using School.Tests.Bases;
+using School.Tests.Utils;
 
 // ReSharper disable All
 
-namespace School.Tests.Sorters
+namespace School.Tests.Units
 {
     [TestFixture]
     public class Sorter_Tests : SorterTestsBase
@@ -16,37 +17,37 @@ namespace School.Tests.Sorters
         [Test]
         public void Bubble_9876543210()
         {
-            Array_is_sorted_in_ascending_order( new BubbleSorter(), CreateArrayFrom9to0() );
+            Array_is_sorted_in_ascending_order( new BubbleSorter(), TestHelper.CreateArrayFrom9to0() );
         }
 
         [Test]
         public void Bubble_RandomArray()
         {
-            Array_is_sorted_in_ascending_order( new BubbleSorter(), CreateRandomArray() );
+            Array_is_sorted_in_ascending_order( new BubbleSorter(), TestHelper.CreateRandomArray() );
         }
 
         [Test]
         public void Quick_9876543210()
         {
-            Array_is_sorted_in_ascending_order( new QuickSorter(), CreateArrayFrom9to0() );
+            Array_is_sorted_in_ascending_order( new QuickSorter(), TestHelper.CreateArrayFrom9to0() );
         }
 
         [Test]
         public void Quick_RandomArray()
         {
-            Array_is_sorted_in_ascending_order( new QuickSorter(), CreateRandomArray() );
+            Array_is_sorted_in_ascending_order( new QuickSorter(), TestHelper.CreateRandomArray() );
         }
 
         [Test]
         public void Insertion_9876543210()
         {
-            Array_is_sorted_in_ascending_order( new InsertionSorter(), CreateArrayFrom9to0() );
+            Array_is_sorted_in_ascending_order( new InsertionSorter(), TestHelper.CreateArrayFrom9to0() );
         }
 
         [Test]
         public void Insertion_RandomArray()
         {
-            Array_is_sorted_in_ascending_order( new InsertionSorter(), CreateRandomArray() );
+            Array_is_sorted_in_ascending_order( new InsertionSorter(), TestHelper.CreateRandomArray() );
         }
     }
 }

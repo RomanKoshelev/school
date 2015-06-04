@@ -7,7 +7,7 @@ using School.Lybrary.Types;
 namespace School.Lybrary.Sorters
 {
     // ReSharper disable All
-    public class BubbleSorter : AbstractSorter
+    public class BubbleSorter : Sorter
     {
         protected override void DoSort( int[] array )
         {

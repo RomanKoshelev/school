@@ -13,6 +13,8 @@ namespace School.Tests.Bases
 {
     public class SorterTestsBase
     {
+        #region Protected
+
         protected static void Assert_is_ascending( int[] arr )
         {
             for( var i = 0; i < arr.Length - 1; i++ ) {
@@ -20,12 +22,6 @@ namespace School.Tests.Bases
                     Assert.Fail( "\narr[{0}] > arr[{1}] ({2} > {3})", i, i + 1, arr[ i ], arr[ i + 1 ] );
                 }
             }
-        }
-
-        protected static int[] CreateRandomArray( int n=100 )
-        {
-            var rand = new Randomizer();
-            return rand.GetInts( 0, n + 1, n );
         }
 
         protected static void Print( int[] array )
@@ -41,18 +37,15 @@ namespace School.Tests.Bases
             Console.WriteLine( statistics );
         }
 
-        protected int[] CreateArrayFrom9to0()
-        {
-            return new int[] { 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 };
-        }
-
         protected void Array_is_sorted_in_ascending_order( ISorter sorter, int[] array )
         {
             sorter.Sort( array );
             Print( array );
             Console.WriteLine();
-            Print( sorter.GetStatistics() );
+            Print( sorter.Algorithm.GetStatistics() );
             Assert_is_ascending( array );
         }
+
+        #endregion
     }
 }

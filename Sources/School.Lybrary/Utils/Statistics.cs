@@ -4,22 +4,34 @@
 
 namespace School.Lybrary.Utils
 {
-    public class Statistics
+    public class Statistics : IStatistics
     {
+        #region Ctor
+
         public Statistics( int size )
         {
             _size = size;
         }
 
-        public void Swap()
+        #endregion
+
+
+        #region IStatistics
+
+        void IStatistics.Swap()
         {
             _swaps++;
         }
 
-        public void Compare()
+        void IStatistics.Compare()
         {
             _comparisons++;
         }
+
+        #endregion
+
+
+        #region Overrides
 
         public override string ToString()
         {
@@ -32,8 +44,15 @@ namespace School.Lybrary.Utils
             return str;
         }
 
+        #endregion
+
+
+        #region Fields
+
         private int _comparisons;
         private int _swaps;
-        private int _size;
+        private readonly int _size;
+
+        #endregion
     }
 }

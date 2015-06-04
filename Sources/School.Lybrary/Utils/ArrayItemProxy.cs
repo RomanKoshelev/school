@@ -4,35 +4,55 @@
 
 namespace School.Lybrary.Utils
 {
-    public class ArrayItemProxy
+    public class ArrayItemProxy : IArrayItemProxy
     {
-        private readonly ArrayProxy _array;
-        private readonly int _index;
+        #region Ctor
 
-        public ArrayItemProxy( ArrayProxy array, int index )
+        public ArrayItemProxy( IArrayProxy array, int index )
         {
             _array = array;
             _index = index;
         }
 
-        public int Value()
-        {
-            return _array.Value( _index );
-        }
 
-        public bool Is_Greater_than_item( int otherIndex )
+        #endregion
+
+
+        #region IArrayItemProxy
+
+        bool IArrayItemProxy.Is_Greater_than_item( int otherIndex )
         {
             return _array.Compare( Value(), _array.Value( otherIndex ) ) > 0;
         }
 
-        public void Swap_with( int otherIndex )
-        {
-            _array.Swap( _index, otherIndex );
-        }
-
-        public bool Is_LessOrEqual_than_value( int value )
+        bool IArrayItemProxy.Is_LessOrEqual_than_value( int value )
         {
             return _array.Compare( Value(), value ) <= 0;
         }
+
+        bool IArrayItemProxy.Is_Equal_to_value( int value )
+        {
+            return _array.Compare( Value(), value ) == 0;
+        }
+
+        #endregion
+
+
+        #region Fields
+
+        private readonly IArrayProxy _array;
+        private readonly int _index;
+
+        #endregion
+
+
+        #region Utils
+
+        private int Value()
+        {
+            return _array.Value( _index );
+        }
+
+        #endregion
     }
 }

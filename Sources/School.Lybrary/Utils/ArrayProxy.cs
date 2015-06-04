@@ -5,28 +5,32 @@
 namespace School.Lybrary.Utils
 {
     // ReSharper disable All
-    public class ArrayProxy
+    public class ArrayProxy: IArrayProxy
     {
-        public ArrayProxy( int[] array, Statistics statistics )
+        #region Ctor
+
+        public ArrayProxy( int[] array, IStatistics statistics )
         {
             _array = array;
             _statistics = statistics;
         }
 
-        public ArrayItemProxy Item( int i )
+        #endregion
+
+
+        #region IArrayProxy
+
+        IArrayItemProxy IArrayProxy.Item( int i )
         {
             return new ArrayItemProxy( this, i );
         }
 
-        private readonly int[] _array;
-        private Statistics _statistics;
-
-        public int Value( int index )
+        int IArrayProxy.Value( int index )
         {
             return _array[ index ];
         }
 
-        public void Swap( int i, int j )
+        void IArrayProxy.Swap( int i, int j )
         {
             _statistics.Swap();
             var array_i = _array[ i ];
@@ -34,10 +38,20 @@ namespace School.Lybrary.Utils
             _array[ j ] = array_i;
         }
 
-        public int Compare( int a, int b )
+        int IArrayProxy.Compare( int a, int b )
         {
             _statistics.Compare();
             return a - b;
         }
+
+        #endregion
+
+
+        #region Fields
+
+        private readonly int[] _array;
+        private IStatistics _statistics;
+
+        #endregion
     }
 }
