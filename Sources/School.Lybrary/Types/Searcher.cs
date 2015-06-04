@@ -9,7 +9,7 @@ namespace School.Lybrary.Types
     {
         #region Constatns
 
-        public const int KeyNotFound = int.MinValue;
+        public const int KeyNotFound = -1;
 
         #endregion
 

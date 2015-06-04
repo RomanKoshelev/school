@@ -42,12 +42,22 @@ namespace School.Lybrary.Types
             return new ArrayProxy( array, _statistics );
         }
 
+        protected IArrayItemProxy Value( int[] array, int index )
+        {
+            return From( array ).Item( index );
+        }
+
+        protected void StopStatistics()
+        {
+            _statistics.Stop();
+        }
+
         #endregion
 
 
         #region Fields
 
-        private Statistics _statistics;
+        private IStatistics _statistics;
 
         #endregion
     }

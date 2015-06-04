@@ -19,20 +19,15 @@ namespace School.Lybrary.Algorithms.Search
             if( first > last ) {
                 return KeyNotFound;
             } else {
-                var middle = GetMiddleIndex( first, last );
-                if( From( array ).Item( middle ).Is_Greater_than_value( key ) ) {
+                var middle = ( first + last )/2;
+                if( Value( array, middle ).Greater_than( key ) ) {
                     return BinarySearchRecursive( array, key, first, middle - 1 );
-                } else if( From( array ).Item( middle ).Is_Less_than_value( key ) ) {
-                    return BinarySearchRecursive( array, key, middle + 1, last );
-                } else {
-                    return middle;
                 }
+                if( Value( array, middle ).Less_than( key ) ) {
+                    return BinarySearchRecursive( array, key, middle + 1, last );
+                }
+                return middle;
             }
-        }
-
-        private int GetMiddleIndex( int first, int last )
-        {
-            return first + ( last - first )/2;
         }
     }
 }

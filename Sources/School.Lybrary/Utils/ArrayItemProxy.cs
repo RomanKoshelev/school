@@ -19,27 +19,27 @@ namespace School.Lybrary.Utils
 
         #region IArrayItemProxy
 
-        bool IArrayItemProxy.Is_Greater_than_item( int otherIndex )
+        bool IArrayItemProxy.Greater_than_item( int otherIndex )
         {
             return _array.Compare( Value(), _array.Value( otherIndex ) ) > 0;
         }
 
-        bool IArrayItemProxy.Is_LessOrEqual_than_value( int value )
+        bool IArrayItemProxy.LessOrEqual_than( int value )
         {
             return _array.Compare( Value(), value ) <= 0;
         }
 
-        bool IArrayItemProxy.Is_Equal_to_value( int value )
+        bool IArrayItemProxy.Equal( int value )
         {
             return _array.Compare( Value(), value ) == 0;
         }
 
-        public bool Is_Greater_than_value( int value )
+        public bool Greater_than( int value )
         {
             return _array.Compare( Value(), value ) > 0;
         }
 
-        public bool Is_Less_than_value( int value )
+        public bool Less_than( int value )
         {
             return _array.Compare( Value(), value ) < 0;
         }

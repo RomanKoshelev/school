@@ -32,7 +32,7 @@ namespace School.Lybrary.Algorithms.Sort
             var partition = first;
 
             foreach( var index in Range( first, last - 1 ) ) {
-                if( From( array ).Item( index ).Is_LessOrEqual_than_value( pivotValue ) ) {
+                if( From( array ).Item( index ).LessOrEqual_than( pivotValue ) ) {
                     Then.From( array ).Swap( partition, index );
                     partition++;
                 }

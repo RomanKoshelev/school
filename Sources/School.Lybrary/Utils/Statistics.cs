@@ -11,6 +11,7 @@ namespace School.Lybrary.Utils
         public Statistics( int size )
         {
             _size = size;
+            _active = true;
         }
 
         #endregion
@@ -20,12 +21,21 @@ namespace School.Lybrary.Utils
 
         void IStatistics.Swap()
         {
-            _swaps++;
+            if( _active ) {
+                _swaps++;
+            }
         }
 
         void IStatistics.Compare()
         {
-            _comparisons++;
+            if( _active ) {
+                _comparisons++;
+            }
+        }
+
+        void IStatistics.Stop()
+        {
+            _active = false;
         }
 
         #endregion
@@ -50,6 +60,7 @@ namespace School.Lybrary.Utils
         private int _comparisons;
         private int _swaps;
         private readonly int _size;
+        private bool _active;
 
         #endregion
 

@@ -28,6 +28,8 @@ namespace School.Nunit.Bases
             var value = array[ index ];
             var found = searcher.Search( array, value );
 
+            Assert.AreNotEqual( Searcher.KeyNotFound, found );
+
             Console.WriteLine( "array[{0}]={1}", index, value );
             Console.WriteLine( "found[{0}]={1}", found, array[ found ] );
             Console.WriteLine();

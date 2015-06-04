@@ -16,8 +16,20 @@ namespace School.Lybrary.Algorithms.Search
 
         private int BinarySearchIterative( int[] array, int key )
         {
-            // Todo:> BinarySearch http://en.wikipedia.org/wiki/Binary_search_algorithm
-            return 0;
+            var first = 0;
+            var last = array.Length - 1;
+            while( first <= last ) {
+                var middle = ( first + last )/2;
+                if( Value( array, middle ).Equal( key ) ) {
+                    return middle;
+                }
+                if( Value( array, middle ).Less_than( key ) ) {
+                    first = middle + 1;
+                } else {
+                    last = middle - 1;
+                }
+            }
+            return KeyNotFound;
         }
     }
 }

@@ -8,5 +8,6 @@ namespace School.Lybrary.Utils
     {
         void Swap();
         void Compare();
+        void Stop();
     }
 }

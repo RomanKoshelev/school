@@ -20,7 +20,7 @@ namespace School.Lybrary.Algorithms.Sort
                 var inputValue = array[ inputIndex ];
                 var searchIndex = inputIndex - 1;
                 while( searchIndex >= 0 ) {
-                    if( From( array ).Item( searchIndex ).Is_Greater_than_item( searchIndex + 1 ) ) {
+                    if( From( array ).Item( searchIndex ).Greater_than_item( searchIndex + 1 ) ) {
                         Then.From( array ).Swap( searchIndex, searchIndex + 1 );
                     }
                     searchIndex--;
