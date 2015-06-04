@@ -38,7 +38,8 @@ namespace School.Lybrary.Sorters
                 }
             }
 
-            In( array ).Swap( partition, pivotIndex );
+            In( array ).Swap( pivotIndex, partition );
+
             return partition;
         }
 
