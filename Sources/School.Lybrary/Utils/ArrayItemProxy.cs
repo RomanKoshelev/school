@@ -17,11 +17,12 @@ namespace School.Lybrary.Utils
 
         public int Value()
         {
-            return _array.getValue( _index );
+            return _array.Value( _index );
         }
-        public bool Greater_than_item( int otherIndex )
+
+        public bool Is_Greater_than_item( int otherIndex )
         {
-            return Value() > _array.getValue( otherIndex );
+            return _array.Compare( Value(), _array.Value( otherIndex ) ) > 0;
         }
 
         public void Swap_with( int otherIndex )
@@ -29,9 +30,9 @@ namespace School.Lybrary.Utils
             _array.Swap( _index, otherIndex );
         }
 
-        public bool Less_or_equal_than( int value )
+        public bool Is_LessOrEqual_than_value( int value )
         {
-            return Value() <= value;
+            return _array.Compare( Value(), value ) <= 0;
         }
     }
 }

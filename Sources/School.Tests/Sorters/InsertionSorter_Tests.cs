@@ -16,8 +16,9 @@ namespace School.Tests.Sorters
         [Test]
         public void Array_9876543210_is_sorted_in_ascending_order()
         {
+            ISorter sorter = new InsertionSorter();
             var array = new int[] { 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 };
-            InsertionSorter.Sort( array );
+            sorter.Sort( array );
             Print( array );
             Assert_is_ascending( array );
         }
@@ -25,8 +26,9 @@ namespace School.Tests.Sorters
         [Test]
         public void Random_array_is_sorted_ascendently()
         {
+            ISorter sorter = new InsertionSorter();
             var array = CreateRandomArray( 70 );
-            InsertionSorter.Sort( array );
+            sorter.Sort( array );
             Print( array );
             Assert_is_ascending( array );
         }

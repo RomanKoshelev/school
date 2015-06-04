@@ -7,12 +7,12 @@ namespace School.Lybrary.Sorters
     // ReSharper disable All
     public class QuickSorter : BaseSorter
     {
-        public static void Sort( int[] array )
+        public override void Sort( int[] array )
         {
             Sort( array, 0, array.Length - 1 );
         }
 
-        private static void Sort( int[] array, int lo, int hi )
+        private void Sort( int[] array, int lo, int hi )
         {
             if( lo < hi ) {
                 var p = Partition( array, lo, hi );
@@ -21,19 +21,21 @@ namespace School.Lybrary.Sorters
             }
         }
 
-        private static int Partition( int[] array, int lo, int hi )
+        private int Partition( int[] array, int lo, int hi )
         {
             var pivotIndex = ChoosePivotIndex( array, lo, hi );
             var pivotValue = array[ pivotIndex ];
             In( array ).Swap( pivotIndex, hi );
 
             var partition = lo;
-            for( var index = lo; index <= ( hi - 1 ); index++ ) {
-                if( In( array ).Item( index ).Less_or_equal_than( pivotValue ) ) {
-                    In( array ).Swap( partition, index );
+
+            foreach( var index in Range( lo, hi - 1 ) ) {
+                if( In( array ).Item( index ).Is_LessOrEqual_than_value( pivotValue ) ) {
+                    Then.In( array ).Swap( partition, index );
                     partition++;
                 }
             }
+
             In( array ).Swap( partition, pivotIndex );
             return partition;
         }

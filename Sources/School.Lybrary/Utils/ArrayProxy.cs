@@ -2,11 +2,9 @@
 // School.Lybrary
 // ArrayProxy.cs
 
-using System.Diagnostics.CodeAnalysis;
-
 namespace School.Lybrary.Utils
 {
-    [SuppressMessage( "ReSharper", "InconsistentNaming" )]
+    // ReSharper disable All
     public class ArrayProxy
     {
         public ArrayProxy( int[] array, Statistics statistics )
@@ -23,16 +21,23 @@ namespace School.Lybrary.Utils
         private readonly int[] _array;
         private Statistics _statistics;
 
-        public int getValue( int index )
+        public int Value( int index )
         {
             return _array[ index ];
         }
 
         public void Swap( int i, int j )
         {
+            _statistics.Swap();
             var array_i = _array[ i ];
             _array[ i ] = _array[ j ];
             _array[ j ] = array_i;
+        }
+
+        public int Compare( int a, int b )
+        {
+            _statistics.Compare();
+            return a - b;
         }
     }
 }

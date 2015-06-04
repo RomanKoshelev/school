@@ -4,6 +4,7 @@
 
 using System;
 using NUnit.Framework;
+using School.Lybrary.Utils;
 
 // ReSharper disable All
 
@@ -31,6 +32,11 @@ namespace School.Tests.Sorters
             for( var i = 0; i < array.Length; i++ ) {
                 Console.Write( "{0} ", array[ i ] );
             }
+        }
+
+        protected void Print( Statistics statistics )
+        {
+            Console.Write( statistics );
         }
     }
 }

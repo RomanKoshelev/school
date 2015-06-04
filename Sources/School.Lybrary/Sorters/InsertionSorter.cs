@@ -7,7 +7,7 @@ namespace School.Lybrary.Sorters
     // ReSharper disable All
     public class InsertionSorter : BaseSorter
     {
-        public static void Sort( int[] array )
+        public override void Sort( int[] array )
         {
             
         }
