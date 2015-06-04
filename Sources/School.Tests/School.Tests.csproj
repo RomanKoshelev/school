@@ -6,7 +6,7 @@
     <ProjectGuid>{06F74DE4-F5C0-47C7-9C55-1A1CB9FC74BF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>School.Tests</RootNamespace>
+    <RootNamespace>School.Nunit</RootNamespace>
     <AssemblyName>School.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -55,8 +55,8 @@
   <ItemGroup>
     <Compile Include="Bases\SearherTestsBase.cs" />
     <Compile Include="Bases\SorterTestsBase.cs" />
-    <Compile Include="Units\Searcher_Tests.cs" />
-    <Compile Include="Units\Sorter_Tests.cs" />
+    <Compile Include="Tests\Searcher_Tests.cs" />
+    <Compile Include="Tests\Sorter_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\TestHelper.cs" />
   </ItemGroup>

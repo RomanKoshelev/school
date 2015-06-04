@@ -4,12 +4,12 @@
 
 using NUnit.Framework;
 using School.Lybrary.Algorithms.Sorters;
-using School.Tests.Bases;
-using School.Tests.Utils;
+using School.Nunit.Bases;
+using School.Nunit.Utils;
 
 // ReSharper disable All
 
-namespace School.Tests.Units
+namespace School.Nunit.Tests
 {
     [TestFixture]
     public class Sorter_Tests : SorterTestsBase
@@ -17,7 +17,7 @@ namespace School.Tests.Units
         [Test]
         public void Bubble_9876543210()
         {
-            Array_is_sorted_in_ascending_order( new BubbleSorter(), TestHelper.CreateArrayFrom9to0() );
+            Array_is_sorted_in_ascending_order( new BubbleSorter(), TestHelper.CreateArrayFrom9To0() );
         }
 
         [Test]
@@ -29,7 +29,7 @@ namespace School.Tests.Units
         [Test]
         public void Quick_9876543210()
         {
-            Array_is_sorted_in_ascending_order( new QuickSorter(), TestHelper.CreateArrayFrom9to0() );
+            Array_is_sorted_in_ascending_order( new QuickSorter(), TestHelper.CreateArrayFrom9To0() );
         }
 
         [Test]
@@ -41,7 +41,7 @@ namespace School.Tests.Units
         [Test]
         public void Insertion_9876543210()
         {
-            Array_is_sorted_in_ascending_order( new InsertionSorter(), TestHelper.CreateArrayFrom9to0() );
+            Array_is_sorted_in_ascending_order( new InsertionSorter(), TestHelper.CreateArrayFrom9To0() );
         }
 
         [Test]

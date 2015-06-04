@@ -4,11 +4,11 @@
 
 using NUnit.Framework;
 using School.Lybrary.Algorithms.Searchers;
-using School.Tests.Bases;
+using School.Nunit.Bases;
 
 // ReSharper disable All
 
-namespace School.Tests.Units
+namespace School.Nunit.Tests
 {
     [TestFixture]
     public class Searcher_Tests : SearherTestsBase

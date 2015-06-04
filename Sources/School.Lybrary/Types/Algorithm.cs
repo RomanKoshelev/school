@@ -32,11 +32,6 @@ namespace School.Lybrary.Types
             return Enumerable.Range( first, last - first + 1 );
         }
 
-        protected static IEnumerable< int > Indices( int[] array )
-        {
-            return Range( 0, array.Length - 1 );
-        }
-
         protected Algorithm Then
         {
             get { return this; }

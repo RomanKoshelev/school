@@ -16,7 +16,7 @@ namespace School.Lybrary.Algorithms.Searchers
 
         private int LinearSearch( int[] array, int value )
         {
-            foreach( var index in Indices( array ) ) {
+            foreach( var index in Range( 0, array.Length - 1 ) ) {
                 if( In( array ).Item( index ).Is_Equal_to_value( value ) ) {
                     return index;
                 }

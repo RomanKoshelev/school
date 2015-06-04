@@ -6,9 +6,9 @@ using System;
 using NUnit.Framework;
 using School.Lybrary.Algorithms.Sorters;
 using School.Lybrary.Types;
-using School.Tests.Utils;
+using School.Nunit.Utils;
 
-namespace School.Tests.Bases
+namespace School.Nunit.Bases
 {
     // ReSharper disable All
     public class SearherTestsBase
@@ -31,11 +31,32 @@ namespace School.Tests.Bases
             Console.WriteLine( "array[{0}]={1}", index, value );
             Console.WriteLine( "found[{0}]={1}", found, array[ found ] );
             Console.WriteLine();
-            Console.WriteLine( searcher.Algorithm.Statistics.ToString() );
+
+            TestHelper.Print( searcher.Algorithm.Statistics );
 
             Assert.AreEqual( value, array[ found ] );
+            Assert_wrong_values_not_found( searcher, array );
+            Assert_bounds_found( searcher, array );
+        }
+
+        private static void Assert_wrong_values_not_found( ISearcher searcher, int[] array )
+        {
             Assert.AreEqual( Searcher.NotFound, searcher.Search( array, Int32.MaxValue ) );
             Assert.AreEqual( Searcher.NotFound, searcher.Search( array, Int32.MinValue ) );
+        }
+
+        private static void Assert_bounds_found( ISearcher searcher, int[] array )
+        {
+            Assert_index_found( searcher, array, 0 );
+            Assert_index_found( searcher, array, 1 );
+            Assert_index_found( searcher, array, array.Length/2 );
+            Assert_index_found( searcher, array, array.Length - 1 );
+            Assert_index_found( searcher, array, array.Length - 2 );
+        }
+
+        private static void Assert_index_found( ISearcher searcher, int[] array, int index )
+        {
+            Assert.AreEqual( array[ index ], array[ searcher.Search( array, array[ index ] ) ] );
         }
     }
 }

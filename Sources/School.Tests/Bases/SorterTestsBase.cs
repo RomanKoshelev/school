@@ -2,14 +2,13 @@
 // School.Tests
 // SorterTestsBase.cs
 
-using System;
 using NUnit.Framework;
 using School.Lybrary.Types;
-using School.Lybrary.Utils;
+using School.Nunit.Utils;
 
 // ReSharper disable All
 
-namespace School.Tests.Bases
+namespace School.Nunit.Bases
 {
     public class SorterTestsBase
     {
@@ -24,25 +23,11 @@ namespace School.Tests.Bases
             }
         }
 
-        protected static void Print( int[] array )
-        {
-            for( var i = 0; i < array.Length; i++ ) {
-                Console.Write( "{0} ", array[ i ] );
-            }
-            Console.WriteLine();
-        }
-
-        protected void Print( IStatistics statistics )
-        {
-            Console.WriteLine( statistics );
-        }
-
         protected void Array_is_sorted_in_ascending_order( ISorter sorter, int[] array )
         {
             sorter.Sort( array );
-            Print( array );
-            Console.WriteLine();
-            Print( sorter.Algorithm.Statistics );
+            TestHelper.Print( array );
+            TestHelper.Print( sorter.Algorithm.Statistics );
             Assert_is_ascending( array );
         }
 
