@@ -1,6 +1,6 @@
 ﻿// School (c) 2015 Krokodev
 // School.Lybrary
-// BaseSorter.cs
+// AbstractSorter.cs
 
 using System.Collections.Generic;
 using School.Lybrary.Utils;
@@ -8,21 +8,39 @@ using School.Lybrary.Utils;
 namespace School.Lybrary.Types
 {
     // ReSharper disable All
-    public abstract class BaseSorter : ISorter
+    public abstract class AbstractSorter : ISorter
     {
+        #region ISorter
+
         Statistics ISorter.GetStatistics()
         {
             return statistics;
         }
 
+        void ISorter.Sort( int[] array )
+        {
+            statistics = new Statistics( array.Length );
+            DoSort( array );
+        }
+
+        #endregion
+
+
+        #region Fields
+
         private Statistics statistics;
+
+        #endregion
+
+
+        #region Utils
 
         protected internal ArrayProxy In( int[] array )
         {
             return new ArrayProxy( array, statistics );
         }
 
-        protected BaseSorter Then
+        protected AbstractSorter Then
         {
             get { return this; }
         }
@@ -36,12 +54,13 @@ namespace School.Lybrary.Types
             return range;
         }
 
-        public virtual void Sort( int[] array )
-        {
-            statistics = new Statistics( array.Length );
-            DoSort( array );
-        }
+        #endregion
+
+
+        #region Abstracts
 
         protected abstract void DoSort( int[] array );
+
+        #endregion
     }
 }
