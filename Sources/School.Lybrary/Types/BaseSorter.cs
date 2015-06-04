@@ -5,20 +5,16 @@
 using System.Collections.Generic;
 using School.Lybrary.Utils;
 
-namespace School.Lybrary.Sorters
+namespace School.Lybrary.Types
 {
     // ReSharper disable All
     public abstract class BaseSorter : ISorter
     {
-        public BaseSorter()
-        {
-            statistics = new Statistics();
-        }
         Statistics ISorter.GetStatistics()
         {
             return statistics;
         }
-        
+
         private Statistics statistics;
 
         protected internal ArrayProxy In( int[] array )
@@ -40,6 +36,12 @@ namespace School.Lybrary.Sorters
             return range;
         }
 
-        public abstract void Sort( int[] array );
+        public virtual void Sort( int[] array )
+        {
+            statistics = new Statistics( array.Length );
+            DoSort( array );
+        }
+
+        protected abstract void DoSort( int[] array );
     }
 }

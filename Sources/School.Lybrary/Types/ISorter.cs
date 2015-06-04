@@ -1,6 +1,6 @@
 using School.Lybrary.Utils;
 
-namespace School.Lybrary.Sorters
+namespace School.Lybrary.Types
 {
     public interface ISorter {
         Statistics GetStatistics();

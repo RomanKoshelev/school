@@ -2,14 +2,18 @@
 // School.Lybrary
 // InsertionSorter.cs
 
+using School.Lybrary.Types;
+
 namespace School.Lybrary.Sorters
 {
     // ReSharper disable All
     public class InsertionSorter : BaseSorter
     {
-        public override void Sort( int[] array )
+        protected override void DoSort( int[] array )
         {
-            
+            InsertionSort( array );
         }
+
+        private void InsertionSort( int[] array ) {}
     }
 }

@@ -53,10 +53,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Sorters\BaseSorterTests.cs" />
-    <Compile Include="Sorters\InsertionSorter_Tests.cs" />
-    <Compile Include="Sorters\QuickSorter_Tests.cs" />
-    <Compile Include="Sorters\BubbleSorter_Tests.cs" />
+    <Compile Include="Bases\SorterTestsBase.cs" />
+    <Compile Include="Sorters\Sorter_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

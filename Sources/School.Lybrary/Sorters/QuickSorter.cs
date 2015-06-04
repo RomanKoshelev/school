@@ -2,22 +2,25 @@
 // School.Lybrary
 // QuickSorter.cs
 
+using School.Lybrary.Types;
+
 namespace School.Lybrary.Sorters
 {
     // ReSharper disable All
     public class QuickSorter : BaseSorter
     {
-        public override void Sort( int[] array )
+        protected override void DoSort( int[] array )
         {
-            Sort( array, 0, array.Length - 1 );
+            QuickSort( array, 0, array.Length - 1 );
         }
 
-        private void Sort( int[] array, int lo, int hi )
+
+        private void QuickSort( int[] array, int lo, int hi )
         {
             if( lo < hi ) {
                 var p = Partition( array, lo, hi );
-                Sort( array, lo, p - 1 );
-                Sort( array, p + 1, hi );
+                QuickSort( array, lo, p - 1 );
+                QuickSort( array, p + 1, hi );
             }
         }
 

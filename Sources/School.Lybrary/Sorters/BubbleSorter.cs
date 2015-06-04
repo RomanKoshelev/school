@@ -2,12 +2,19 @@
 // School.Lybrary
 // BubbleSorter.cs
 
+using School.Lybrary.Types;
+
 namespace School.Lybrary.Sorters
 {
     // ReSharper disable All
     public class BubbleSorter : BaseSorter
     {
-        public override void Sort( int[] array )
+        protected override void DoSort( int[] array )
+        {
+            BubleSort( array );
+        }
+
+        public void BubleSort( int[] array )
         {
             bool swapped;
 

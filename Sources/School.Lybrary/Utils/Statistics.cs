@@ -6,8 +6,10 @@ namespace School.Lybrary.Utils
 {
     public class Statistics {
 
-        private int _comparisons;
-        private int _swaps;
+        public Statistics( int size )
+        {
+            _size = size;
+        }
 
         public void Swap()
         {
@@ -22,10 +24,16 @@ namespace School.Lybrary.Utils
         public override string ToString()
         {
             var str = "";
-            str += string.Format( "comparisons: {0}", _comparisons );
+            str += string.Format( "Size: {0}", _size );
             str += "\n";
-            str += string.Format( "swaps: {0}", _swaps );
+            str += string.Format( "Comparisons: {0}", _comparisons );
+            str += "\n";
+            str += string.Format( "Swaps: {0}", _swaps );
             return str;
         }
+
+        private int _comparisons;
+        private int _swaps;
+        private int _size;
     }
 }
