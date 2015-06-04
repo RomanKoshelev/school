@@ -16,7 +16,7 @@ namespace School.Tests.Sorters
         [Test]
         public void Bubble_9876543210()
         {
-            Array_is_sorted_in_ascending_order( new BubbleSorter(), Create9876543210Array() );
+            Array_is_sorted_in_ascending_order( new BubbleSorter(), CreateArrayFrom9to0() );
         }
 
         [Test]
@@ -28,7 +28,7 @@ namespace School.Tests.Sorters
         [Test]
         public void Quick_9876543210()
         {
-            Array_is_sorted_in_ascending_order( new QuickSorter(), Create9876543210Array() );
+            Array_is_sorted_in_ascending_order( new QuickSorter(), CreateArrayFrom9to0() );
         }
 
         [Test]
@@ -41,7 +41,7 @@ namespace School.Tests.Sorters
         [Test]
         public void Insertion_9876543210()
         {
-            Array_is_sorted_in_ascending_order( new InsertionSorter(), Create9876543210Array() );
+            Array_is_sorted_in_ascending_order( new InsertionSorter(), CreateArrayFrom9to0() );
         }
 
         [Ignore]
