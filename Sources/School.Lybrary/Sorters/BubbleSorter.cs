@@ -9,11 +9,11 @@ namespace School.Lybrary.Sorters
     {
         public static void Sort( int[] arr )
         {
-            var n = arr.Length;
-            var swapped = false;
+            bool swapped;
 
             do {
-                for( var i = 0; i < n - 1; i++ ) {
+                swapped = false;
+                for( var i = 0; i < arr.Length - 1; i++ ) {
                     if( arr[ i ] > arr[ i + 1 ] ) {
                         Swap( arr, i, i + 1 );
                         swapped = true;
