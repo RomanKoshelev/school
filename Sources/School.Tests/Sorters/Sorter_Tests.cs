@@ -22,7 +22,7 @@ namespace School.Tests.Sorters
         [Test]
         public void Bubble_RandomArray()
         {
-            Array_is_sorted_in_ascending_order( new BubbleSorter(), CreateRandomArray( 100 ) );
+            Array_is_sorted_in_ascending_order( new BubbleSorter(), CreateRandomArray() );
         }
 
         [Test]
@@ -34,7 +34,7 @@ namespace School.Tests.Sorters
         [Test]
         public void Quick_RandomArray()
         {
-            Array_is_sorted_in_ascending_order( new QuickSorter(), CreateRandomArray( 100 ) );
+            Array_is_sorted_in_ascending_order( new QuickSorter(), CreateRandomArray() );
         }
 
         [Ignore]
@@ -48,7 +48,7 @@ namespace School.Tests.Sorters
         [Test]
         public void Insertion_RandomArray()
         {
-            Array_is_sorted_in_ascending_order( new InsertionSorter(), CreateRandomArray( 100 ) );
+            Array_is_sorted_in_ascending_order( new InsertionSorter(), CreateRandomArray() );
         }
     }
 }

@@ -22,7 +22,7 @@ namespace School.Tests.Bases
             }
         }
 
-        protected static int[] CreateRandomArray( int n )
+        protected static int[] CreateRandomArray( int n=100 )
         {
             var rand = new Randomizer();
             return rand.GetInts( 0, n + 1, n );
