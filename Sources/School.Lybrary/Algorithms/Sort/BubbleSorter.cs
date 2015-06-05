@@ -22,7 +22,7 @@ namespace School.Lybrary.Algorithms.Sort
                 swapped = false;
                 for( var index = 0; index < array.Length - 1; index++ ) {
                     if( From( array ).Item( index ).Greater_than_item( index + 1 ) ) {
-                        Then.From( array ).Swap( index, index + 1 );
+                        Then.In( array ).Swap( index, index + 1 );
                         swapped = true;
                     }
                 }

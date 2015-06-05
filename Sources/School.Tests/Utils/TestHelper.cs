@@ -17,6 +17,11 @@ namespace School.Nunit.Utils
             return rand.GetInts( 0, n + 1, n );
         }
 
+        public static int[] CreateArrayFrom0To9()
+        {
+            return new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+        }
+
         public static int[] CreateArrayFrom9To0()
         {
             return new int[] { 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 };

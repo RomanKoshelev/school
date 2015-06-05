@@ -27,18 +27,18 @@ namespace School.Lybrary.Algorithms.Sort
         {
             var pivotIndex = ChoosePivotIndex( array, first, last );
             var pivotValue = array[ pivotIndex ];
-            From( array ).Swap( pivotIndex, last );
+            In( array ).Swap( pivotIndex, last );
 
             var partition = first;
 
-            foreach( var index in Range( first, last - 1 ) ) {
+            foreach( var index in Order( first, last - 1 ) ) {
                 if( From( array ).Item( index ).LessOrEqual_than( pivotValue ) ) {
-                    Then.From( array ).Swap( partition, index );
+                    Then.In( array ).Swap( partition, index );
                     partition++;
                 }
             }
 
-            From( array ).Swap( pivotIndex, partition );
+            In( array ).Swap( pivotIndex, partition );
 
             return partition;
         }

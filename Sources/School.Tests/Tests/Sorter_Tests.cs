@@ -49,5 +49,17 @@ namespace School.Nunit.Tests
         {
             Array_is_sorted_in_ascending_order( new InsertionSorter(), TestHelper.CreateRandomArray() );
         }
+
+        [Test]
+        public void Heap_0123456789()
+        {
+            Array_is_sorted_in_ascending_order( new HeapSorter(), TestHelper.CreateArrayFrom0To9() );
+        }
+
+        [Test]
+        public void Heap_RandomArray()
+        {
+            Array_is_sorted_in_ascending_order( new HeapSorter(), TestHelper.CreateRandomArray() );
+        }
     }
 }

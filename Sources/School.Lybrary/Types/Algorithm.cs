@@ -27,9 +27,12 @@ namespace School.Lybrary.Types
             _statistics = new Statistics( array.Length );
         }
 
-        protected static IEnumerable< int > Range( int first, int last )
+        protected static IEnumerable< int > Order( int first, int last )
         {
-            return Enumerable.Range( first, last - first + 1 );
+            return
+                first <= last
+                    ? Enumerable.Range( first, last - first + 1 )
+                    : Order( last, first ).Reverse();
         }
 
         protected Algorithm Then
@@ -37,7 +40,12 @@ namespace School.Lybrary.Types
             get { return this; }
         }
 
-        protected internal IArrayProxy From( int[] array )
+        protected IArrayProxy From( int[] array )
+        {
+            return new ArrayProxy( array, _statistics );
+        }
+
+        protected internal IArrayProxy In( int[] array )
         {
             return new ArrayProxy( array, _statistics );
         }

@@ -42,6 +42,7 @@
     <Compile Include="Algorithms\Search\BinarySearcherRecursive.cs" />
     <Compile Include="Algorithms\Search\BinarySearcherIterative.cs" />
     <Compile Include="Algorithms\Search\LinearSearcher.cs" />
+    <Compile Include="Algorithms\Sort\HeapSorter.cs" />
     <Compile Include="Types\Algorithm.cs" />
     <Compile Include="Types\IAlgorithm.cs" />
     <Compile Include="Types\Searcher.cs" />

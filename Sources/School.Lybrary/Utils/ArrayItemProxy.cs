@@ -24,6 +24,11 @@ namespace School.Lybrary.Utils
             return _array.Compare( Value(), _array.Value( otherIndex ) ) > 0;
         }
 
+        public bool Less_than_item( int otherIndex )
+        {
+            return _array.Compare( Value(), _array.Value( otherIndex ) ) < 0;
+        }
+
         bool IArrayItemProxy.LessOrEqual_than( int value )
         {
             return _array.Compare( Value(), value ) <= 0;

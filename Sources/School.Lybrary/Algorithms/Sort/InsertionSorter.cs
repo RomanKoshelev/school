@@ -16,12 +16,12 @@ namespace School.Lybrary.Algorithms.Sort
 
         private void InsertionSort( int[] array )
         {
-            foreach( var inputIndex in Range( 1, array.Length - 1 ) ) {
+            foreach( var inputIndex in Order( 1, array.Length - 1 ) ) {
                 var inputValue = array[ inputIndex ];
                 var searchIndex = inputIndex - 1;
                 while( searchIndex >= 0 ) {
                     if( From( array ).Item( searchIndex ).Greater_than_item( searchIndex + 1 ) ) {
-                        Then.From( array ).Swap( searchIndex, searchIndex + 1 );
+                        Then.In( array ).Swap( searchIndex, searchIndex + 1 );
                     }
                     searchIndex--;
                 }
