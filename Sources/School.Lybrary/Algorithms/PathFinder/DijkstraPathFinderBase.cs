@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using School.Lybrary.Structures.Graphs;
 
-namespace School.Lybrary.Algorithms.Traverse
+namespace School.Lybrary.Algorithms.PathFinder
 {
     // ReSharper disable All
     public class DijkstraPathFinderBase

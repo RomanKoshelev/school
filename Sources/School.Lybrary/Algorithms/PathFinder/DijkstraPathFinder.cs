@@ -6,7 +6,7 @@ using System.Linq;
 using School.Lybrary.Structures.Graphs;
 using School.Lybrary.Utils;
 
-namespace School.Lybrary.Algorithms.Traverse
+namespace School.Lybrary.Algorithms.PathFinder
 {
     public class DijkstraPathFinder : DijkstraPathFinderBase
     {

@@ -39,8 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Algorithms\Traverse\DijkstraPathFinder.cs" />
-    <Compile Include="Algorithms\Traverse\DijkstraPathFinderBase.cs" />
+    <Compile Include="Algorithms\PathFinder\DijkstraPathFinder.cs" />
+    <Compile Include="Algorithms\PathFinder\DijkstraPathFinderBase.cs" />
     <Compile Include="Structures\Graphs\Edge.cs" />
     <Compile Include="Structures\Graphs\Graph.cs" />
     <Compile Include="Structures\Graphs\IEdge.cs" />
