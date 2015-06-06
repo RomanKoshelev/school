@@ -6,6 +6,7 @@ namespace School.Lybrary.Structures.Graphs
 {
     public interface IWeightedGraph : IGraph
     {
-        int Weight( IVertex a, IVertex b );
+        int GetWeight( IVertex a, IVertex b );
+        void SetWeight( IVertex a, IVertex b, int w );
     }
 }

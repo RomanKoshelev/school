@@ -25,7 +25,7 @@ namespace School.Lybrary.Algorithms.Traverse
                 var vertex = Qeue.SelectHasMin( Dist );
                 Qeue.Remove( vertex );
                 foreach( var neighbor in vertex.Neighbors.Intersect( Qeue ) ) {
-                    var newDist = Dist[ vertex ] + graph.Weight( vertex, neighbor );
+                    var newDist = Dist[ vertex ] + graph.GetWeight( vertex, neighbor );
                     if( newDist >= Dist[ neighbor ] ) {
                         continue;
                     }

@@ -41,6 +41,9 @@
   <ItemGroup>
     <Compile Include="Algorithms\Traverse\DijkstraPathFinder.cs" />
     <Compile Include="Algorithms\Traverse\DijkstraPathFinderBase.cs" />
+    <Compile Include="Structures\Graphs\Edge.cs" />
+    <Compile Include="Structures\Graphs\Graph.cs" />
+    <Compile Include="Structures\Graphs\IEdge.cs" />
     <Compile Include="Structures\Graphs\WeightedGraph.cs" />
     <Compile Include="Structures\Graphs\IGraph.cs" />
     <Compile Include="Structures\Graphs\IVertex.cs" />

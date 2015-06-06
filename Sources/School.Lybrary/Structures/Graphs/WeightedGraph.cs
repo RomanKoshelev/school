@@ -2,21 +2,36 @@
 // School.Lybrary
 // WeightedGraph.cs
 
-using System;
 using System.Collections.Generic;
 
 namespace School.Lybrary.Structures.Graphs
 {
     public abstract class WeightedGraph : Graph, IWeightedGraph
     {
-        public int Weight( IVertex a, IVertex b )
-        {
-            throw new NotImplementedException();
-        }
-    }
+        #region IWeightedGraph
 
-    public class Graph
-    {
-        public IEnumerable< IVertex > Vertices { get; set; }
+        int IWeightedGraph.GetWeight( IVertex a, IVertex b )
+        {
+            return _weights[ IGraph.GetEdge( a, b ) ];
+        }
+
+        void IWeightedGraph.SetWeight( IVertex a, IVertex b, int weight )
+        {
+            var edge = IGraph.GetEdge( a, b );
+            if( !_weights.ContainsKey( edge ) ) {
+                _weights.Add( edge, weight );
+            } else {
+                _weights[ edge ] = weight;
+            }
+        }
+
+        #endregion
+
+
+        #region Fields
+
+        private readonly Dictionary< IEdge, int > _weights = new Dictionary< IEdge, int >();
+
+        #endregion
     }
 }
