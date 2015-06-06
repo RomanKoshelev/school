@@ -28,7 +28,7 @@ namespace School.Nunit.Tests
         public void Random_graph_is_correct()
         {
             var graph = CreateRandomGraph( 10, 0.7 );
-            
+
             PrintEdges( graph );
 
             Verify_Graph( graph );
@@ -36,7 +36,7 @@ namespace School.Nunit.Tests
 
         private IGraph CreateWeightedGraph( int num )
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         [Test]
