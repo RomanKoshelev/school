@@ -27,7 +27,7 @@ namespace School.Nunit.Tests
         [Test]
         public void Random_graph_is_correct()
         {
-            var graph = CreateRandomGraph( 10, 0.1 );
+            var graph = CreateRandomGraph( 10, 0.7 );
             
             PrintEdges( graph );
 
