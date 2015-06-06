@@ -2,7 +2,9 @@
 // School.Lybrary
 // ISearcher.cs
 
-namespace School.Lybrary.Types
+using School.Lybrary.Algorithms.Base;
+
+namespace School.Lybrary.Algorithms.Search.Base
 {
     public interface ISearcher
     {

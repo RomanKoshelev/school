@@ -39,6 +39,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithms\PathFinders\DijkstraPathFinder.cs" />
+    <Compile Include="Algorithms\PathFinders\DijkstraPathFinderBase.cs" />
+    <Compile Include="Types\IGraph.cs" />
+    <Compile Include="Types\IVertex.cs" />
+    <Compile Include="Types\IWeightedGraph.cs" />
+    <Compile Include="Utils\LinqExtension.cs" />
     <Compile Include="Algorithms\Search\BinarySearcherRecursive.cs" />
     <Compile Include="Algorithms\Search\BinarySearcherIterative.cs" />
     <Compile Include="Algorithms\Search\LinearSearcher.cs" />

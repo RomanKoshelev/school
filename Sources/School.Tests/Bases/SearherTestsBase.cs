@@ -4,8 +4,9 @@
 
 using System;
 using NUnit.Framework;
+using School.Lybrary.Algorithms.Search.Base;
 using School.Lybrary.Algorithms.Sort;
-using School.Lybrary.Types;
+using School.Lybrary.Algorithms.Sort.Base;
 using School.Nunit.Utils;
 
 namespace School.Nunit.Bases

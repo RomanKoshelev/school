@@ -3,7 +3,7 @@
 // SorterTestsBase.cs
 
 using NUnit.Framework;
-using School.Lybrary.Types;
+using School.Lybrary.Algorithms.Sort.Base;
 using School.Nunit.Utils;
 
 // ReSharper disable All

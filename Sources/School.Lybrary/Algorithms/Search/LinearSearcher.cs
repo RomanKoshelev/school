@@ -2,7 +2,7 @@
 // School.Lybrary
 // LinearSearcher.cs
 
-using School.Lybrary.Types;
+using School.Lybrary.Algorithms.Search.Base;
 
 namespace School.Lybrary.Algorithms.Search
 {

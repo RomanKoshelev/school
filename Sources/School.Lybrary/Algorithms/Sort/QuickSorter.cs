@@ -2,7 +2,7 @@
 // School.Lybrary
 // QuickSorter.cs
 
-using School.Lybrary.Types;
+using School.Lybrary.Algorithms.Sort.Base;
 
 namespace School.Lybrary.Algorithms.Sort
 {
