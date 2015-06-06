@@ -2,7 +2,9 @@
 // School.Lybrary
 // Sorter.cs
 
-namespace School.Lybrary.Types
+using School.Lybrary.Algorithms.Base;
+
+namespace School.Lybrary.Algorithms.Sort.Base
 {
     // ReSharper disable All
     public abstract class Sorter : Algorithm, ISorter

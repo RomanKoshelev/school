@@ -3,8 +3,7 @@
 // DijkstraPathFinder.cs
 
 using System.Linq;
-using School.Lybrary.Algorithms.PathFinders;
-using School.Lybrary.Types;
+using School.Lybrary.Structures.Graphs;
 using School.Lybrary.Utils;
 
 namespace School.Lybrary.Algorithms.Traverse

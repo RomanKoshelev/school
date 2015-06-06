@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using School.Lybrary.Utils;
 
-namespace School.Lybrary.Types
+namespace School.Lybrary.Algorithms.Base
 {
     public abstract class Algorithm : IAlgorithm
     {

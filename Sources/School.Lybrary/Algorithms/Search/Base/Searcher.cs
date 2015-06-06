@@ -2,7 +2,9 @@
 // School.Lybrary
 // Searcher.cs
 
-namespace School.Lybrary.Types
+using School.Lybrary.Algorithms.Base;
+
+namespace School.Lybrary.Algorithms.Search.Base
 {
     // ReSharper disable All
     public abstract class Searcher : Algorithm, ISearcher

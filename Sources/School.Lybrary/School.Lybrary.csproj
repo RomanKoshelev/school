@@ -39,24 +39,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Algorithms\PathFinders\DijkstraPathFinder.cs" />
-    <Compile Include="Algorithms\PathFinders\DijkstraPathFinderBase.cs" />
-    <Compile Include="Types\IGraph.cs" />
-    <Compile Include="Types\IVertex.cs" />
-    <Compile Include="Types\IWeightedGraph.cs" />
+    <Compile Include="Algorithms\Traverse\DijkstraPathFinder.cs" />
+    <Compile Include="Algorithms\Traverse\DijkstraPathFinderBase.cs" />
+    <Compile Include="Structures\Graphs\WeightedGraph.cs" />
+    <Compile Include="Structures\Graphs\IGraph.cs" />
+    <Compile Include="Structures\Graphs\IVertex.cs" />
+    <Compile Include="Structures\Graphs\IWeightedGraph.cs" />
     <Compile Include="Utils\LinqExtension.cs" />
     <Compile Include="Algorithms\Search\BinarySearcherRecursive.cs" />
     <Compile Include="Algorithms\Search\BinarySearcherIterative.cs" />
     <Compile Include="Algorithms\Search\LinearSearcher.cs" />
     <Compile Include="Algorithms\Sort\HeapSorter.cs" />
-    <Compile Include="Types\Algorithm.cs" />
-    <Compile Include="Types\IAlgorithm.cs" />
-    <Compile Include="Types\Searcher.cs" />
-    <Compile Include="Types\ISearcher.cs" />
-    <Compile Include="Types\ISorter.cs" />
+    <Compile Include="Algorithms\Base\Algorithm.cs" />
+    <Compile Include="Algorithms\Base\IAlgorithm.cs" />
+    <Compile Include="Algorithms\Search\Base\Searcher.cs" />
+    <Compile Include="Algorithms\Search\Base\ISearcher.cs" />
+    <Compile Include="Algorithms\Sort\Base\ISorter.cs" />
     <Compile Include="Utils\ArrayItemProxy.cs" />
     <Compile Include="Utils\ArrayProxy.cs" />
-    <Compile Include="Types\Sorter.cs" />
+    <Compile Include="Algorithms\Sort\Base\Sorter.cs" />
     <Compile Include="Algorithms\Sort\InsertionSorter.cs" />
     <Compile Include="Algorithms\Sort\BubbleSorter.cs" />
     <Compile Include="Algorithms\Sort\QuickSorter.cs" />

@@ -4,10 +4,9 @@
 
 using System;
 using System.Collections.Generic;
-using School.Lybrary.Types;
-using School.Lybrary.Utils;
+using School.Lybrary.Structures.Graphs;
 
-namespace School.Lybrary.Algorithms.PathFinders
+namespace School.Lybrary.Algorithms.Traverse
 {
     // ReSharper disable All
     public class DijkstraPathFinderBase

@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using School.Lybrary.Types;
 
 namespace School.Lybrary.Structures.Graphs
 {
