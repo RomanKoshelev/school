@@ -8,11 +8,12 @@ namespace School.Lybrary.Structures.Graphs
 {
     public interface IGraph
     {
-        IEnumerable< IVertex > Vertices { get; }
-        IEnumerable< IEdge > Edges { get; }
+        IList< IVertex > Vertices { get; }
+        IList< IEdge > Edges { get; }
         void AddEdge( IVertex a, IVertex b );
         IEdge GetEdge( IVertex a, IVertex b );
-        void AddVertex( IVertex vertex );
+        IVertex AddVertex( IVertex vertex );
+        IVertex NewVertex( object name );
         bool Linked( IVertex a, IVertex b );
     }
 }

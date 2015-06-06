@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using School.Lybrary.Utils;
 
 namespace School.Lybrary.Structures.Graphs
 {
@@ -17,12 +18,12 @@ namespace School.Lybrary.Structures.Graphs
             get { return this; }
         }
 
-        IEnumerable< IVertex > IGraph.Vertices
+        IList< IVertex > IGraph.Vertices
         {
             get { return _vertices; }
         }
 
-        IEnumerable< IEdge > IGraph.Edges
+        IList< IEdge > IGraph.Edges
         {
             get { return _edges; }
         }
@@ -30,17 +31,25 @@ namespace School.Lybrary.Structures.Graphs
         void IGraph.AddEdge( IVertex a, IVertex b )
         {
             if( IGraph.Linked( a, b ) ) {
-                throw new Exception( "Edge already exists" );
+                throw new SchoolException( "Edge {0}-{1} already exists", a, b );
             }
             _edges.Add( new Edge( a, b ) );
         }
 
-        void IGraph.AddVertex( IVertex vertex )
+        IVertex IGraph.AddVertex( IVertex vertex )
         {
             if( _vertices.Contains( vertex ) ) {
-                throw new Exception( "Vertex already exists" );
+                throw new SchoolException( "Vertex {0} already exists", vertex );
             }
             _vertices.Add( vertex );
+            return vertex;
+        }
+
+        public IVertex NewVertex( object name )
+        {
+            var v = new Vertex( name );
+            _vertices.Add( v );
+            return v;
         }
 
         bool IGraph.Linked( IVertex a, IVertex b )

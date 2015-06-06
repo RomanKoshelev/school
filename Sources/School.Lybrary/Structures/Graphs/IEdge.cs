@@ -9,5 +9,6 @@ namespace School.Lybrary.Structures.Graphs
         IVertex Vertex1 { get; set; }
         IVertex Vertex2 { get; set; }
         bool Contains( IVertex v );
+        IVertex Neighbor( Vertex vertex );
     }
 }

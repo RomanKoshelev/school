@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace School.Lybrary.Structures.Graphs
 {
-    public abstract class WeightedGraph : Graph, IWeightedGraph
+    public class WeightedGraph : Graph, IWeightedGraph
     {
         #region IWeightedGraph
 

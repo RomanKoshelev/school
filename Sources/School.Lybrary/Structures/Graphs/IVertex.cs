@@ -8,6 +8,8 @@ namespace School.Lybrary.Structures.Graphs
 {
     public interface IVertex
     {
-        IEnumerable< IVertex > Neighbors { get; set; }
+        IList< IVertex > Neighbors { get; set; }
+        string Name { get; set; }
+        void AddEdge( IEdge edge );
     }
 }

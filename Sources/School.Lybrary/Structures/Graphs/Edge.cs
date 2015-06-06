@@ -12,6 +12,8 @@ namespace School.Lybrary.Structures.Graphs
         {
             IEdge.Vertex1 = vertex1;
             IEdge.Vertex2 = vertex2;
+            vertex1.AddEdge( this );
+            vertex2.AddEdge( this );
         }
 
         public IEdge IEdge
@@ -30,6 +32,15 @@ namespace School.Lybrary.Structures.Graphs
         bool IEdge.Contains( IVertex v )
         {
             return IEdge.Vertex1 == v || IEdge.Vertex2 == v;
+        }
+
+        IVertex IEdge.Neighbor( Vertex vertex )
+        {
+            return vertex == IEdge.Vertex1
+                ? IEdge.Vertex2
+                : vertex == IEdge.Vertex2
+                    ? IEdge.Vertex1
+                    : null;
         }
 
         #endregion
