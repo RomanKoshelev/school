@@ -49,6 +49,21 @@ namespace School.Nunit.Bases
             return graph;
         }
 
+        protected IWeightedGraph CreateRandomWeightedGraph( int num, double linkageThreshold, int minWeight, int maxWeight )
+        {
+            var graph = CreateWeightedGraph( num );
+            MakeGraphRandomLinked( graph, linkageThreshold );
+            MakeRandomWeighted( graph, minWeight, maxWeight );
+            return graph;
+        }
+
+        protected IWeightedGraph CreateCompleteWeightedGraph( int num, int minWeight, int maxWeight )
+        {
+            var graph = CreateWeightedGraph( num );
+            MakeGraphComplete( graph );
+            MakeRandomWeighted( graph, minWeight, maxWeight );
+            return graph;
+        }
         #endregion
 
 
@@ -117,7 +132,7 @@ namespace School.Nunit.Bases
             foreach( var v in graph.Vertices ) {
                 Console.WriteLine();
                 foreach( var n in v.Neighbors ) {
-                    Console.Write( "{0}({2}){1} ", v, n, graph.GetWeight( v, n ) );
+                    Console.Write( "{0}-{1}:{2} ", v, n, graph.GetWeight( v, n ) );
                 }
             }
         }

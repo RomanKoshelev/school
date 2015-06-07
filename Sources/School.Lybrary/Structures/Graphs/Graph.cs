@@ -51,6 +51,11 @@ namespace School.Lybrary.Structures.Graphs
             return _edges.First( e => e.DoesConnect( a, b ) );
         }
 
+        IVertex IGraph.GetVertex( string name )
+        {
+            return _vertices.First( v => v.Name == name );
+        }
+
         #endregion
 
 

@@ -2,35 +2,40 @@
 // School.Lybrary
 // DijkstraPathFinder.cs
 
+using System.Collections.Generic;
 using System.Linq;
 using School.Lybrary.Structures.Graphs;
 using School.Lybrary.Utils;
 
 namespace School.Lybrary.Algorithms.PathFinder
 {
-    public class DijkstraPathFinder : DijkstraPathFinderBase
+    // ReSharper disable All
+    public class DijkstraPathFinder : DijkstraPathFinderBase, IPathFinder
     {
-        public void FindPathes( IWeightedGraph graph, IVertex source )
+        public IList< IVertex > FindPath( IWeightedGraph graph, IVertex start, IVertex finish )
         {
-            Dist[ source ] = 0;
-            Path[ source ] = EmptyPath();
+            Init();
+            FindPathes( graph, start );
+            return Path[ finish ];
+        }
 
-            foreach( var vertex in graph.Vertices.Except( source ) ) {
-                Dist[ vertex ] = Infinity;
+        private void FindPathes( IWeightedGraph graph, IVertex source )
+        {
+            foreach( var vertex in graph.Vertices ) {
+                Dist[ vertex ] = vertex == source ? 0 : Infinity;
                 Path[ vertex ] = EmptyPath();
                 Qeue.Add( vertex );
             }
 
             while( Qeue.NotEmpty() ) {
-                var vertex = Qeue.SelectHasMin( Dist );
-                Qeue.Remove( vertex );
-                foreach( var neighbor in vertex.Neighbors.Intersect( Qeue ) ) {
-                    var newDist = Dist[ vertex ] + graph.GetWeight( vertex, neighbor );
-                    if( newDist >= Dist[ neighbor ] ) {
-                        continue;
+                var current = Qeue.SelectHasMin( Dist );
+                Qeue.Remove( current );
+                foreach( var neighbor in current.Neighbors.Intersect( Qeue ) ) {
+                    var distNeighbor = Dist[ current ] + graph.GetWeight( current, neighbor );
+                    if( distNeighbor < Dist[ neighbor ] ) {
+                        Dist[ neighbor ] = distNeighbor;
+                        Path[ neighbor ] = Path[ current ].With( neighbor );
                     }
-                    Dist[ neighbor ] = newDist;
-                    Path[ neighbor ] = Path[ vertex ].With( neighbor );
                 }
             }
         }

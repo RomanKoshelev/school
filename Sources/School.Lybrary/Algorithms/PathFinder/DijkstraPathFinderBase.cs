@@ -13,7 +13,7 @@ namespace School.Lybrary.Algorithms.PathFinder
     {
         #region Consts
 
-        protected const int Infinity = Int32.MaxValue;
+        protected const int Infinity = 100000;//Int32.MaxValue/2;
 
         #endregion
 
@@ -32,6 +32,12 @@ namespace School.Lybrary.Algorithms.PathFinder
         protected IList< IVertex > EmptyPath()
         {
             return new List< IVertex >();
+        }
+        protected void Init()
+        {
+            Dist.Clear();
+            Path.Clear();
+            Qeue.Clear();
         }
 
         #endregion

@@ -26,10 +26,10 @@ namespace School.Lybrary.Structures.Graphs
 
         int IWeightedGraph.GetWeight( IEdge edge )
         {
-            if( !_weights.ContainsKey( edge ) ) {
-                return 0;
-            }
-            return _weights[ edge ];
+            return
+                IsWeightAssigned( edge )
+                    ? _weights[ edge ]
+                    : 0;
         }
 
         void IWeightedGraph.SetWeight( IVertex a, IVertex b, int weight )
@@ -40,10 +40,10 @@ namespace School.Lybrary.Structures.Graphs
 
         void IWeightedGraph.SetWeight( IEdge edge, int weight )
         {
-            if( !_weights.ContainsKey( edge ) ) {
-                _weights.Add( edge, weight );
-            } else {
+            if( IsWeightAssigned( edge ) ) {
                 _weights[ edge ] = weight;
+            } else {
+                _weights.Add( edge, weight );
             }
         }
 
@@ -53,6 +53,16 @@ namespace School.Lybrary.Structures.Graphs
         #region Fields
 
         private readonly Dictionary< IEdge, int > _weights = new Dictionary< IEdge, int >();
+
+        #endregion
+
+
+        #region Utils
+
+        private bool IsWeightAssigned( IEdge edge )
+        {
+            return _weights.ContainsKey( edge );
+        }
 
         #endregion
     }

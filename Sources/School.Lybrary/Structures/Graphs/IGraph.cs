@@ -14,5 +14,6 @@ namespace School.Lybrary.Structures.Graphs
         IEdge GetEdge( IVertex a, IVertex b );
         void NewVertex( object name );
         bool Linked( IVertex a, IVertex b );
+        IVertex GetVertex( string name );
     }
 }

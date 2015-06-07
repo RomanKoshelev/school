@@ -26,8 +26,7 @@ namespace School.Lybrary.Utils
 
         public static T SelectHasMin<T>( this IEnumerable< T > set, IDictionary< T, int > value )
         {
-            return value.Where( p => set.Contains( p.Key ) ).Min().Key;
-            ;
+            return set.Where( value.ContainsKey ).OrderBy( i => value[ i ] ).First();
         }
     }
 }
