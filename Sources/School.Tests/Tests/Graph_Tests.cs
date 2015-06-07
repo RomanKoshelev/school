@@ -5,7 +5,6 @@
 using System;
 using NUnit.Framework;
 using School.Lybrary.Algorithms.PathFinder;
-using School.Lybrary.Structures.Graphs;
 using School.Nunit.Bases;
 
 namespace School.Nunit.Tests
@@ -41,28 +40,30 @@ namespace School.Nunit.Tests
         [Test]
         public void Dijkstra_PathFinder()
         {
-            var graph = CreateCompleteWeightedGraph( num : 9, minWeight : 1, maxWeight : 9 );
+            var graph = CreateRandomWeightedGraph( num : 10, linkageThreshold : 0.12, minWeight : 1, maxWeight : 10 );
             IPathFinder pathFinder = new DijkstraPathFinder();
 
             var start = graph.GetVertex( "0" );
             var finish = graph.GetVertex( "1" );
-            graph.SetWeight( start, finish, 99 );
+            if( graph.Linked( start, finish ) ) {
+                graph.SetWeight( start, finish, 99 );
+            }
 
             var path = pathFinder.FindPath( graph, start, finish );
 
             PrintWeights( graph );
 
-            Console.WriteLine("\n");
+            Console.WriteLine( "\n" );
             Console.Write( "path: [{0}", start );
-            foreach( var step in path ) {
-                Console.Write( "-{0}", step );
+            if( path.Count > 0 ) {
+                foreach( var step in path ) {
+                    Console.Write( "-{0}", step );
+                }
+            } else {
+                Console.Write( " not found {0}", finish );
             }
+
             Console.Write( "]" );
-
-            Verify_Complete_Graph( graph );
-            Verify_Weighted_Graph( graph );
-
-            Assert.Greater( path.Count, 0, "path.Count");
         }
     }
 }
