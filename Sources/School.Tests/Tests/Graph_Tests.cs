@@ -47,6 +47,7 @@ namespace School.Nunit.Tests
 
             var start = graph.GetVertex( "0" );
             var finish = graph.GetVertex( "1" );
+
             if( graph.Linked( start, finish ) ) {
                 graph.SetWeight( start, finish, 99 );
             }
