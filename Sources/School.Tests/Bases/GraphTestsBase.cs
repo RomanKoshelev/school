@@ -17,11 +17,21 @@ namespace School.Nunit.Bases
         protected static IGraph CreateGraph( int num )
         {
             IGraph graph = new Graph();
+            AddVertecies( graph, num );
+            return graph;
+        }
 
+        private static void AddVertecies( IGraph graph, int num )
+        {
             for( var i = 0; i < num; i++ ) {
                 graph.NewVertex( i );
             }
+        }
 
+        protected IWeightedGraph CreateWeightedGraph( int num )
+        {
+            var graph = new WeightedGraph();
+            AddVertecies( graph, num );
             return graph;
         }
 
@@ -69,6 +79,14 @@ namespace School.Nunit.Bases
             }
         }
 
+        protected void MakeRandomWeighted( IWeightedGraph graph, int minWeight, int maxWeight )
+        {
+            var rand = new Randomizer();
+            foreach( var e in graph.Edges ) {
+                graph.SetWeight( e, rand.Next( minWeight, maxWeight + 1 ) );
+            }
+        }
+
         #endregion
 
 
@@ -76,10 +94,30 @@ namespace School.Nunit.Bases
 
         protected static void PrintEdges( IGraph graph )
         {
+            Console.WriteLine();
+            foreach( var e in graph.Edges ) {
+                Console.WriteLine( "{0}-{1} ", e.Vertex1, e.Vertex2 );
+            }
+        }
+
+        protected static void PrintVertecies( IGraph graph )
+        {
+            Console.WriteLine();
             foreach( var v in graph.Vertices ) {
                 Console.WriteLine();
                 foreach( var n in v.Neighbors ) {
                     Console.Write( "{0}-{1} ", v, n );
+                }
+            }
+        }
+
+        protected void PrintWeights( IWeightedGraph graph )
+        {
+            Console.WriteLine();
+            foreach( var v in graph.Vertices ) {
+                Console.WriteLine();
+                foreach( var n in v.Neighbors ) {
+                    Console.Write( "{0}({2}){1} ", v, n, graph.GetWeight( v, n ) );
                 }
             }
         }
@@ -96,14 +134,33 @@ namespace School.Nunit.Bases
                 neighborNum += vertex.Neighbors.Count;
             }
             Assert.AreEqual( graph.Edges.Count, neighborNum/2, "neighborNum/2" );
+
+            foreach( var edge in graph.Edges ) {
+                Assert.AreNotEqual( edge.Vertex1, edge.Vertex2, "edge.Vertex1, edge.Vertex2" );
+            }
         }
 
         protected static void Verify_Complete_Graph( IGraph graph )
         {
+            Verify_Graph( graph );
             var num = graph.Vertices.Count;
             Assert.AreEqual( num*( num - 1 )/2, graph.Edges.Count, "graph.Edges.Count" );
             foreach( var vertex in graph.Vertices ) {
                 Assert.AreEqual( num - 1, vertex.Neighbors.Count, "vertex.Neighbors.Count" );
+            }
+        }
+
+        protected void Verify_Weighted_Graph( IWeightedGraph graph )
+        {
+            Verify_Graph( graph );
+            foreach( var vertex in graph.Vertices ) {
+                Assert.AreEqual( 0, graph.GetWeight( vertex, vertex ), vertex.ToString() );
+            }
+
+            foreach( var v in graph.Vertices ) {
+                foreach( var n in v.Neighbors ) {
+                    Assert.Greater( graph.GetWeight( v, n ), 0, "vertex.Neighbors weight" );
+                }
             }
         }
 

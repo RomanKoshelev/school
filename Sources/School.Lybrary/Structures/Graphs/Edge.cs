@@ -29,11 +29,6 @@ namespace School.Lybrary.Structures.Graphs
         IVertex IEdge.Vertex1 { get; set; }
         IVertex IEdge.Vertex2 { get; set; }
 
-        bool IEdge.Contains( IVertex v )
-        {
-            return IEdge.Vertex1 == v || IEdge.Vertex2 == v;
-        }
-
         IVertex IEdge.Neighbor( Vertex vertex )
         {
             return vertex == IEdge.Vertex1
@@ -41,6 +36,11 @@ namespace School.Lybrary.Structures.Graphs
                 : vertex == IEdge.Vertex2
                     ? IEdge.Vertex1
                     : null;
+        }
+
+        bool IEdge.DoesConnect( IVertex a, IVertex b )
+        {
+            return IEdge.Vertex1 == a && IEdge.Vertex2 == b || IEdge.Vertex1 == b && IEdge.Vertex2 == a;
         }
 
         #endregion

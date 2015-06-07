@@ -12,8 +12,7 @@ namespace School.Lybrary.Structures.Graphs
         IList< IEdge > Edges { get; }
         void AddEdge( IVertex a, IVertex b );
         IEdge GetEdge( IVertex a, IVertex b );
-        IVertex AddVertex( IVertex vertex );
-        IVertex NewVertex( object name );
+        void NewVertex( object name );
         bool Linked( IVertex a, IVertex b );
     }
 }

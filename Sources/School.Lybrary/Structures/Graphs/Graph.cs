@@ -2,7 +2,6 @@
 // School.Lybrary
 // Graph.cs
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using School.Lybrary.Utils;
@@ -13,7 +12,7 @@ namespace School.Lybrary.Structures.Graphs
     {
         #region IGraph
 
-        protected IGraph IGraph
+        public IGraph IGraph
         {
             get { return this; }
         }
@@ -36,30 +35,20 @@ namespace School.Lybrary.Structures.Graphs
             _edges.Add( new Edge( a, b ) );
         }
 
-        IVertex IGraph.AddVertex( IVertex vertex )
-        {
-            if( _vertices.Contains( vertex ) ) {
-                throw new SchoolException( "Vertex {0} already exists", vertex );
-            }
-            _vertices.Add( vertex );
-            return vertex;
-        }
-
-        public IVertex NewVertex( object name )
+        void IGraph.NewVertex( object name )
         {
             var v = new Vertex( name );
             _vertices.Add( v );
-            return v;
         }
 
         bool IGraph.Linked( IVertex a, IVertex b )
         {
-            return _edges.Any( v => v.Contains( a ) && v.Contains( b ) );
+            return _edges.Any( e => e.DoesConnect( a, b ) );
         }
 
         IEdge IGraph.GetEdge( IVertex a, IVertex b )
         {
-            return _edges.First( v => v.Contains( a ) && v.Contains( b ) );
+            return _edges.First( e => e.DoesConnect( a, b ) );
         }
 
         #endregion

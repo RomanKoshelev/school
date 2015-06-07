@@ -8,5 +8,7 @@ namespace School.Lybrary.Structures.Graphs
     {
         int GetWeight( IVertex a, IVertex b );
         void SetWeight( IVertex a, IVertex b, int w );
+        void SetWeight( IEdge edge, int weight );
+        int GetWeight( IEdge edge );
     }
 }
