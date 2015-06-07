@@ -3,8 +3,10 @@
 // Graph_Tests.cs
 
 using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 using School.Lybrary.Algorithms.PathFinder;
+using School.Lybrary.Structures.Graphs;
 using School.Nunit.Bases;
 
 namespace School.Nunit.Tests
@@ -52,18 +54,7 @@ namespace School.Nunit.Tests
             var path = pathFinder.FindPath( graph, start, finish );
 
             PrintWeights( graph );
-
-            Console.WriteLine( "\n" );
-            Console.Write( "path: [{0}", start );
-            if( path.Count > 0 ) {
-                foreach( var step in path ) {
-                    Console.Write( "-{0}", step );
-                }
-            } else {
-                Console.Write( " not found {0}", finish );
-            }
-
-            Console.Write( "]" );
+            PrintPath( graph, path, start, finish );
         }
     }
 }

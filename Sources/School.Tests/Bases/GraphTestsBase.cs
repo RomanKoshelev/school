@@ -3,6 +3,7 @@
 // GraphTestsBase.cs
 
 using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 using School.Lybrary.Structures.Graphs;
 using School.Lybrary.Utils;
@@ -64,6 +65,7 @@ namespace School.Nunit.Bases
             MakeRandomWeighted( graph, minWeight, maxWeight );
             return graph;
         }
+
         #endregion
 
 
@@ -135,6 +137,28 @@ namespace School.Nunit.Bases
                     Console.Write( "{0}-{1}:{2} ", v, n, graph.GetWeight( v, n ) );
                 }
             }
+        }
+
+        protected static void PrintPath( IWeightedGraph graph, IList< IVertex > path, IVertex start, IVertex finish )
+        {
+            Console.WriteLine( "\n" );
+            Console.Write( "path: [{0}", start );
+            var prev = start;
+            var dist = 0;
+            if( path.Count > 0 ) {
+                foreach( var step in path ) {
+                    Console.Write( "-{0}", step );
+                    dist += graph.GetWeight( prev, step );
+                    prev = step;
+                }
+            } else {
+                Console.Write( " not found {0}", finish );
+            }
+            Console.Write( "]" );
+            if( dist > 0 ) {
+                Console.Write( ":{0}", dist );
+            }
+            Console.WriteLine();
         }
 
         #endregion
