@@ -29,10 +29,16 @@ void bubble_sort( T& arr )
 template< typename T >
 void print(T& arr)
 {
+	for (auto i : arr)
+	{
+		std::cout << i << " ";
+	}
+	/*
 	for each (auto i in arr)
 	{
 		std::cout << i << " ";
 	}
+	*/
 	//std::for_each(arr.begin(), arr.end(), [](T::value_type i){ std::cout << i << " "; });
 	std::cout << "\n";
 }
