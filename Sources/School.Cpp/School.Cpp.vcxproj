@@ -84,8 +84,13 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="bind_function.cpp" />
     <ClCompile Include="bubble_sort.cpp" />
+    <ClCompile Include="initializerr_list.cpp" />
+    <ClCompile Include="lambda_generator.cpp" />
+    <ClCompile Include="lambda_this_capture.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="private_destructor.cpp" />
     <ClCompile Include="static.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

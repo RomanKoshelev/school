@@ -47,7 +47,7 @@ void bubble_sort_test()
 {
 	std::cout << "bubble_sort_test\n\n";
 
-	std::array<int,10> aint {9,3,2,4,5,6,8,7,1,0};
+	std::array<int,10> aint = {9,3,2,4,5,6,8,7,1,0};
 		print(aint); 
 		bubble_sort(aint); 
 		print(aint);
@@ -55,7 +55,7 @@ void bubble_sort_test()
 		_ASSERTE(std::is_sorted(aint.begin(), aint.end()));
 			
 
-	std::array<std::string, 10> astr{ "bc", "xx", "ca", "cb", "cc", "aa", "ab", "ac", "ba", "bb" };
+	std::array<std::string, 10> astr = { "bc", "xx", "ca", "cb", "cc", "aa", "ab", "ac", "ba", "bb" };
 		print(astr);
 		bubble_sort(astr);
 		print(astr);
