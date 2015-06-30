@@ -129,7 +129,7 @@ private:
 		
 		std::cout << "radix_sort...";
 		time_t radix_beg = time(0);
-		radix_sort(randarr);
+		auto sortedarr = radix_sort(randarr);
 		time_t radix_end = time(0);
 		time_t radix_time = radix_end - radix_beg;
 		std::cout << std::endl << "radix_time: " << radix_time << std::endl;
