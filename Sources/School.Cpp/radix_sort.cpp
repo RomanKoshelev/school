@@ -132,6 +132,7 @@ private:
 		auto sortedarr = radix_sort(randarr);
 		time_t radix_end = time(0);
 		time_t radix_time = radix_end - radix_beg;
+		assert_is_sorted(sortedarr);
 		std::cout << std::endl << "radix_time: " << radix_time << std::endl;
 
 		std::cout << "quick_sort...";
@@ -141,7 +142,6 @@ private:
 		});
 		time_t qsort_end = time(0);
 		time_t qsort_time = qsort_end - qsort_beg;
-
 		assert_is_sorted(randarr);
 		std::cout << std::endl << "qsort_time: " << qsort_time << std::endl;
 	}
