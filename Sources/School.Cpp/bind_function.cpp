@@ -30,4 +30,4 @@ struct  bind_function
 	}
 };
 
-bind_function test;
+//bind_function test;

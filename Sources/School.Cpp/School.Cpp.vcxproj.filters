@@ -46,5 +46,8 @@
     <ClCompile Include="bind_function.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="radix_sort.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
