@@ -1,0 +1,414 @@
+/*
+________________________________________________________________________________
+[]                                                                            []
+[] This is a part of the PROJECT: 'ObjBase'												[]
+[] Copyright (C) 1998 W:Brain Software Inc.                                   []
+[] All rights reserved.                                                       []
+[] __________________________________________________________________________ []
+[]                                                                            []
+[] Name:            main.h																		[]
+[] Date:            01/22/99                                                  []
+[] Author:          Roman V. Koshelev														[]
+[] Description:     Основной заголовочный файл. 										[]
+[]						  Все остальные подключаются через него							[]
+[]____________________________________________________________________________[]
+*/
+#ifndef MAIN_H
+#define MAIN_H
+
+#define ifdelete(p) {if(p) delete p; p=0;}
+
+#include "config.h"
+
+#define NOTHING
+
+//----------------------------------------------------------------------------[] 
+#ifdef USES_URL_h
+	#define USES_string_h
+#endif
+
+#ifdef USES_UserAgent_h
+	#define USES_string_h
+#endif
+
+#ifdef Lay_ObjController_h
+	#define Lay_Stubs_H
+#endif
+
+#ifdef Lay_Stubs_H
+	#define USES_key_arr_h
+	#define USES_File_h
+	#define USES_ObjDriver_h
+#endif
+
+#ifdef USES_ObjDriver_h
+	#define USES_STATIC_FILE_ID_h
+	#define USES_File_h
+#endif
+
+#ifdef USES_key_arr_h
+	#define USES_string_h
+	#define USES_AVTree_h
+#endif
+
+#ifdef USES_EventMonitor_h
+	#define USES_string_h
+	#define USES_AVTree_h
+#endif
+
+#ifdef USES_OB_System_h
+	#define USES_OBServer_Interface_h
+	#define USES_ObjCache_h
+#endif
+
+#ifdef USES_ObjCache_h
+	#define USES_OBD_h
+#endif
+
+#ifdef USES_OBServer_Interface_h
+	#define USES_string_h
+#endif
+
+#ifdef USES_string_h
+	#define USES_Ptr_h
+#endif
+
+#ifdef USES_ArgResCache_h
+	#define USES_Ptr_h
+	#define USES_AVTree_h
+	#define USES_OB_System_h
+#endif
+
+#ifdef USES_File_h
+	#define USES_FileDriver_h
+	#define USES_Ptr_h
+	#define USES_string_h
+#endif
+
+#ifdef USES_key_arr_h
+	#define USES_AVTree_h
+#endif
+
+
+#ifdef USES_ObjCache_h
+	#define USES_stopwatch_h
+#endif
+//----------------------------------------------------------------------------[] 
+
+
+
+
+//----------------------------------------------------------------------------[] 
+#ifdef USES_ALL_H
+	#define USES_STATIC_FILE_ID_h
+	#define USES_MemoryManager_h
+	#define USES_OB_System_h
+	#define USES_Ptr_h
+	#define USES_string_h
+	#define USES_AVTree_h
+	#define USES_EventMonitor_h
+	#define USES_FileDriver_h
+	#define USES_File_h
+	#define USES_key_arr_h
+	#define USES_ObjDriver_h
+	#define USES_ArgResCache_h
+	#define USES_OBServer_Interface_h
+	#define USES_URL_h
+	#define USES_UserAgent_h
+	#define USES_ObjCache_h
+	#define USES_OBD_h
+	#define USES_stopwatch_h
+#endif
+//----------------------------------------------------------------------------[] 
+
+
+
+//______________________________________________________________________________
+//                                                                            []
+//` Алиасы основных глобальных объектов													[]
+//																										[]
+#define theCClearFof								(*pCClearFof)
+#define theServerDebug							(*pServerDebug)
+#define theEventMonitor							(*pEventMonitor)
+#define theFileDriver							(*pFileDriver)
+#define theObjDriver								(*pObjDriver)
+#define theOBServer_ERROR_DESCRIPTION_ARR	(*pOBServer_ERROR_DESCRIPTION_ARR)
+#define theArgResCache							(*pArgResCache)
+//____________________________________________________________________________[]
+
+
+
+
+
+
+//______________________________________________________________________________
+//                                                                            []
+//` Стандартные заголовочные файлы															[]
+//                                                                            []
+#include <limits.h>
+#include <stdio.h>
+#include <time.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <errno.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <stdarg.h>
+#include <math.h>
+
+
+#define	MAX_OBJECT_ID			((identifier)0xFFFFFFFF)
+#define	NA							MAX_OBJECT_ID
+#define	UNKNOWN					MAX_OBJECT_ID
+
+typedef unsigned long identifier;
+
+//----------------------------------------------------------------------------[] 
+// Предполагается, что размер этой структуры 12 байт.
+struct guid 
+{
+	identifier cl;		//	Класс объекта
+	identifier id;		//	Идентификатор объекта
+	identifier rn;		// Случайное число, чтобы не спутать объекты, попавшие после смерти старого объекта на его id.
+	void Init  ()															{cl=NA; id=NA; rn=NA;}
+	guid ()																	{Init();}
+	guid (const guid& from)												{cl=from.cl; id=from.id; rn=from.rn;}
+	guid (identifier a_cl, identifier a_id, identifier a_rn)	{cl=a_cl; id=a_id; rn=a_rn;}
+	guid (char C)															{(void)C; Init();} // Этот конструктор можно вызывать только для нулевой инициализации: static const FT defval=FT((char)0);
+	guid& operator=  (const guid& from)								{cl=from.cl; id=from.id; rn=from.rn; return *this;}
+
+	bool operator == (const guid& to) const	{return (cl==to.cl) && (id==to.id) && (rn==to.rn);}
+	bool operator <  (const guid& to) const	{return (cl< to.cl) || (cl==to.cl  && (id< to.id || id==to.id && rn<to.rn));}
+	bool operator != (const guid& to) const	{return !(to==*this);}
+	bool operator <= (const guid& to) const	{return *this<to || *this==to;}
+	bool operator >  (const guid& to) const	{return to <  *this;}
+	bool operator >= (const guid& to) const	{return to <= *this;}
+}; 
+//----------------------------------------------------------------------------[] 
+
+
+//----------------------------------------------------------------------------[] 
+#define DECLARE_COPY_CONSTRUCTORS_BEGIN(cl)												\
+	cl (const cl& from)																			\
+	{																									\
+		CopyFrom (from);																			\
+	}																									\
+	cl& operator = (const cl& from)															\
+	{																									\
+		return CopyFrom (from);																	\
+	}																									\
+	cl& CopyFrom (const cl& from)																\
+	{
+//----------------------------------------------------------------------------[] 
+#define DECLARE_COPY_CONSTRUCTORS_END														\
+		return *this;																				\
+	}
+//----------------------------------------------------------------------------[] 
+#define CC_COPY(fld)																				\
+	fld=from.fld;
+//----------------------------------------------------------------------------[] 
+
+
+#ifdef _DEBUG
+	#include "MemoryManager.h"
+#endif
+
+#ifdef USES_MemoryManager_h
+	#include "MemoryManager.h"
+#endif
+
+#ifdef USES_OB_System_h
+	#include "OB_System.h"
+#endif
+
+#ifdef WIN32
+	#include <io.h>
+	#include <windows.h>
+	#include <process.h>
+	#include <conio.h>
+#else
+	#include <unistd.h>
+#endif
+
+#ifndef WIN32
+	#define rand random
+	#define srand srandom
+	typedef unsigned int DWORD;
+#endif
+
+#ifdef WIN32
+	#pragma warning(disable:4786)
+	#pragma warning(disable:4700)
+	#pragma warning(disable:4284)
+#endif
+
+
+#ifdef WIN32
+	#define bzero(a,b) ZeroMemory(a,b)
+#endif
+
+#ifdef WIN32
+	#define snprintf _snprintf
+	#define vsnprintf _vsnprintf
+#endif
+
+#ifndef BOOL
+	#define BOOL bool
+#endif
+#ifndef TRUE
+	#define TRUE true
+#endif
+#ifndef FALSE
+	#define FALSE false
+#endif
+
+#ifndef BYTE
+	typedef unsigned char BYTE;
+#endif
+
+typedef bool BIT;
+
+#ifndef byte
+	typedef unsigned char byte;
+#endif
+
+typedef bool bit;
+
+#ifndef max
+	#define max(x,y)	( ((x)>(y)) ? (x) : (y) )
+#endif
+#ifndef min
+	#define min(x,y)	( ((x)<(y)) ? (x) : (y) )
+#endif
+
+
+#define VAL_IN_RANGE(v,m1,m2)  (((m1)<=(v)) && ((v)<=(m2)))
+#define VAL_APPROX_EQ(v1,v2,d) VAL_IN_RANGE(v1,v2-d,v2+d)
+
+typedef byte * pbyte;
+
+//+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-[]
+#include "ServerDebug.h"
+//+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-[]
+
+//____________________________________________________________________________[]
+
+
+
+//______________________________________________________________________________
+//                                                                            []
+// Заголовочные файлы проекта ObjBase														[]
+//                                                                            []
+
+#ifdef USES_STATIC_FILE_ID_h
+	#include "STATIC_FILE_ID.h"
+#endif
+
+#ifdef USES_Ptr_h
+	#include "Ptr.h"
+#endif
+
+#ifdef USES_string_h
+	#include "string.h"
+#endif
+
+#ifdef USES_AVTree_h
+	#include "AVTree.h"
+#endif
+
+#ifdef USES_EventMonitor_h
+	#include "EventMonitor.h"
+#endif
+
+#ifdef USES_FileDriver_h
+	#include "FileDriver.h"
+#endif
+
+#ifdef USES_File_h
+	#include "File.h"
+#endif
+
+#ifdef USES_key_arr_h
+	#include "key_arr.h"
+#endif
+
+#ifdef USES_ObjDriver_h
+	#include "ObjDriver.h"
+#endif
+
+#ifdef USES_Ptr_h
+	typedef CPtr<identifier>			identifier_arr;
+	typedef CPtr<guid>					guid_arr;
+	typedef CPtr<int>						int_arr;
+	typedef CPtr<byte>					byte_arr;
+	typedef CPtr<char>					char_arr;
+	typedef CPtr<bool>					bool_arr;
+	typedef CPtr<float>					float_arr;
+	typedef CPtr<double>					double_arr;
+	typedef CPtr<string>					string_arr;
+	typedef CPtr<string_arr>			string_arr_arr;
+	typedef CPtr<time_t>					time_t_arr;
+	typedef CPtr<identifier_arr>		identifier_arr_arr;
+	typedef CPtr<identifier_arr_arr>	identifier_arr_arr_arr;
+#endif
+
+#ifdef USES_ArgResCache_h
+	#include "ArgResCache.h"
+	extern IT_AVTree_ARG_RES_CACHE				*	pArgResCache;
+#endif
+
+#ifdef USES_OBServer_Interface_h
+	#include "OBServer_Interface.h"
+#endif
+
+#ifdef USES_URL_h
+	#include "URL.h"
+#endif
+
+#ifdef USES_UserAgent_h
+	#include "UserAgent.h"
+#endif
+
+#ifdef USES_PicklockPassword_h
+	#include "PicklockPassword.h"
+#endif
+
+#ifdef USES_stopwatch_h
+	#include "stopwatch.h"
+#endif
+
+#ifdef USES_OBD_h
+	#include "OBD.h"
+#endif
+
+#ifdef USES_ObjCache_h
+	#include "ObjCache.h"
+#endif
+
+void RunTest (void);
+
+// Устанавливается в time(NULL) перед 
+// каждым вызовом прикладных функций.
+extern	time_t	time_0;
+
+extern	bool		CLEAR_FILE_SYSTEM_BEFORE_START;
+extern	char *	FILE_SYSTEM_PATH_AND_NAME;
+extern	char *	THIS_PROJECT_PREFIX;
+
+//____________________________________________________________________________[]
+
+
+
+
+
+#endif
+/*______________________________________________________________________________
+[]                                                                            []
+[]                                                                            []
+[] END OF FILE                                                                []
+[]                                                                            []
+[]____________________________________________________________________________[]
+*/
+

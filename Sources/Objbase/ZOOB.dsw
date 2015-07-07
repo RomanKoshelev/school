@@ -1,0 +1,97 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "Client"=.\CLIENT\Client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/Client", OJAAAAAA
+    .\client
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Intertek"=.\server\applications\intertek\Intertek.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/Intertek", BAAAAAAA
+    .\server\applications\intertek
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Kernel"=.\server\kernel\Kernel.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/Kernel", XBAAAAAA
+    .\server\kernel
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Modules"=.\server\modules\Modules.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/Modules", YDAAAAAA
+    .\server\modules
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "UTILS"=.\SERVER\UTILS\UTILS.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/UTILS", MJAAAAAA
+    .\server\utils
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+
