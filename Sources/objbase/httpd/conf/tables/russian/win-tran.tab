@@ -1,0 +1,79 @@
+# Line with '#' at the begin is comment
+# table file may contain number of line as you wana
+# first - code of symbol, second translate code of symbol
+# codes may be in three forms: decimal, char and hex
+# examples:
+# 192 225
+# 0x81 226
+# 226 0x81
+# 0x90 0xfe
+# a b
+# patch for Russia by Dm.Kryukov (dvk@stack.serpukhov.su)
+# Transliteration support by Vadim Kolontsov (vadim@tversu.ac.ru)
+#
+À A
+Á B
+Â V
+Ã G
+Ä D
+Å E
+¨ E
+Æ Zh
+Ç Z
+È I
+É '
+Ê K
+Ë L
+Ì M
+Í N
+Î O
+Ï P
+Ð R
+Ñ S
+Ò T
+Ó U
+Ô F
+Õ H
+Ö C
+× Ch
+Ù Sh
+Ø Sh
+Ü '
+Û Y
+Ú '
+Ý E
+Þ Yu
+ß Ya
+à a
+á b
+â v
+ã g
+ä d
+å e
+¨ e
+æ zh
+ç z
+è i
+é i
+ê k
+ë l
+ì m
+í n
+î o
+ï p
+ð r
+ñ s
+ò t
+ó u
+ô f
+õ h
+ö c
+÷ ch
+ø sh
+ù sh
+ü '
+û y
+ú '
+ý e
+þ yu
+ÿ ya

@@ -1,0 +1,7 @@
+filename = test.log
+newfilename = ${filename}`date "+%m%d%-%H%M"`
+mv $filename $newfilename
+#if [ -f $newfilename ]
+#then
+#	tar rzvf logarh.tgz $newfilename
+#fi

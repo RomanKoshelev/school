@@ -1,0 +1,133 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "BX"=..\BX\BX.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/BX", BIAAAAAA
+    ..\bx
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "OBT"=..\obt\OBT.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/OBT", XLAAAAAA
+    ..\obt
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Obsolete"=..\..\Obsolete\Obsolete.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/Obsolete", JBBAAAAA
+    ..\..\obsolete
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "bcc"=..\bcc\bcc.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/bcc", NGAAAAAA
+    ..\bcc
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "doc"=..\..\doc\doc.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/doc", DSAAAAAA
+    ..\..\doc
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "mod_counter"=..\mod_counter\mod_counter.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/mod_counter", KKAAAAAA
+    ..\mod_counter
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "public_html"=..\..\public_html\public_html.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/public_html", QNAAAAAA
+    ..\..\public_html
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+    begin source code control
+    "$/obi", LGAAAAAA
+    .
+    end source code control
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

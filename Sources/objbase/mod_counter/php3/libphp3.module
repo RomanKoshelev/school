@@ -1,0 +1,8 @@
+Name: php3_module
+ConfigStart
+	RULE_WANTHSREGEX=yes
+       LDFLAGS_SHLIB=" -rpath /usr/local/lib/mysql $LDFLAGS_SHLIB"
+       LIBS=" -Wl,-rpath,/usr/local/lib/mysql  -lgd -L/usr/local/lib/mysql -lmysqlclient -Lmodules/php3 -L../modules/php3 -L../../modules/php3 -lmodphp3                        -lgd -lm -ldl  -lresolv $LIBS "
+	RULE_HIDE=yes
+ConfigEnd
+

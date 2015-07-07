@@ -1,0 +1,42 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: BX - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\TEMP\RSP204.tmp" with contents
+[
+/nologo /MLd /W3 /WX /Gm /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"Debug/BX.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /c 
+"W:\TSMC\bx\BX_Constructor.cpp"
+]
+Creating command line "cl.exe @C:\TEMP\RSP204.tmp" 
+Creating temporary file "C:\TEMP\RSP205.tmp" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:yes /pdb:"Debug/BX.pdb" /debug /machine:I386 /out:"Debug/BX.exe" /pdbtype:sept 
+.\Debug\ObjDriver.obj
+.\Debug\EventMonitor.obj
+.\Debug\ServerDebug.obj
+.\Debug\FileDriver.obj
+.\Debug\Lay_ObjData.obj
+.\Debug\BX.obj
+.\Debug\BX_Constructor.obj
+.\Debug\BX_EnumObjects.obj
+.\Debug\BX_Events.obj
+.\Debug\BX_Main.obj
+.\Debug\BX_Test.obj
+]
+Creating command line "link.exe @C:\TEMP\RSP205.tmp"
+<h3>Output Window</h3>
+Compiling...
+BX_Constructor.cpp
+Linking...
+
+
+
+<h3>Results</h3>
+BX.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>
