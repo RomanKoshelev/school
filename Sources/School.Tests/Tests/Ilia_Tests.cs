@@ -4,12 +4,11 @@
 
 using System;
 using NUnit.Framework;
-using Robotango.Tests.Utils.Bases;
 
-namespace Robotango.Tests.Cases
+namespace School.Nunit.Tests
 {
     [TestFixture]
-    public class Ilia : BaseTests
+    public class Ilia
     {
         #region Console
 
@@ -29,7 +28,7 @@ namespace Robotango.Tests.Cases
         [Test]
         public void Print_42()
         {
-            var a = 42;
+            int a = 42;
             Print( a );
         }
 
@@ -55,17 +54,23 @@ namespace Robotango.Tests.Cases
                 Print( i );
                 Print( "Hello World" );
             }
+
         }
 
         [Test]
         public void Print_Hello_World_nn_times()
         {
             var n = Input();
+            int i;
             n = n*n;
-            for( var i = 0; i < n; i++ ) {
+
+            for( i = 35; i < n; i = i + 1000 ) {
                 Print( i );
-                Print( "Hello World" );
             }
+            
+            Print("-----");
+
+            Print( i );
         }
     }
 }

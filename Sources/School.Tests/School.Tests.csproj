@@ -57,6 +57,7 @@
     <Compile Include="Bases\SearherTestsBase.cs" />
     <Compile Include="Bases\SorterTestsBase.cs" />
     <Compile Include="Tests\Graph_Tests.cs" />
+    <Compile Include="Tests\Ilia_Tests.cs" />
     <Compile Include="Tests\Searcher_Tests.cs" />
     <Compile Include="Tests\Sorter_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
