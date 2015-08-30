@@ -72,5 +72,19 @@ namespace School.Nunit.Tests
 
             Print( i );
         }
+
+        [Test]
+        public void Print_5_25()
+        {
+            for( var i = 5; i <= 25; i = i + 1 ) {
+                Print( i );
+            }
+
+
+
+        } 
+
+
+
     }
 }
