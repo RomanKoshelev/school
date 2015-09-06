@@ -87,8 +87,8 @@ namespace School.Nunit.Tests
         [Test]
         public void Summ_1_n()
         {
-            var n =100345044453;
-            var s = 0;
+            var n =100343454.0;
+            var s = 0.0;
 
             for( var i = 1; i <= n; i = i + 1 ) {
                 s = s + i;
