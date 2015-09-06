@@ -62,9 +62,9 @@ namespace School.Nunit.Tests
         {
             var n = Input();
             int i;
-            n = n*n;
+            n = 2500 ;
 
-            for( i = 35; i < n; i = i + 1000 ) {
+            for( i = 25; i < n; i = i + 1000 ) {
                 Print( i );
             }
             
@@ -76,15 +76,40 @@ namespace School.Nunit.Tests
         [Test]
         public void Print_5_25()
         {
-            for( var i = 5; i <= 25; i = i + 1 ) {
+            for( var i = 25; i <= 100 ; i = i + 10 ) {
                 Print( i );
             }
 
 
 
-        } 
+        }
 
+        [Test]
+        public void Summ_1_n()
+        {
+            var n =100345044453;
+            var s = 0;
 
+            for( var i = 1; i <= n; i = i + 1 ) {
+                s = s + i;
 
+            }      
+            
+            Print(s);
+
+            Assert.That( s, Is.EqualTo( (n+1)*n/2 ) );
+        }
+
+        [Test]
+        public void Factorial()
+        {
+            var n =10;
+            //var f = ;
+
+            
+            //Print(f);
+
+            //Assert.That( s, Is.EqualTo( (n+1)*n/2 ) );
+        }
     }
 }
