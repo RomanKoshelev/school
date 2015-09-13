@@ -1,6 +1,6 @@
-﻿// Robotango (c) 2015 Krokodev
-// Robotango.Tests
-// Ilia.cs
+﻿// School (c) 2015 Krokodev
+// School.Tests
+// Ilia_Tests.cs
 
 using System;
 using NUnit.Framework;
@@ -12,9 +12,14 @@ namespace School.Nunit.Tests
     {
         #region Console
 
-        private static void Print( object obj )
+        private static void Print( object arg )
         {
-            Console.WriteLine( obj );
+            Console.WriteLine( arg.ToString() );
+        }
+
+        private static void Print( string template, params object[] args )
+        {
+            Console.WriteLine( template, args );
         }
 
         private int Input()
@@ -28,7 +33,7 @@ namespace School.Nunit.Tests
         [Test]
         public void Print_42()
         {
-            int a = 42;
+            var a = 42;
             Print( a );
         }
 
@@ -54,7 +59,6 @@ namespace School.Nunit.Tests
                 Print( i );
                 Print( "Hello World" );
             }
-
         }
 
         [Test]
@@ -62,13 +66,13 @@ namespace School.Nunit.Tests
         {
             var n = Input();
             int i;
-            n = 2500 ;
+            n = 2500;
 
             for( i = 25; i < n; i = i + 1000 ) {
                 Print( i );
             }
-            
-            Print("-----");
+
+            Print( "-----" );
 
             Print( i );
         }
@@ -76,40 +80,49 @@ namespace School.Nunit.Tests
         [Test]
         public void Print_5_25()
         {
-            for( var i = 25; i <= 100 ; i = i + 10 ) {
+            for( var i = 25; i <= 100; i = i + 10 ) {
                 Print( i );
             }
-
-
-
         }
 
         [Test]
         public void Summ_1_n()
         {
-            var n =100343454.0;
+            var n = 100388.0;
             var s = 0.0;
 
             for( var i = 1; i <= n; i = i + 1 ) {
                 s = s + i;
+            }
 
-            }      
-            
-            Print(s);
+            Print( s );
 
-            Assert.That( s, Is.EqualTo( (n+1)*n/2 ) );
+            Assert.That( s, Is.EqualTo( ( n + 1 )*n/2 ) );
         }
 
         [Test]
-        public void Factorial()
+        [TestCase( 1 )]
+        [TestCase( 2 )]
+        [TestCase( 10 )]
+        [TestCase( 100 )]
+        [TestCase( 1001 )]
+        [TestCase( 300 )]
+        [TestCase( 5 )]
+        public void Operator_if_less_10( int n )
         {
-            var n =10;
-            //var f = ;
-
-            
-            //Print(f);
-
-            //Assert.That( s, Is.EqualTo( (n+1)*n/2 ) );
+            if( n < 10 ) {
+                Print( "{0}<10", n );
+                Print( "(Yes)" );
+            } else {
+                Print( "{0}>=10", n );
+                Print( "(No)" );
+                if( n > 301 ) {
+                    Print( "Wow! " );
+                }
+            }
+            if( n < 1000 ) {
+                Print( "why?" );
+            }
         }
     }
 }
