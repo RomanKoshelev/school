@@ -124,5 +124,34 @@ namespace School.Nunit.Tests
                 Print( "why?" );
             }
         }
+
+        [TestCase( "man", 5, "small" )]
+        [TestCase( "man", 116, "big" )]
+        [TestCase( "cat", 11, "big" )]
+        [TestCase( "cat", 3, "small" )]
+        [TestCase( "ant", 100, "unknown" )]
+        public void Big_or_small( string kind, int weight, string answer )
+        {
+            var result = "unknown";
+
+            if( kind == "man" ) {
+                if( weight > 70 ) {
+                    result = "big";
+                } else {
+                    result = "small";
+                }
+            }
+
+            if( kind == "cat" ) {
+                if( weight > 10 ) {
+                    result = "big";
+                } else {
+                    result = "small";
+                }
+            }
+
+            Print( "{0} {1} kg = {2}", kind, weight, result );
+            Assert.That( result, Is.EqualTo( answer ) );
+        }
     }
 }
