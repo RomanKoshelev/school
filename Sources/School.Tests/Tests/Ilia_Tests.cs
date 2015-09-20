@@ -135,19 +135,11 @@ namespace School.Nunit.Tests
             var result = "unknown";
 
             if( kind == "man" ) {
-                if( weight > 70 ) {
-                    result = "big";
-                } else {
-                    result = "small";
-                }
+                result = weight > 70 ? "big" : "small";
             }
 
             if( kind == "cat" ) {
-                if( weight > 10 ) {
-                    result = "big";
-                } else {
-                    result = "small";
-                }
+                result = weight > 10 ? "big" : "small";
             }
 
             Print( "{0} {1} kg = {2}", kind, weight, result );
