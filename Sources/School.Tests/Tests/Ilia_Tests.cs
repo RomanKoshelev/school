@@ -3,6 +3,7 @@
 // Ilia_Tests.cs
 
 using System;
+using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
 using NUnit.Framework;
 
@@ -323,12 +324,40 @@ namespace School.Nunit.Tests
                 if( arr[ i ] < arr[ r ] )
                 {
                     // если i-ая меньше r-ая то записать i в r
-
+                    r = i;
                 }
 
             }
 
             Assert.That( r, Is.EqualTo( pos ) );          
+        }
+        
+        [Test]
+        [TestCase( new[] { 1, 3, 2 }, 2 )]
+        [TestCase( new[] { 1, 0, 10, 1 }, 3 )]
+        [TestCase( new[] { 2, 100, -2, 200, 50 }, 70 )]
+        public void Calc_average(int[] arr, int ave )
+        {
+            Assert.That( arr.Length, Is.GreaterThan( 0 ) );
+            var r = 0;
+            
+            // naiti summu i zapisatj ee v s
+            var s = 0;
+            
+            // idem po vsem chislam
+            for( var i = 0; i < arr.Length; i++ ) {
+                // uvelichivaem summu na tekuchsee chislo
+                s += arr[ i ]; // s = s + arr[i]
+
+            }
+
+            // razdelitj summu s na kolichestvo chisel arr.Length
+            r = s/arr.Length;
+            
+            // zapomnitj resultat deleniya v r
+
+
+            Assert.That( r, Is.EqualTo( ave ) );          
         }
     }
 }
