@@ -3,7 +3,9 @@
 // Ilia_Tests.cs
 
 using System;
+using System.Linq;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 
 namespace School.Nunit.Tests
 {
@@ -353,8 +355,104 @@ namespace School.Nunit.Tests
             r = s/arr.Length;
 
             // zapomnitj resultat deleniya v r
-
+            
             Assert.That( r, Is.EqualTo( ave ) );
         }
+
+        [Test]
+        public void Print_1_10_copy_paste()
+        {
+            Print( 1 );
+            Print( 2 );
+            Print( 3 );
+            Print( 4 );
+            Print( 5 );
+            Print( 6 );
+            Print( 8 );
+            Print( 9 );
+            Print( 10 );
+        }
+        [Test]
+        public void Print_1_10_smart_copy_paste()
+        {
+            var i = 0;
+            i++;Print( i );
+            i++;Print( i );
+            i++;Print( i );
+            i++;Print( i );
+            i++;Print( i );
+            i++;Print( i );
+            i++;Print( i );
+            i++;Print( i );
+            i++;Print( i );
+            i++;Print( i );
+        }
+
+        [Test]
+        public void Print_1_100_goto()
+        {
+            var i = 0;
+
+        start:
+            i++;
+            Print( i );
+            if( i >= 100)
+                goto end;
+         goto start;
+        end:;
+        }
+
+        
+
+        [Test]
+        public void Print_1_100_while_true()
+        {
+            var i = 0;
+
+            while(true) // m01
+            { // if(!true) goto m02
+                i++; //i=i+1;
+
+                Print( i );
+
+                if( i >= 100 )
+                    break; // goto m02
+
+
+            } // goto m01
+            //m02
+        }
+
+
+
+        [Test]
+        public void Print_1_100_while_condition()
+        {
+            var i = 0;
+            while( i < 100 )
+            {
+                Print( i++ );
+            }
+        }
+
+        [Test]
+        public void Print_1_100_for()
+        {
+            for ( var i=1; i<=100; i++)
+            {
+                Print( i );
+            }
+        }
+
+        [Test]
+        public void Print_1_100_in()
+        {
+            foreach( var i in Enumerable.Range( 1,100 ) )
+            {
+                Print( i );
+            }
+        }
+
+
     }
 }
