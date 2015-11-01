@@ -5,7 +5,6 @@
 using System;
 using System.Linq;
 using NUnit.Framework;
-using NUnit.Framework.Constraints;
 
 namespace School.Nunit.Tests
 {
@@ -338,7 +337,7 @@ namespace School.Nunit.Tests
         public void Calc_average( int[] arr, int ave )
         {
             Assert.That( arr.Length, Is.GreaterThan( 0 ) );
-            
+
             var r = 0;
 
             // naiti summu i zapisatj ee v s
@@ -355,7 +354,7 @@ namespace School.Nunit.Tests
             r = s/arr.Length;
 
             // zapomnitj resultat deleniya v r
-            
+
             Assert.That( r, Is.EqualTo( ave ) );
         }
 
@@ -372,20 +371,31 @@ namespace School.Nunit.Tests
             Print( 9 );
             Print( 10 );
         }
+
         [Test]
         public void Print_1_10_smart_copy_paste()
         {
             var i = 0;
-            i++;Print( i );
-            i++;Print( i );
-            i++;Print( i );
-            i++;Print( i );
-            i++;Print( i );
-            i++;Print( i );
-            i++;Print( i );
-            i++;Print( i );
-            i++;Print( i );
-            i++;Print( i );
+            i++;
+            Print( i );
+            i++;
+            Print( i );
+            i++;
+            Print( i );
+            i++;
+            Print( i );
+            i++;
+            Print( i );
+            i++;
+            Print( i );
+            i++;
+            Print( i );
+            i++;
+            Print( i );
+            i++;
+            Print( i );
+            i++;
+            Print( i );
         }
 
         [Test]
@@ -393,37 +403,38 @@ namespace School.Nunit.Tests
         {
             var i = 0;
 
-        start:
+            start:
             i++;
             Print( i );
-            if( i >= 100)
+            if( i >= 100 )
+            {
                 goto end;
-         goto start;
-        end:;
+            }
+            goto start;
+            end:
+            ;
         }
-
-        
 
         [Test]
         public void Print_1_100_while_true()
         {
             var i = 0;
 
-            while(true) // m01
-            { // if(!true) goto m02
+            while( true ) // m01
+            {
+                // if(!true) goto m02
                 i++; //i=i+1;
 
                 Print( i );
 
                 if( i >= 100 )
+                {
                     break; // goto m02
-
-
+                }
             } // goto m01
+
             //m02
         }
-
-
 
         [Test]
         public void Print_1_100_while_condition()
@@ -438,7 +449,7 @@ namespace School.Nunit.Tests
         [Test]
         public void Print_1_100_for()
         {
-            for ( var i=1; i<=100; i++)
+            for( var i = 1; i <= 100; i++ )
             {
                 Print( i );
             }
@@ -447,12 +458,12 @@ namespace School.Nunit.Tests
         [Test]
         public void Print_1_100_in()
         {
-            foreach( var i in Enumerable.Range( 1,100 ) )
+            var arr = Enumerable.Range( 1, 100 );
+
+            foreach( var i in arr )
             {
                 Print( i );
             }
         }
-
-
     }
 }
