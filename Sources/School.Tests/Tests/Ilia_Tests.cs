@@ -458,7 +458,7 @@ namespace School.Nunit.Tests
         [Test]
         public void Print_1_100_in()
         {
-            var arr = Enumerable.Range( 1, 100 );
+            var arr = Enumerable.Range( 1,100 );
 
             foreach( var i in arr )
             {
