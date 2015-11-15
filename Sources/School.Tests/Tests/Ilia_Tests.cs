@@ -167,8 +167,8 @@ namespace School.Nunit.Tests
             Assert.That( result, Is.EqualTo( answer ) );
         }
 
-        [Test]
         [TestCase( "man", 1, "small" )]
+        [Test]
         [TestCase( "man", 5, "small" )]
         [TestCase( "man", 50, "small" )]
         [TestCase( "man", 59, "small" )]
@@ -228,7 +228,7 @@ namespace School.Nunit.Tests
             Assert.That( result, Is.EqualTo( answer ) );
         }
 
-        [TestCase( new[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -1 }, 10 )]
+        [TestCase( new[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -1 }, 10 )]
         [TestCase( new[] { 6, 19, 1, 4 }, 30 )]
         [TestCase( new[] { 10, 7, 6 }, 23 )]
         [TestCase( new[] { 1, 2, 1 }, 4 )]
@@ -458,12 +458,35 @@ namespace School.Nunit.Tests
         [Test]
         public void Print_1_100_in()
         {
-            var arr = Enumerable.Range( 1,100 );
+            var arr = Enumerable.Range( 1, 100 );
 
             foreach( var i in arr )
             {
                 Print( i );
             }
+        }
+
+        [Test]
+        [TestCase( new[] { 1, 2, 3, 5 }, 1, 5, true )]
+        [TestCase( new[] { 0, 1, 2, 3, 5, 7 }, 1, 5, false )]
+        [TestCase( new[] { 1, 2, 3, 5, 0 }, 2, 6, false )]
+        public void Sequence_in_range( int[] arr, int min, int max, bool answer )
+        {
+            var res = true;
+
+            for( var i = 0; i < arr.Length; i++ )
+            {
+                Print( arr[i] );
+  
+              if( min > arr[i] || arr[i] > max )
+              {
+                  res = false; 
+                    Print( "out" );
+                }
+
+            }
+
+            Assert.That( res, Is.EqualTo( answer ) );
         }
     }
 }
