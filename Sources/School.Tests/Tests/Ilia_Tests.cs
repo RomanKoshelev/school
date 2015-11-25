@@ -476,15 +476,39 @@ namespace School.Nunit.Tests
 
             for( var i = 0; i < arr.Length; i++ )
             {
-                Print( arr[i] );
-  
-              if( min > arr[i] || arr[i] > max )
-              {
-                  res = false; 
+                Print( arr[ i ] );
+
+                if( min > arr[ i ] || arr[ i ] > max )
+                {
+                    res = false;
                     Print( "out" );
                 }
-
             }
+
+            Assert.That( res, Is.EqualTo( answer ) );
+        }
+
+        [Test]
+        [TestCase( new[] { 7 }, true )]
+        [TestCase( new[] { 1, 2, 3, 5 }, true )]
+        [TestCase( new[] { 0, 1, 2, 3, 5, 5 }, true )]
+        [TestCase( new[] { -1, 0, 2, 3 }, true )]
+        [TestCase( new[] { 1, 2, 3, 2 }, false )]
+        [TestCase( new[] { 3, 2, 1 }, false )]
+        public void Sequence_is_ordered( int[] arr, bool answer )
+        {
+            var res = true;
+
+            for( var i = 0; i < arr.Length - 1; i++ )
+            {
+                Print( arr[i] );
+                if( arr[ i ] > arr[ i + 1 ] )
+                {
+                    res = false;
+                    Print( "out" );
+                }
+            }
+            Print( arr[arr.Length - 1] );
 
             Assert.That( res, Is.EqualTo( answer ) );
         }
