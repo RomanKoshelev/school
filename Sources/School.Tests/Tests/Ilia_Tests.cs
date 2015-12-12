@@ -501,16 +501,60 @@ namespace School.Nunit.Tests
 
             for( var i = 0; i < arr.Length - 1; i++ )
             {
-                Print( arr[i] );
+                Print( arr[ i ] );
                 if( arr[ i ] > arr[ i + 1 ] )
                 {
                     res = false;
                     Print( "out" );
                 }
             }
-            Print( arr[arr.Length - 1] );
+            Print( arr[ arr.Length - 1 ] );
 
             Assert.That( res, Is.EqualTo( answer ) );
         }
+
+        [Test]
+        public void Test_print()
+        {
+            var a = 1;
+            var b = a + 2;
+
+            Print( b );
+        }
+
+        [TestCase( new[] { 1, 2, 3 }, new[] { 1, 2, 3 } )]
+        [TestCase( new[] { 1, 3, 2, 4 }, new[] { 1, 2, 3, 4 } )]
+        public void Bubble_sort( int[] arr, int[] result )
+        {
+            // печатаем входной массив
+            for( var i = 0; i < arr.Length; i++ )
+            {
+                Print( arr[ i ] );
+            }
+
+            // i -- граница, справа от нее порядок, слева включая i -- хаос
+            for( var i = arr.Length - 1; i > 0; i-- )
+            {
+                // тащим направо самый большой элемент до границы
+                for( var a = 0; a <= i - 1; a++ )
+                {
+                    // Поменять местами если не по порядку
+                    if( arr[ a ] > arr[ a + 1 ] )
+                    {
+                        var tmp = arr[ a ];
+
+                        arr[ a ] = arr[ a + 1 ];
+                        arr[ a + 1 ] = arr[ a ];
+
+                        arr[ a ] = arr[ a + 1 ];
+                        arr[ a + 1 ] = tmp;
+                    }
+                }
+            }
+
+            Assert.That( arr, Is.EqualTo( result ) );
+        }
+
+        // дальше: пузырьком по убыванию
     }
 }
