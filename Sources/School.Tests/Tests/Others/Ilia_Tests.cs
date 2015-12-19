@@ -544,7 +544,39 @@ namespace School.Nunit.Tests
                         var tmp = arr[ a ];
 
                         arr[ a ] = arr[ a + 1 ];
-                        arr[ a + 1 ] = arr[ a ];
+                        arr[ a + 1 ] = tmp;
+                    }
+                }
+            }
+
+            Assert.That( arr, Is.EqualTo( result ) );
+        }
+
+        [TestCase( new[] { 1, 2, 3 }, new[] { 3, 2, 1 } )]
+        [TestCase( new[] { 3, 2, 1 }, new[] { 3, 2, 1 } )]
+        [TestCase( new[] { 1, 3, 2, 4 }, new[] { 4, 3, 2, 1 } )]
+        [TestCase( new[] { 1, 1, 1, 1 }, new[] { 1, 1, 1, 1 } )]
+        [TestCase( new[] { 1, -1, 1, -1 }, new[] { 1, 1, -1, -1 } )]
+        [TestCase( new[] { 1/2, 1/4, 1/3, 1/5 }, new[] { 1/2, 1/3, 1/4, 1/5 } )]
+        [TestCase( new[] { 2^2, 4^-1, 42, -1488,300 }, new[] { 300, 42, 2^2, 4^-1, -1488  } )] 
+        public void Bubble_sort_desc( int[] arr, int[] result )
+        {
+            // печатаем входной массив
+            for( var i = 0; i < arr.Length; i++ )
+            {
+                Print( arr[ i ] );
+            }
+
+            // i -- граница, справа от нее порядок, слева включая i -- хаос
+            for( var i = arr.Length - 1; i > 0; i-- )    
+            {
+                // тащим направо самый маленький элемент до границы
+                for( var a = 0; a <= i - 1; a++ )       
+                {
+                    // Поменять местами если не по порядку
+                    if( arr[ a ] < arr[ a + 1 ] )
+                    {
+                        var tmp = arr[ a ];
 
                         arr[ a ] = arr[ a + 1 ];
                         arr[ a + 1 ] = tmp;
@@ -554,7 +586,5 @@ namespace School.Nunit.Tests
 
             Assert.That( arr, Is.EqualTo( result ) );
         }
-
-        // дальше: пузырьком по убыванию
     }
 }

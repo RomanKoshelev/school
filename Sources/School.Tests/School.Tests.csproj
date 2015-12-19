@@ -56,11 +56,13 @@
     <Compile Include="Bases\GraphTestsBase.cs" />
     <Compile Include="Bases\SearherTestsBase.cs" />
     <Compile Include="Bases\SorterTestsBase.cs" />
-    <Compile Include="Tests\Graph_Tests.cs" />
-    <Compile Include="Tests\Cormorant_Tests.cs" />
-    <Compile Include="Tests\Ilia_Tests.cs" />
-    <Compile Include="Tests\Searcher_Tests.cs" />
-    <Compile Include="Tests\Sorter_Tests.cs" />
+    <Compile Include="Tests\Others\Graph_Tests.cs" />
+    <Compile Include="Tests\Others\Cormorant_Tests.cs" />
+    <Compile Include="Tests\Others\Ilia_Tests.cs" />
+    <Compile Include="Tests\Probability\CoinGenerator.cs" />
+    <Compile Include="Tests\Probability\Coin_Tests.cs" />
+    <Compile Include="Tests\Others\Searcher_Tests.cs" />
+    <Compile Include="Tests\Others\Sorter_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\TestHelper.cs" />
   </ItemGroup>
@@ -74,7 +76,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Tests\ilia.html" />
+    <Content Include="Tests\Others\ilia.html" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
