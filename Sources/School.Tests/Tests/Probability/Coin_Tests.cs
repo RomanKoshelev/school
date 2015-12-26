@@ -63,7 +63,8 @@ namespace School.Nunit.Tests.Probability
             Assert.That( num1, Is.GreaterThan( 0 ) );
         }
 
-        [TestCase( new [] { 2, 3, 5, 7, 10, 20, 30, 100, 300, 1000, 10*1000, 100*1000, 1*1000*1000 } )]
+        [TestCase( new[] { 2, 3, 5, 7, 10, 20, 30, 100, 300, 1000, 10*1000, 100*1000, 1*1000*1000, 1*10000*10000 } )
+        ]
         public void The_sequence_of_coins_exists_and_it_counts_its_number_of_0_and_1( int[] numbers )
         {
             var generator = new CoinGenerator();
@@ -74,11 +75,32 @@ namespace School.Nunit.Tests.Probability
 
                 var num0 = seq.NumOf( 0 );
                 var num1 = seq.NumOf( 1 );
-                var div = Math.Abs(num1-num0);
+                var div = Math.Abs( num1 - num0 );
 
-                Print( "n={0} {1}:{2}, div={3}, rate={4}", n, num0, num1, div, div/(double)n*100 );
+                Print( "n={0} {1}:{2}, div={3}, rate={4}", n, num0, num1, div, div/( double ) n*100 );
 
                 Assert.That( num0 + num1, Is.EqualTo( n ), "N(0)+N(1)" );
+            }
+        }
+
+        [TestCase( new[] { 10,100,1000,10*1000, 100*1000, 1000*1000 } )]
+        public void Law_of_large_numbers( int[] numbers )
+        {
+            var dold = 1.0; 
+            foreach( var n in numbers )
+            {
+                var generator = new CoinGenerator();
+                var seq = generator.MakeRandomCoinSequance( n );
+                var numbers0 = ( double ) seq.NumOf( 0 );
+                var numbers1 = ( double ) seq.NumOf( 1 );
+                var max = Math.Max( numbers0, numbers1 );
+                var min = Math.Min( numbers0, numbers1 );
+                var d = ( max - min )/n;
+                Print( "n={1}, d={0}", d, n );
+
+                Assert.That( d<dold );
+                dold = d;
+
             }
         }
     }
