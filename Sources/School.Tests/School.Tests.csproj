@@ -59,8 +59,14 @@
     <Compile Include="Tests\Others\Graph_Tests.cs" />
     <Compile Include="Tests\Others\Cormorant_Tests.cs" />
     <Compile Include="Tests\Others\Ilia_Tests.cs" />
-    <Compile Include="Tests\Probability\CoinGenerator.cs" />
-    <Compile Include="Tests\Probability\Coin_Tests.cs" />
+    <Compile Include="Tests\Probability\Cards\Card.cs" />
+    <Compile Include="Tests\Probability\Cards\Cards_Tests.cs" />
+    <Compile Include="Tests\Probability\Base\ProbabilityBaseTest.cs" />
+    <Compile Include="Tests\Probability\Cards\Deck.cs" />
+    <Compile Include="Tests\Probability\Cards\Rank.cs" />
+    <Compile Include="Tests\Probability\Cards\Suit.cs" />
+    <Compile Include="Tests\Probability\Coins\CoinGenerator.cs" />
+    <Compile Include="Tests\Probability\Coins\Coin_Tests.cs" />
     <Compile Include="Tests\Others\Searcher_Tests.cs" />
     <Compile Include="Tests\Others\Sorter_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -78,6 +84,7 @@
   <ItemGroup>
     <Content Include="Tests\Others\ilia.html" />
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

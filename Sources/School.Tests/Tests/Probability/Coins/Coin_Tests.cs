@@ -83,10 +83,10 @@ namespace School.Nunit.Tests.Probability
             }
         }
 
-        [TestCase( new[] { 10,100,1000,10*1000, 100*1000, 1000*1000 } )]
+        [TestCase( new[] { 10, 100, 1000, 10*1000, 100*1000, 1000*1000 } )]
         public void Law_of_large_numbers( int[] numbers )
         {
-            var dold = 1.0; 
+            var dold = 1.0;
             foreach( var n in numbers )
             {
                 var generator = new CoinGenerator();
@@ -98,9 +98,8 @@ namespace School.Nunit.Tests.Probability
                 var d = ( max - min )/n;
                 Print( "n={1}, d={0}", d, n );
 
-                Assert.That( d<dold );
+                Assert.That( d < dold );
                 dold = d;
-
             }
         }
     }
