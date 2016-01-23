@@ -99,13 +99,33 @@ namespace School.Nunit.Tests.Probability.Cards
             Assert.That( deck.NumOf( Suit.Hearts ), Is.EqualTo( 11 ) );
             Assert.That( deck.NumOf( Suit.Diamonds ), Is.EqualTo( 13 ) );
 
-            // Напечать число двоек
-            // Убедиться что двоек осталось 3
             Print( "Num of {0}={1}", Rank.N2, deck.NumOf( Rank.N2 ) );
             Assert.That( deck.NumOf( Rank.N2 ), Is.EqualTo( 3 ) );
         }
 
-        [Test, Ignore]
-        public void We_can_shuffle_deck() {}
+        [Test]
+
+        // мы умем перемешивать колоду
+        public void We_can_shuffle_deck()
+        {
+
+            const int n = 100000;
+            for( var i = 0; i < n; i++ )
+            {
+                var deck = new Deck();
+                deck.Shuffle();
+
+                if( i%(n/10) == 0 )
+                {
+                    Print();
+                    Print( deck );
+                }
+
+                Assert.That(
+                    !( deck[ 0 ].Is( Rank.N2, Suit.Hearts ) && deck[ 1 ].Is( Rank.N3, Suit.Hearts )
+                       && deck[ 2 ].Is( Rank.N4, Suit.Hearts ) && deck[ 3 ].Is( Rank.N5, Suit.Hearts )
+                       && deck[ 51 ].Is( Rank.Ace, Suit.Spades ) ) );
+            }
+        }
     }
 }

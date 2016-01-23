@@ -2,6 +2,7 @@
 // School.Tests
 // Deck.cs
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,8 +11,14 @@ namespace School.Nunit.Tests.Probability.Cards
     public class Deck
     {
         private readonly List< Card > _cards = new List< Card >();
+        private static readonly Random Random = new Random();
 
         public Deck()
+        {
+            CreateCards();
+        }
+
+        private void CreateCards()
         {
             for( var s = Suit.Hearts; s <= Suit.Spades; s++ )
             {
@@ -56,11 +63,37 @@ namespace School.Nunit.Tests.Probability.Cards
             return _cards.Count( c => c.Rank == rank && c.Suit == suit );
         }
 
+        private Card Draw( int pos )
+        {
+            var card = _cards[ pos ];
+            _cards.RemoveAt( pos );
+            return card;
+        }
+
         public Card Draw()
         {
-            var card = _cards[ 0 ];
-            _cards.RemoveAt( 0 );
-            return card;
+            return Draw(0);
+        }
+
+        public Card this[ int i ]
+        {
+            get
+            {
+                return _cards[ i ];
+            }
+        }
+
+        public void Shuffle()
+        {
+            const int n = 300;
+            var size = _cards.Count;
+
+            for( var i = 0; i < n; i++ )
+            {
+                var j = Random.Next( 0, size);
+                var card = Draw( j );
+                _cards.Add( card );
+            }
         }
     }
 }

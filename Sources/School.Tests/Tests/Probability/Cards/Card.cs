@@ -27,7 +27,7 @@ namespace School.Nunit.Tests.Probability.Cards
         {
             switch( suit )
             {
-                case Suit.Clubs :
+                case Suit.Clubs :   
                     return "♣";
                 case Suit.Diamonds :
                     return "♦";
@@ -48,5 +48,10 @@ namespace School.Nunit.Tests.Probability.Cards
 
         public Suit Suit { get; private set; }
         public Rank Rank { get; private set; }
+
+        public bool Is( Rank rank, Suit suit )
+        {
+            return Suit == suit && Rank == rank;
+        }
     }
 }

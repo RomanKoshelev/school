@@ -13,5 +13,10 @@ namespace School.Nunit.Tests.Probability.Base
         {
             Console.WriteLine( obj.ToString() );
         }
+
+        protected void Print()
+        {
+            Print("");
+        }
     }
 }
