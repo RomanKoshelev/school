@@ -103,19 +103,17 @@ namespace School.Nunit.Tests.Probability.Cards
             Assert.That( deck.NumOf( Rank.N2 ), Is.EqualTo( 3 ) );
         }
 
-        [Test]
-
         // мы умем перемешивать колоду
+        [Test]
         public void We_can_shuffle_deck()
         {
-
             const int n = 100000;
             for( var i = 0; i < n; i++ )
             {
                 var deck = new Deck();
                 deck.Shuffle();
 
-                if( i%(n/10) == 0 )
+                if( i%( n/10 ) == 0 )
                 {
                     Print();
                     Print( deck );
@@ -126,6 +124,110 @@ namespace School.Nunit.Tests.Probability.Cards
                        && deck[ 2 ].Is( Rank.N4, Suit.Hearts ) && deck[ 3 ].Is( Rank.N5, Suit.Hearts )
                        && deck[ 51 ].Is( Rank.Ace, Suit.Spades ) ) );
             }
+        }
+
+        // мы умем считать статистику пар
+        [Test]
+        public void We_can_calculate_pair_statistics()
+        {
+            const int total = 10000;
+            var pairNum = 0;
+            var log = "";
+
+            for( var i = 0; i < total; i++ )
+            {
+                var deck = new Deck();
+                deck.Shuffle();
+
+                var hand = new Hand();
+                var cards = deck.Draw( 5 );
+
+                hand.Take( cards );
+                var hasPair = hand.HasPair();
+
+                log += i > 100 ? "":string.Format( "{0} {1}\n", hasPair ? "+ " : "  ", hand );
+                pairNum += hasPair ? 1 : 0;
+            }
+
+            Print( "Total: {0}", total );
+            Print( "Pairs: {0} ({1:F}%)", pairNum, ( double ) pairNum/total*100 );
+            Print();
+            Print( log );
+        }
+
+        // мы умем считать статистику двух пар
+        [Test]
+        public void We_can_calculate_two_pairs_statistics()
+        {
+            const int total = 10000;
+            var success = 0;
+            var log = "";
+
+            for( var i = 0; i < total; i++ )
+            {
+                var deck = new Deck();
+                deck.Shuffle();
+
+                var hand = new Hand();
+                var cards = deck.Draw( 5 );
+
+                hand.Take( cards );
+                var hasPair = hand.HasTwoPairs();
+
+                log += i > 100 ? "":string.Format( "{0} {1}\n", hasPair ? "+ " : "  ", hand );
+                success += hasPair ? 1 : 0;
+            }
+
+            Print( "Total:     {0}", total );
+            Print( "Two pairs: {0} ({1:F}%)", success, ( double ) success/total*100 );
+            Print();
+            Print( log );
+        }
+
+        // Илья умеет узнавать пару
+        [Test]
+        [TestCase( new[] { Rank.Ace, Rank.N2, Rank.Jack, Rank.N4, Rank.N5 }, false )]
+        [TestCase( new[] { Rank.Ace, Rank.N2, Rank.Jack, Rank.N2, Rank.N5 }, true )]
+        public void Ilia_can_recognise_pair( Rank[] ranks, bool answer )
+        {
+            var hand = new Hand();
+
+            foreach( var rank in ranks )
+            {
+                hand.Take( new Card( rank, Suit.Clubs ) );
+            }
+
+            Print( hand );
+            Print( hand.HasPair_Ilia() ? "Has pair" : "No" );
+
+            Assert.That( hand.HasPair_Ilia(), Is.EqualTo( answer ) );
+        }
+
+        // Мы умеем узнавать две пары
+        [Test]
+        [TestCase( new[] { Rank.Ace, Rank.N2, Rank.Jack, Rank.N4, Rank.N5 }, false )]
+        [TestCase( new[] { Rank.Ace, Rank.N2, Rank.Jack, Rank.N2, Rank.N5 }, false )]
+        [TestCase( new[] { Rank.Ace, Rank.N2, Rank.Jack, Rank.N2, Rank.Jack }, true )]
+        [TestCase( new[] { Rank.Ace, Rank.N2, Rank.Jack, Rank.Jack, Rank.Jack }, false )]
+        [TestCase( new[] { Rank.Jack, Rank.N2, Rank.Jack, Rank.Jack, Rank.Jack }, true )]
+        [TestCase( new[] { Rank.Jack, Rank.Jack, Rank.Jack, Rank.Jack, Rank.Jack }, true )]
+        [TestCase( new[] { Rank.Jack, Rank.Jack, Rank.Jack, Rank.Ace, Rank.Ace }, true )]
+        [TestCase( new[] { Rank.Jack, Rank.Jack, Rank.Jack, Rank.Ace, Rank.Qween }, false )]
+        [TestCase( new[] { Rank.Ace, Rank.Jack, Rank.Ace, Rank.Qween, Rank.Qween }, true )]
+        [TestCase( new[] { Rank.N2, Rank.N2, Rank.N2, Rank.N2, Rank.N2 }, true )]
+        public void We_can_recognise_two_pairs( Rank[] ranks, bool answer )
+        {
+            var hand = new Hand();
+
+            foreach( var rank in ranks )
+            {
+                hand.Take( new Card( rank, Suit.Clubs ) );
+            }
+
+            Print( hand );
+            Print( hand.HasTwoPairs() ? "Has two pair" : "No" );
+
+            Assert.That( hand.HasTwoPairs(), Is.EqualTo( answer ) );
         }
     }
 }

@@ -63,7 +63,7 @@ namespace School.Nunit.Tests.Probability.Cards
             return _cards.Count( c => c.Rank == rank && c.Suit == suit );
         }
 
-        private Card Draw( int pos )
+        private Card DrawAt( int pos )
         {
             var card = _cards[ pos ];
             _cards.RemoveAt( pos );
@@ -72,7 +72,7 @@ namespace School.Nunit.Tests.Probability.Cards
 
         public Card Draw()
         {
-            return Draw(0);
+            return DrawAt(0);
         }
 
         public Card this[ int i ]
@@ -91,9 +91,20 @@ namespace School.Nunit.Tests.Probability.Cards
             for( var i = 0; i < n; i++ )
             {
                 var j = Random.Next( 0, size);
-                var card = Draw( j );
+                var card = DrawAt( j );
                 _cards.Add( card );
             }
+        }
+
+        public List<Card> Draw( int num )
+        {
+            var cards = new List<Card>();
+            for( var i = 0; i < num; i++ )
+            {
+                var card = Draw();
+                cards.Add( card );
+            }
+            return cards;
         }
     }
 }

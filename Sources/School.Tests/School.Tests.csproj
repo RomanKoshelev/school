@@ -63,6 +63,7 @@
     <Compile Include="Tests\Probability\Cards\Cards_Tests.cs" />
     <Compile Include="Tests\Probability\Base\ProbabilityBaseTest.cs" />
     <Compile Include="Tests\Probability\Cards\Deck.cs" />
+    <Compile Include="Tests\Probability\Cards\Hand.cs" />
     <Compile Include="Tests\Probability\Cards\Rank.cs" />
     <Compile Include="Tests\Probability\Cards\Suit.cs" />
     <Compile Include="Tests\Probability\Coins\CoinGenerator.cs" />
