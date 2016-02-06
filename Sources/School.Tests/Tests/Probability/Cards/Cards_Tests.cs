@@ -184,11 +184,11 @@ namespace School.Nunit.Tests.Probability.Cards
             Print( log );
         }
 
-        // Илья умеет узнавать пару
+        // Мы умеем узнавать пару
         [Test]
         [TestCase( new[] { Rank.Ace, Rank.N2, Rank.Jack, Rank.N4, Rank.N5 }, false )]
         [TestCase( new[] { Rank.Ace, Rank.N2, Rank.Jack, Rank.N2, Rank.N5 }, true )]
-        public void Ilia_can_recognise_pair( Rank[] ranks, bool answer )
+        public void We_can_recognise_pair( Rank[] ranks, bool answer )
         {
             var hand = new Hand();
 
@@ -201,6 +201,26 @@ namespace School.Nunit.Tests.Probability.Cards
             Print( hand.HasPair_Ilia() ? "Has pair" : "No" );
 
             Assert.That( hand.HasPair_Ilia(), Is.EqualTo( answer ) );
+        }
+        
+        // 10-ка на руках
+        [Test]
+        [TestCase( new[] { Rank.Ace, Rank.N2, Rank.Jack, Rank.N4, Rank.N5 }, false )]
+        [TestCase( new[] { Rank.Ace, Rank.N2, Rank.Jack, Rank.N10, Rank.N5 }, true )]
+        [TestCase( new[] { Rank.Ace, Rank.N2, Rank.Jack, Rank.N2, Rank.N10 }, true )]
+        public void Hand_contains_10( Rank[] ranks, bool answer )
+        {
+            var hand = new Hand();
+
+            foreach( var rank in ranks )
+            {
+                hand.Take( new Card( rank, Suit.Clubs ) );
+            }
+
+            Print( hand );
+            Print( hand.Has10() ? "Has 10" : "No" );
+
+            Assert.That( hand.Has10(), Is.EqualTo( answer ) );
         }
 
         // Мы умеем узнавать две пары
