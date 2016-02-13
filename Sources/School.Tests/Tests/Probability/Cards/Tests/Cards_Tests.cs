@@ -4,8 +4,9 @@
 
 using NUnit.Framework;
 using School.Nunit.Tests.Probability.Base;
+using School.Nunit.Tests.Probability.Cards.Entities;
 
-namespace School.Nunit.Tests.Probability.Cards
+namespace School.Nunit.Tests.Probability.Cards.Tests
 {
     [TestFixture]
     public class Cards_Tests : ProbabilityBaseTest
@@ -145,7 +146,7 @@ namespace School.Nunit.Tests.Probability.Cards
                 hand.Take( cards );
                 var hasPair = hand.HasPair();
 
-                log += i > 100 ? "":string.Format( "{0} {1}\n", hasPair ? "+ " : "  ", hand );
+                log += i > 100 ? "" : string.Format( "{0} {1}\n", hasPair ? "+ " : "  ", hand );
                 pairNum += hasPair ? 1 : 0;
             }
 
@@ -174,7 +175,7 @@ namespace School.Nunit.Tests.Probability.Cards
                 hand.Take( cards );
                 var hasPair = hand.HasTwoPairs();
 
-                log += i > 100 ? "":string.Format( "{0} {1}\n", hasPair ? "+ " : "  ", hand );
+                log += i > 100 ? "" : string.Format( "{0} {1}\n", hasPair ? "+ " : "  ", hand );
                 success += hasPair ? 1 : 0;
             }
 
@@ -202,7 +203,7 @@ namespace School.Nunit.Tests.Probability.Cards
 
             Assert.That( hand.HasPair_Ilia(), Is.EqualTo( answer ) );
         }
-        
+
         // 10-ка на руках
         [Test]
         [TestCase( new[] { Rank.Ace, Rank.N2, Rank.Jack, Rank.N4, Rank.N5 }, false )]

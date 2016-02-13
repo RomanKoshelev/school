@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace School.Nunit.Tests.Probability.Cards
+namespace School.Nunit.Tests.Probability.Cards.Entities
 {
     public class Deck
     {
@@ -72,7 +72,7 @@ namespace School.Nunit.Tests.Probability.Cards
 
         public Card Draw()
         {
-            return DrawAt(0);
+            return DrawAt( 0 );
         }
 
         public Card this[ int i ]
@@ -90,15 +90,15 @@ namespace School.Nunit.Tests.Probability.Cards
 
             for( var i = 0; i < n; i++ )
             {
-                var j = Random.Next( 0, size);
+                var j = Random.Next( 0, size );
                 var card = DrawAt( j );
                 _cards.Add( card );
             }
         }
 
-        public List<Card> Draw( int num )
+        public List< Card > Draw( int num )
         {
-            var cards = new List<Card>();
+            var cards = new List< Card >();
             for( var i = 0; i < num; i++ )
             {
                 var card = Draw();

@@ -2,7 +2,7 @@
 // School.Tests
 // Rank.cs
 
-namespace School.Nunit.Tests.Probability.Cards
+namespace School.Nunit.Tests.Probability.Cards.Entities
 {
     public enum Rank
     {

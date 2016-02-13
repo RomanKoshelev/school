@@ -3,9 +3,8 @@
 // Hand.cs
 
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 
-namespace School.Nunit.Tests.Probability.Cards
+namespace School.Nunit.Tests.Probability.Cards.Entities
 {
     public class Hand
     {
@@ -54,8 +53,7 @@ namespace School.Nunit.Tests.Probability.Cards
 
         public bool Has10()
         {
-
-/*            for( var i = 0; i < _cards.Count; i++) 
+            /*            for( var i = 0; i < _cards.Count; i++) 
             {
                 if( _cards[ i ].Rank == Rank.N10 )
                 {
@@ -68,31 +66,30 @@ namespace School.Nunit.Tests.Probability.Cards
             {
                 if( card.Rank == Rank.N10 )
                 {
-                    return true; 
+                    return true;
                 }
             }
+
             // иначе вернуть false 
             return false;
         }
 
         public bool HasPair_Ilia()
         {
-            for( var i = 0; i < _cards.Count; i++  )
+            for( var i = 0; i < _cards.Count - 1; i++ )
             {
                 var c1 = _cards[ i ];
                 for( var j = i + 1; j < _cards.Count; j++ )
                 {
-                    var c2 =_cards[j];
-                    if( c2.Rank == c1.Rank )
+                    var c2 = _cards[ j ];
+                    if( c1.Rank == c2.Rank )
                     {
-                        return true; 
+                        return true;
                     }
                 }
             }
             return false;
         }
-
-
 
         public bool HasTwoPairs()
         {

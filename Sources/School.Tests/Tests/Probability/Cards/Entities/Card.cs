@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace School.Nunit.Tests.Probability.Cards
+namespace School.Nunit.Tests.Probability.Cards.Entities
 {
     public class Card
     {
@@ -27,7 +27,7 @@ namespace School.Nunit.Tests.Probability.Cards
         {
             switch( suit )
             {
-                case Suit.Clubs :   
+                case Suit.Clubs :
                     return "♣";
                 case Suit.Diamonds :
                     return "♦";
