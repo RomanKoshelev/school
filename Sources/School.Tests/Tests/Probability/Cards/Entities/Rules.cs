@@ -10,9 +10,14 @@ namespace School.Nunit.Tests.Probability.Cards.Entities
     {
         public const int MaxNumberOnHand = 5;
 
-        public static bool IsFlushRoyal( IList< Card > cards )
+        public static bool IsRoyalFlush( IList< Card > cards )
         {
             return IsStraight( cards ) && IsFlush( cards ) && HightCard( cards ).Rank == Rank.Ace;
+        }
+
+        public static bool IsStraighFlush( IList< Card > cards )
+        {
+            return IsStraight( cards ) && IsFlush( cards );
         }
 
         private static Card HightCard( IList< Card > cards )
@@ -45,14 +50,40 @@ namespace School.Nunit.Tests.Probability.Cards.Entities
         {
             var sorterd = Helper.GetSorted( cards );
 
+            if( LastAceButNotKing( sorterd ) )
+            {
+                MoveLastToBegin( sorterd );
+            }
+
             for( var i = 1; i < MaxNumberOnHand; i++ )
             {
-                if( sorterd[ i ].Rank != sorterd[ i - 1 ].Rank + 1 )
+                if( !RanksAreNeighbours( sorterd[ i ].Rank, sorterd[ i - 1 ].Rank ) )
                 {
                     return false;
                 }
             }
             return true;
+        }
+
+        private static void MoveLastToBegin( IList< Card > cards )
+        {
+            var card = cards[ 4 ];
+            for( var i = MaxNumberOnHand-1; i >0; i--)
+            {
+                cards[ i ] = cards[ i - 1 ];
+            }
+            cards[ 0 ] = card;
+        }
+
+        private static bool LastAceButNotKing( IList< Card > cards )
+        {
+            return cards[ MaxNumberOnHand-1 ].Rank == Rank.Ace && cards[ MaxNumberOnHand-2 ].Rank != Rank.King;
+        }
+
+        private static bool RanksAreNeighbours( Rank r1, Rank r2 )
+        {
+            return r1 == r2 + 1 || r1 == r2 - 1 || r1 == Rank.Ace && r2 == Rank.N2
+                   || r1 == Rank.N2 && r2 == Rank.Ace;
         }
     }
 }
