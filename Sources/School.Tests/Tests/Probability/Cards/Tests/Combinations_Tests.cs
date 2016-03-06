@@ -155,5 +155,46 @@ namespace School.Nunit.Tests.Probability.Cards.Tests
             Assert.That( Rules.IsFourOfKind( failed1 ), Is.False, "failed1" );
             Assert.That( Rules.IsFourOfKind( failed2 ), Is.False, "failed2" );
         }
+
+        [Test]
+        public void Flush_is_detected()
+        {
+            var success1 = new[] {
+                new Card( Rank.Qween, Suit.Clubs ),
+                new Card( Rank.N8, Suit.Clubs ),
+                new Card( Rank.Jack, Suit.Clubs ),
+                new Card( Rank.N9, Suit.Clubs ),
+                new Card( Rank.King, Suit.Clubs ),
+            };
+            var success2 = new[] {
+                new Card( Rank.Qween, Suit.Diamonds ),
+                new Card( Rank.Jack, Suit.Diamonds ),
+                new Card( Rank.Ace, Suit.Diamonds ),
+                new Card( Rank.N3, Suit.Diamonds ),
+                new Card( Rank.King, Suit.Diamonds ),
+            };
+            var success3 = new[] {
+                new Card( Rank.Jack, Suit.Spades ),
+                new Card( Rank.N4, Suit.Spades ),
+                new Card( Rank.N7, Suit.Spades ),
+                new Card( Rank.N8, Suit.Spades ),
+                new Card( Rank.King, Suit.Spades ),
+            };
+            var failed1 = new[] {
+                new Card( Rank.Qween, Suit.Clubs ),
+                new Card( Rank.Jack, Suit.Hearts ),
+                new Card( Rank.N10, Suit.Diamonds ),
+                new Card( Rank.N3, Suit.Spades ),
+                new Card( Rank.King, Suit.Clubs ),
+            };
+
+            var failed2 = new[] {
+                new Card( Rank.Qween, Suit.Clubs ),
+                new Card( Rank.Jack, Suit.Clubs ),
+                new Card( Rank.N10, Suit.Clubs ),
+                new Card( Rank.N3, Suit.Spades ),
+                new Card( Rank.King, Suit.Clubs ),
+            };
+        }
     }
 }

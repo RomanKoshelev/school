@@ -33,19 +33,8 @@ namespace School.Nunit.Tests.Probability.Cards.Entities
             return hc;
         }
 
-        private static bool IsFlush( IList< Card > hand )
-        {
-            var suit = hand[ 0 ].Suit;
-            foreach( var card in hand )
-            {
-                if( card.Suit != suit )
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-
+      
+      
         private static bool IsStraight( IList< Card > hand )
         {
             var sorterd = Helper.GetSorted( hand );
@@ -72,7 +61,7 @@ namespace School.Nunit.Tests.Probability.Cards.Entities
             //    для этого выызваем функцию (которой пока нет) NumOfRank(card.Rank, hand)
             //    если возващаемое значение == 4 то вернуть true
             //    иначе -- продолжить цикл
-            // в конце вернуть false, т ак как не нашли
+            // в конце вернуть false, так как не нашли
 
             foreach( var card in hand )
             {
@@ -118,5 +107,23 @@ namespace School.Nunit.Tests.Probability.Cards.Entities
             return r1 == r2 + 1 || r1 == r2 - 1 || r1 == Rank.Ace && r2 == Rank.N2
                    || r1 == Rank.N2 && r2 == Rank.Ace;
         }
+
+        public static bool IsFlush( IList< Card > hand )
+        {
+            // берём первую карту из 5 карт и запоминаем её масть 
+            // проходим по всем картам и смотрим, если текущая карта другой масти то возвращаем false
+            // в конце, если не нашли другой масти, то значит все масти одинаковые и возвращаем true   
+
+            var suit = hand[ 0 ].Suit;
+            foreach( var card in hand )
+            {
+                if( card.Suit != suit )
+                {
+                    return false;
+                }
+
+            }
+            return true;
+        }
     }
-} //return IsStraight( cards ) && IsFlush( cards ) && HightCard( cards ).Rank == Rank.Ace;
+}
