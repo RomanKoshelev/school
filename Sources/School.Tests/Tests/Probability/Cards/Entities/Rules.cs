@@ -20,7 +20,7 @@ namespace School.Nunit.Tests.Probability.Cards.Entities
             return IsStraight( hand ) && IsFlush( hand );
         }
 
-        private static Card HightCard( IList< Card > hand )
+        public static Card HightCard( IList< Card > hand )
         {
             var hc = hand[ 0 ];
             foreach( var card in hand )
@@ -33,7 +33,7 @@ namespace School.Nunit.Tests.Probability.Cards.Entities
             return hc;
         }
 
-        private static bool IsStraight( IList< Card > hand )
+        public static bool IsStraight( IList< Card > hand )
         {
             var sorterd = Helper.GetSorted( hand );
 
@@ -54,7 +54,7 @@ namespace School.Nunit.Tests.Probability.Cards.Entities
 
         public static bool IsFourOfKind( IList< Card > hand )
         {
-            // пройитсь по всем картам чтобы найти сколько таких же -- foreach 
+            // пройтись по всем картам чтобы найти сколько таких же -- foreach 
             //    в теле цикла -- для текущей карты card, узнаем сколько в руке с таким же значением (card.Rank)
             //    для этого выызваем функцию (которой пока нет) NumOfRank(card.Rank, hand)
             //    если возващаемое значение == 4 то вернуть true
@@ -65,6 +65,19 @@ namespace School.Nunit.Tests.Probability.Cards.Entities
             {
                 var rankNum = NumOfRank( card.Rank, hand );
                 if( rankNum >= 4 )
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        
+        public static bool IsThreeOfKind( IList< Card > hand )
+        {
+            foreach( var card in hand )
+            {
+                var rankNum = NumOfRank( card.Rank, hand );
+                if( rankNum >= 3 )
                 {
                     return true;
                 }
@@ -137,6 +150,36 @@ namespace School.Nunit.Tests.Probability.Cards.Entities
             }
 
             return false;
+        }
+
+
+        public static bool IsTwoPairs( IList< Card > cards )
+        {
+            var pairsNum = 0;
+
+            var tmp = new List< Card >( cards );
+
+            for( var i = 0; i < tmp.Count - 1; i++ )
+            {
+                var c1 = tmp[ i ];
+
+                for( var j = i + 1; j < tmp.Count; j++ )
+                {
+                    var c2 = tmp[ j ];
+                    if( c2.Rank == c1.Rank )
+                    {
+                        pairsNum++;
+                        tmp.RemoveAt( j );
+                        break;
+                    }
+                }
+            }
+            return pairsNum >= 2;
+        }
+
+        public static bool IsFullHouse( IList< Card > cards )
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

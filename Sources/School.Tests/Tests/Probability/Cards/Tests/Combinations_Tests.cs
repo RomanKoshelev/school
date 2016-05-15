@@ -72,6 +72,52 @@ namespace School.Nunit.Tests.Probability.Cards.Tests
         }
 
         [Test]
+        public void Straight_is_detected()
+        {
+            var success1 = new[] {
+                new Card( Rank.N10, Suit.Clubs ),
+                new Card( Rank.Jack, Suit.Clubs ),
+                new Card( Rank.Qween, Suit.Clubs ),
+                new Card( Rank.King, Suit.Clubs ),
+                new Card( Rank.Ace, Suit.Clubs ),
+            };
+            var success2 = new[] {
+                new Card( Rank.N10, Suit.Clubs ),
+                new Card( Rank.Jack, Suit.Diamonds),
+                new Card( Rank.Qween, Suit.Clubs ),
+                new Card( Rank.King, Suit.Hearts),
+                new Card( Rank.N9, Suit.Clubs ),
+            };
+            var success3 = new[] {
+                new Card( Rank.N2, Suit.Clubs ),
+                new Card( Rank.N3, Suit.Spades),
+                new Card( Rank.N4, Suit.Clubs ),
+                new Card( Rank.N5, Suit.Diamonds),
+                new Card( Rank.Ace, Suit.Hearts ),
+            };
+            var failed1 = new[] {
+                new Card( Rank.N10, Suit.Clubs ),
+                new Card( Rank.Jack, Suit.Diamonds ),
+                new Card( Rank.Qween, Suit.Clubs ),
+                new Card( Rank.King, Suit.Clubs ),
+                new Card( Rank.N8, Suit.Clubs ),
+            };
+            var failed2 = new[] {
+                new Card( Rank.N2, Suit.Clubs ),
+                new Card( Rank.Jack, Suit.Clubs ),
+                new Card( Rank.Qween, Suit.Clubs ),
+                new Card( Rank.King, Suit.Clubs ),
+                new Card( Rank.N9, Suit.Clubs ),
+            };
+
+            Assert.That( Rules.IsStraight( success1 ), Is.True, "Success 1" );
+            Assert.That( Rules.IsStraight( success2 ), Is.True, "Success 2" );
+            Assert.That( Rules.IsStraight( success3 ), Is.True, "Success 3" );
+            Assert.That( Rules.IsStraight( failed1 ), Is.False, "Failed 1" );
+            Assert.That( Rules.IsStraight( failed2 ), Is.False, "Failed 2" );
+        }
+
+        [Test]
         public void Roya_flush_is_detected()
         {
             var success1 = new[] {
@@ -110,7 +156,7 @@ namespace School.Nunit.Tests.Probability.Cards.Tests
         }
 
         [Test]
-        public void Four_of_a_kind_is_detected()
+        public void Four_of_kind_is_detected()
         {
             var success1 = new[] {
                 new Card( Rank.Jack, Suit.Clubs ),
@@ -157,6 +203,53 @@ namespace School.Nunit.Tests.Probability.Cards.Tests
         }
 
         [Test]
+        public void Three_of_kind_is_detected()
+        {
+            var success1 = new[] {
+                new Card( Rank.Jack, Suit.Clubs ),
+                new Card( Rank.Jack, Suit.Hearts ),
+                new Card( Rank.Jack, Suit.Diamonds ),
+                new Card( Rank.Ace, Suit.Spades ),
+                new Card( Rank.King, Suit.Clubs ),
+            };
+
+            var success2 = new[] {
+                new Card( Rank.N10, Suit.Clubs ),
+                new Card( Rank.N10, Suit.Hearts ),
+                new Card( Rank.N10, Suit.Hearts ),
+                new Card( Rank.King, Suit.Diamonds ),
+                new Card( Rank.N10, Suit.Spades ),
+            };
+            var success3 = new[] {
+                new Card( Rank.N10, Suit.Clubs ),
+                new Card( Rank.N10, Suit.Clubs ),
+                new Card( Rank.N10, Suit.Clubs ),
+                new Card( Rank.N10, Suit.Clubs ),
+                new Card( Rank.N10, Suit.Clubs ),
+            };
+            var failed1 = new[] {
+                new Card( Rank.N10, Suit.Clubs ),
+                new Card( Rank.Ace, Suit.Diamonds ),
+                new Card( Rank.Ace, Suit.Clubs ),
+                new Card( Rank.King, Suit.Clubs ),
+                new Card( Rank.N10, Suit.Clubs ),
+            };
+
+            var failed2 = new[] {
+                new Card( Rank.N10, Suit.Clubs ),
+                new Card( Rank.Jack, Suit.Clubs ),
+                new Card( Rank.Qween, Suit.Clubs ),
+                new Card( Rank.King, Suit.Clubs ),
+                new Card( Rank.Ace, Suit.Clubs ),
+            };
+            Assert.That( Rules.IsThreeOfKind( success1 ), Is.True, "success1" );
+            Assert.That( Rules.IsThreeOfKind( success2 ), Is.True, "success2" );
+            Assert.That( Rules.IsThreeOfKind( success3 ), Is.True, "success3" );
+            Assert.That( Rules.IsThreeOfKind( failed1 ), Is.False, "failed1" );
+            Assert.That( Rules.IsThreeOfKind( failed2 ), Is.False, "failed2" );
+        }
+
+        [Test]
         public void Flush_is_detected()
         {
             var success1 = new[] {
@@ -195,6 +288,95 @@ namespace School.Nunit.Tests.Probability.Cards.Tests
                 new Card( Rank.N3, Suit.Spades ),
                 new Card( Rank.King, Suit.Clubs ),
             };
+            Assert.That( Rules.IsFlush( success1 ), Is.True, "success1" );
+            Assert.That( Rules.IsFlush( success2 ), Is.True, "success2" );
+            Assert.That( Rules.IsFlush( success3 ), Is.True, "success3" );
+            Assert.That( Rules.IsFlush( failed1 ), Is.False, "failed1" );
+            Assert.That( Rules.IsFlush( failed2 ), Is.False, "failed2" );
+
+        }
+
+        [Test]
+        public void FullHouse_is_detected()
+        {
+            var success1 = new[] {
+                new Card( Rank.Qween, Suit.Hearts),
+                new Card( Rank.Qween, Suit.Spades),
+                new Card( Rank.Jack, Suit.Clubs ),
+                new Card( Rank.Jack, Suit.Spades),
+                new Card( Rank.Jack, Suit.Diamonds),
+            };
+            var failed1 = new[] {
+                new Card( Rank.Qween, Suit.Clubs ),
+                new Card( Rank.Jack, Suit.Hearts ),
+                new Card( Rank.N10, Suit.Diamonds ),
+                new Card( Rank.N3, Suit.Spades ),
+                new Card( Rank.King, Suit.Clubs ),
+            };
+            Assert.That( Rules.IsFullHouse( success1 ), Is.True, "success1" );
+            Assert.That( Rules.IsFullHouse( failed1 ), Is.False, "failed1" );
+
+        }
+        [Test]
+        public void TwoPairs_is_detected()
+        {
+            var success1 = new[] {
+                new Card( Rank.N2, Suit.Clubs ),
+                new Card( Rank.Jack, Suit.Hearts ),
+                new Card( Rank.King, Suit.Diamonds ),
+                new Card( Rank.Jack, Suit.Spades ),
+                new Card( Rank.King, Suit.Clubs ),
+            };
+            var success2 = new[] {
+                new Card( Rank.King, Suit.Clubs ),
+                new Card( Rank.Jack, Suit.Hearts ),
+                new Card( Rank.King, Suit.Diamonds ),
+                new Card( Rank.Jack, Suit.Spades ),
+                new Card( Rank.Jack, Suit.Clubs ),
+            };
+
+            var failed1 = new[] {
+                new Card( Rank.N4, Suit.Clubs ),
+                new Card( Rank.N10, Suit.Diamonds ),
+                new Card( Rank.Ace, Suit.Clubs ),
+                new Card( Rank.King, Suit.Clubs ),
+                new Card( Rank.N5, Suit.Clubs ),
+            };
+
+            Assert.That( Rules.IsTwoPairs( success1 ), Is.True, "success1" );
+            Assert.That( Rules.IsTwoPairs( success2 ), Is.True, "success2" );
+            Assert.That( Rules.IsTwoPairs( failed1 ), Is.False, "failed1" );
+        }
+
+        [Test]
+        public void HighCard_is_detected()
+        {
+            var cards1 = new[] {
+                new Card( Rank.N2, Suit.Clubs ),
+                new Card( Rank.Jack, Suit.Hearts ),
+                new Card( Rank.Ace, Suit.Diamonds ),
+                new Card( Rank.Jack, Suit.Spades ),
+                new Card( Rank.King, Suit.Clubs ),
+            };
+            var cards2 = new[] {
+                new Card( Rank.N2, Suit.Clubs ),
+                new Card( Rank.Jack, Suit.Hearts ),
+                new Card( Rank.King, Suit.Diamonds ),
+                new Card( Rank.Jack, Suit.Spades ),
+                new Card( Rank.N10, Suit.Clubs ),
+            };
+
+            var cards3 = new[] {
+                new Card( Rank.N4, Suit.Clubs ),
+                new Card( Rank.N10, Suit.Diamonds ),
+                new Card( Rank.Qween, Suit.Clubs ),
+                new Card( Rank.N2, Suit.Clubs ),
+                new Card( Rank.N5, Suit.Clubs ),
+            };
+
+            Assert.That( Rules.HightCard( cards1 ).Rank, Is.EqualTo( Rank.Ace), "cards1" );
+            Assert.That( Rules.HightCard( cards2 ).Rank, Is.EqualTo( Rank.King), "cards2" );
+            Assert.That( Rules.HightCard( cards3 ).Rank, Is.EqualTo( Rank.Qween), "cards3" );
         }
 
         [Test]
@@ -224,7 +406,7 @@ namespace School.Nunit.Tests.Probability.Cards.Tests
             };
 
             Assert.That( Rules.IsPair( success1 ), Is.True, "success1" );
-            Assert.That( Rules.IsPair( success1 ), Is.True, "success2" );
+            Assert.That( Rules.IsPair( success2 ), Is.True, "success2" );
             Assert.That( Rules.IsPair( failed1 ), Is.False, "failed1" );
         }
     }

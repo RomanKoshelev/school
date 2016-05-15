@@ -199,30 +199,11 @@ namespace School.Nunit.Tests.Probability.Cards.Tests
             }
 
             Print( hand );
-            Print( hand.HasPair_Ilia() ? "Has pair" : "No" );
+            Print( hand.HasPair() ? "Has pair" : "No" );
 
-            Assert.That( hand.HasPair_Ilia(), Is.EqualTo( answer ) );
+            Assert.That( hand.HasPair(), Is.EqualTo( answer ) );
         }
 
-        // 10-ка на руках
-        [Test]
-        [TestCase( new[] { Rank.Ace, Rank.N2, Rank.Jack, Rank.N4, Rank.N5 }, false )]
-        [TestCase( new[] { Rank.Ace, Rank.N2, Rank.Jack, Rank.N10, Rank.N5 }, true )]
-        [TestCase( new[] { Rank.Ace, Rank.N2, Rank.Jack, Rank.N2, Rank.N10 }, true )]
-        public void Hand_contains_10( Rank[] ranks, bool answer )
-        {
-            var hand = new Hand();
-
-            foreach( var rank in ranks )
-            {
-                hand.Take( new Card( rank, Suit.Clubs ) );
-            }
-
-            Print( hand );
-            Print( hand.Has10() ? "Has 10" : "No" );
-
-            Assert.That( hand.Has10(), Is.EqualTo( answer ) );
-        }
 
         // Мы умеем узнавать две пары
         [Test]

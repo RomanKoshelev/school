@@ -3,12 +3,21 @@
 // Hand.cs
 
 using System.Collections.Generic;
+using System.Linq;
 
 namespace School.Nunit.Tests.Probability.Cards.Entities
 {
     public class Hand
     {
         private readonly List< Card > _cards = new List< Card >();
+
+        public int CardsNum
+        {
+            get
+            {
+                return _cards.Count;
+            }
+        }
 
         public override string ToString()
         {
@@ -33,86 +42,59 @@ namespace School.Nunit.Tests.Probability.Cards.Entities
             }
         }
 
+        public bool Contains( Card card )
+        {
+            return _cards.Any( c => c.Rank == card.Rank && c.Suit == card.Suit );
+        }
+
         public bool HasPair()
         {
-            for( var i = 0; i < _cards.Count - 1; i++ )
-            {
-                var c1 = _cards[ i ];
-
-                for( var j = i + 1; j < _cards.Count; j++ )
-                {
-                    var c2 = _cards[ j ];
-                    if( c2.Rank == c1.Rank )
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-
-        public bool Has10()
-        {
-            /*            for( var i = 0; i < _cards.Count; i++) 
-            {
-                if( _cards[ i ].Rank == Rank.N10 )
-                {
-                    return true;
-                }
-            }
- */
-            // если есть 10 (в переменной _cards) то вернуть true 
-            foreach( var card in _cards )
-            {
-                if( card.Rank == Rank.N10 )
-                {
-                    return true;
-                }
-            }
-
-            // иначе вернуть false 
-            return false;
-        }
-
-        public bool HasPair_Ilia()
-        {
-            for( var i = 0; i < _cards.Count - 1; i++ )
-            {
-                var c1 = _cards[ i ];
-                for( var j = i + 1; j < _cards.Count; j++ )
-                {
-                    var c2 = _cards[ j ];
-                    if( c1.Rank == c2.Rank )
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
+            return Rules.IsPair(_cards);
         }
 
         public bool HasTwoPairs()
         {
-            var pairsNum = 0;
+            return Rules.IsTwoPairs( _cards );
+        }
 
-            var cards = new List< Card >( _cards );
+        public bool HasRoyalFlush()
+        {
+            return Rules.IsRoyalFlush( _cards );
+        }
 
-            for( var i = 0; i < cards.Count - 1; i++ )
-            {
-                var c1 = cards[ i ];
+        public bool HasStraightFlush()
+        {
+            return Rules.IsStraighFlush( _cards );
+        }
 
-                for( var j = i + 1; j < cards.Count; j++ )
-                {
-                    var c2 = cards[ j ];
-                    if( c2.Rank == c1.Rank )
-                    {
-                        pairsNum++;
-                        cards.RemoveAt( j );
-                        break;
-                    }
-                }
-            }
-            return pairsNum == 2;
+        public bool HasFourOfKind()
+        {
+            return Rules.IsFourOfKind( _cards );
+        }
+
+        public bool HasFullHouse()
+        {
+            return Rules.IsFullHouse( _cards );
+        }
+
+        public bool HasFlush()
+        {
+            return Rules.IsFlush( _cards );
+        }
+
+        public bool HasStraight()
+        {
+            return Rules.IsStraight( _cards );
+        }
+
+        public bool HasThreeOfKind()
+        {
+            return Rules.IsThreeOfKind( _cards );
+        }
+
+        public bool HasTwoPair()
+        {
+            return Rules.IsTwoPairs( _cards );
         }
     }
 }
