@@ -196,5 +196,36 @@ namespace School.Nunit.Tests.Probability.Cards.Tests
                 new Card( Rank.King, Suit.Clubs ),
             };
         }
+
+        [Test]
+        public void Pair_is_detected()
+        {
+            var success1 = new[] {
+                new Card( Rank.N2, Suit.Clubs ),
+                new Card( Rank.Jack, Suit.Hearts ),
+                new Card( Rank.King, Suit.Diamonds ),
+                new Card( Rank.Jack, Suit.Spades ),
+                new Card( Rank.King, Suit.Clubs ),
+            };
+            var success2 = new[] {
+                new Card( Rank.N2, Suit.Clubs ),
+                new Card( Rank.Jack, Suit.Hearts ),
+                new Card( Rank.King, Suit.Diamonds ),
+                new Card( Rank.Jack, Suit.Spades ),
+                new Card( Rank.N10, Suit.Clubs ),
+            };
+
+            var failed1 = new[] {
+                new Card( Rank.N4, Suit.Clubs ),
+                new Card( Rank.N10, Suit.Diamonds ),
+                new Card( Rank.Ace, Suit.Clubs ),
+                new Card( Rank.King, Suit.Clubs ),
+                new Card( Rank.N5, Suit.Clubs ),
+            };
+
+            Assert.That( Rules.IsPair( success1 ), Is.True, "success1" );
+            Assert.That( Rules.IsPair( success1 ), Is.True, "success2" );
+            Assert.That( Rules.IsPair( failed1 ), Is.False, "failed1" );
+        }
     }
 }

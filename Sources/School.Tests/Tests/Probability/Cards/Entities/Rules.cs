@@ -33,8 +33,6 @@ namespace School.Nunit.Tests.Probability.Cards.Entities
             return hc;
         }
 
-      
-      
         private static bool IsStraight( IList< Card > hand )
         {
             var sorterd = Helper.GetSorted( hand );
@@ -121,9 +119,24 @@ namespace School.Nunit.Tests.Probability.Cards.Entities
                 {
                     return false;
                 }
-
             }
             return true;
+        }
+
+        public static bool IsPair( IList< Card > cards )
+        {
+            for( var i = 0; i < cards.Count; i++ )
+            {
+                for( var j = i + 1; j < cards.Count; j++ )
+                {
+                    if( cards[ i ].Rank == cards[ j ].Rank )
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
     }
 }

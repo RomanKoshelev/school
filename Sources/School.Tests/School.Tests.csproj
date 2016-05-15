@@ -63,6 +63,7 @@
     <Compile Include="Tests\Probability\Cards\Entities\Card.cs" />
     <Compile Include="Tests\Probability\Cards\Entities\Combination.cs" />
     <Compile Include="Tests\Probability\Cards\Entities\Helper.cs" />
+    <Compile Include="Tests\Probability\Cards\Tests\Game_Tests.cs" />
     <Compile Include="Tests\Probability\Cards\Tests\Combinations_Tests.cs" />
     <Compile Include="Tests\Probability\Cards\Tests\Cards_Tests.cs" />
     <Compile Include="Tests\Probability\Base\ProbabilityBaseTest.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Tests\Probability\Cards\Entities\Rank.cs" />
     <Compile Include="Tests\Probability\Cards\Entities\Suit.cs" />
     <Compile Include="Tests\Probability\Cards\Entities\Rules.cs" />
+    <Compile Include="Tests\Probability\Cards\Entities\Player.cs" />
     <Compile Include="Tests\Probability\Coins\CoinGenerator.cs" />
     <Compile Include="Tests\Probability\Coins\Coin_Tests.cs" />
     <Compile Include="Tests\Others\Searcher_Tests.cs" />
