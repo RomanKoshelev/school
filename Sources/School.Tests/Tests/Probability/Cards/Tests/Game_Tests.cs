@@ -56,5 +56,40 @@ namespace School.Nunit.Tests.Probability.Cards.Tests
             Assert.IsFalse( player.Has( Combination.Flush ) );
             Assert.IsFalse( player.Has( Combination.FullHouse ) );
         }
+
+        [Test]
+        public void Player_ask_the_best_combination()
+        {
+            var player = new Player( "Ilia" );
+
+            // создать пять карт
+            var fullHaouse = new[] {
+                new Card( Rank.Qween, Suit.Hearts ),
+                new Card( Rank.Qween, Suit.Spades ),
+                new Card( Rank.Jack, Suit.Clubs ),
+                new Card( Rank.Jack, Suit.Spades ),
+                new Card( Rank.Jack, Suit.Diamonds ),
+            };
+            var pair = new[] {
+                new Card( Rank.Qween, Suit.Hearts ),
+                new Card( Rank.Qween, Suit.Spades ),
+                new Card( Rank.N7, Suit.Clubs ),
+                new Card( Rank.N10, Suit.Spades ),
+                new Card( Rank.Jack, Suit.Diamonds ),
+            };
+
+
+            
+            // дать карты игроку
+            player.Take( fullHaouse );
+
+            // спросить игрока про лучшую комбюинацуию 
+           var combination=player.ask_the_best_combination();
+
+            // убедиться ,что ответ верный 
+
+            Assert.That( player.Name == "Ilia" );
+            Assert.That( player.CardsNum == 5 );
+        }
     }
 }

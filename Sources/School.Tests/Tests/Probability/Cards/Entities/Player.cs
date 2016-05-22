@@ -1,4 +1,4 @@
-// School (c) 2016 School
+﻿// School (c) 2016 School
 // School.Tests
 // Player.cs
 
@@ -72,6 +72,21 @@ namespace School.Nunit.Tests.Probability.Cards.Entities
                     return _hand.HasPair();
             }
             throw new ArgumentException( combination.ToString() );
+        }
+
+        public void Take( Card[] cards )
+        {
+            foreach( var card in cards )
+            {
+                Take( card );
+            }
+        }
+
+        public Combination ask_the_best_combination()
+        {
+            // todo:
+            // начать проверку с самой крутой комбинации и если это не ноа идем вниз по комбинациям
+            return  Combination.RoyalFlush;
         }
     }
 }
