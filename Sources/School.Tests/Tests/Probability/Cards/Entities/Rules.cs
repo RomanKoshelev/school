@@ -35,16 +35,16 @@ namespace School.Nunit.Tests.Probability.Cards.Entities
 
         public static bool IsStraight( IList< Card > hand )
         {
-            var sorterd = Helper.GetSorted( hand );
+            var sorted = Helper.GetSorted( hand );
 
-            if( LastAceButNotKing( sorterd ) )
+            if( LastAceButNotKing( sorted ) )
             {
-                MoveLastToBegin( sorterd );
+                MoveLastToBegin( sorted );
             }
 
             for( var i = 1; i < MaxNumberOnHand; i++ )
             {
-                if( !RanksAreNeighbours( sorterd[ i ].Rank, sorterd[ i - 1 ].Rank ) )
+                if( !RanksAreNeighbours( sorted[ i ].Rank, sorted[ i - 1 ].Rank ) )
                 {
                     return false;
                 }
@@ -71,7 +71,7 @@ namespace School.Nunit.Tests.Probability.Cards.Entities
             }
             return false;
         }
-        
+
         public static bool IsThreeOfKind( IList< Card > hand )
         {
             foreach( var card in hand )
@@ -152,7 +152,6 @@ namespace School.Nunit.Tests.Probability.Cards.Entities
             return false;
         }
 
-
         public static bool IsTwoPairs( IList< Card > cards )
         {
             var pairsNum = 0;
@@ -179,7 +178,20 @@ namespace School.Nunit.Tests.Probability.Cards.Entities
 
         public static bool IsFullHouse( IList< Card > cards )
         {
-            throw new System.NotImplementedException();
+            var sc = Helper.GetSorted( cards );
+
+            // 3+2
+            if( sc[ 0 ].Rank == sc[ 1 ].Rank && sc[ 1 ].Rank == sc[ 2 ].Rank && sc[ 3 ].Rank == sc[ 4 ].Rank )
+            {
+                return true;
+            }
+            // 2+3
+            if( sc[ 0 ].Rank == sc[ 1 ].Rank && sc[ 2 ].Rank == sc[ 3 ].Rank && sc[ 3 ].Rank == sc[ 4 ].Rank )
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

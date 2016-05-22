@@ -49,7 +49,7 @@ namespace School.Nunit.Tests.Probability.Cards.Entities
 
         public bool HasPair()
         {
-            return Rules.IsPair(_cards);
+            return Rules.IsPair( _cards );
         }
 
         public bool HasTwoPairs()
