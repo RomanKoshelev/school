@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Погладь котёнка</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #1a1a2e;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      padding: 32px 16px 48px;
+      color: #eee;
+      user-select: none;
+    }
+
+    h1 { font-size: 2rem; margin-bottom: 12px; letter-spacing: 2px; color: #f5a623; }
+
+    #mood-label {
+      font-size: 1.1rem; margin-bottom: 24px; color: #ccc; min-height: 1.4em;
+    }
+
+    #bar-wrap {
+      width: 320px; height: 18px; background: #333;
+      border-radius: 9px; margin-bottom: 32px; overflow: hidden;
+    }
+    #bar {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, #f5a623, #f76b8a);
+      border-radius: 9px; transition: width 0.3s ease;
+    }
+
+    #kitten-wrap {
+      position: relative; cursor: pointer; width: 220px; height: 220px;
+    }
+    #kitten {
+      font-size: 130px; line-height: 220px; text-align: center;
+      display: block; transition: transform 0.15s ease;
+    }
+    #kitten-wrap:hover #kitten { transform: scale(1.06); }
+    #kitten-wrap:active #kitten { transform: scale(0.92); }
+    #kitten.petting {
+      animation: pet 0.35s ease;
+      filter: drop-shadow(0 0 22px rgba(245,166,35,0.9));
+    }
+    @keyframes pet {
+      0%   { transform: scale(1); }
+      30%  { transform: scale(1.18) rotate(-6deg); }
+      60%  { transform: scale(1.18) rotate(6deg); }
+      100% { transform: scale(1); }
+    }
+
+    .heart {
+      position: absolute; font-size: 24px; pointer-events: none;
+      animation: float-up 1s ease forwards; top: 20px;
+    }
+    @keyframes float-up {
+      0%   { opacity: 1; transform: translateY(0) scale(1); }
+      100% { opacity: 0; transform: translateY(-90px) scale(1.4); }
+    }
+
+    #purr {
+      margin-top: 28px; font-size: 1.3rem; color: #f76b8a;
+      min-height: 1.6em; letter-spacing: 3px;
+      transition: opacity 0.5s; opacity: 0;
+    }
+    #purr.visible { opacity: 1; }
+
+    #count { margin-top: 16px; color: #888; font-size: 0.9rem; }
+
+    /* Save score form */
+    #save-form {
+      margin-top: 24px;
+      display: flex; gap: 8px; align-items: center;
+      opacity: 0; pointer-events: none; transition: opacity 0.4s;
+    }
+    #save-form.visible { opacity: 1; pointer-events: all; }
+    #save-form input {
+      background: #2a2a45; border: 1px solid #444; color: #eee;
+      padding: 8px 12px; border-radius: 20px; font-size: 0.95rem;
+      outline: none; width: 160px;
+    }
+    #save-form button {
+      background: #f5a623; color: #1a1a2e; border: none;
+      padding: 8px 16px; border-radius: 20px; font-weight: bold;
+      cursor: pointer; font-size: 0.95rem;
+    }
+    #save-form button:hover { background: #f76b8a; color: #fff; }
+
+    /* Leaderboard */
+    #leaderboard {
+      margin-top: 28px; width: 320px;
+      background: #16213e; border-radius: 12px; overflow: hidden;
+    }
+    #leaderboard h2 {
+      font-size: 1rem; padding: 10px 16px;
+      background: #0f3460; color: #f5a623; letter-spacing: 1px;
+    }
+    #lb-list { list-style: none; }
+    #lb-list li {
+      display: flex; justify-content: space-between;
+      padding: 7px 16px; border-bottom: 1px solid #1e2a45;
+      font-size: 0.9rem; color: #ccc;
+    }
+    #lb-list li:last-child { border-bottom: none; }
+    #lb-list li span.score { color: #f5a623; font-weight: bold; }
+    #lb-list .empty { color: #555; font-style: italic; justify-content: center; }
+
+    /* Achievement */
+    #achievement {
+      position: fixed; bottom: -80px; left: 50%;
+      transform: translateX(-50%);
+      background: #f5a623; color: #1a1a2e;
+      padding: 12px 28px; border-radius: 30px;
+      font-weight: bold; font-size: 1rem;
+      transition: bottom 0.5s ease; white-space: nowrap; z-index: 100;
+    }
+    #achievement.show { bottom: 32px; }
+
+    #lb-note {
+      margin-top: 6px; font-size: 0.75rem; color: #555; text-align: center; width: 320px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Погладь котёнка</h1>
+  <div id="mood-label">Котёнок скучает...</div>
+
+  <div id="bar-wrap"><div id="bar"></div></div>
+
+  <div id="kitten-wrap" onclick="pet(event)">
+    <span id="kitten">🐱</span>
+  </div>
+
+  <div id="purr"></div>
+  <div id="count">Погладили: <b id="num">0</b> раз</div>
+
+  <div id="save-form">
+    <input id="player-name" type="text" placeholder="Ваше имя" maxlength="30" />
+    <button onclick="saveScore()">Сохранить</button>
+  </div>
+
+  <div id="leaderboard">
+    <h2>🏆 Таблица лидеров</h2>
+    <ul id="lb-list"><li class="empty">Пока никого нет...</li></ul>
+  </div>
+  <div id="lb-note">Рекорды хранятся в браузере</div>
+
+  <div id="achievement"></div>
+
+<script>
+  const PURRS  = ['мурр...','мур-мур','пурр~','мяу!','мур!','мррр','пррр...'];
+  const HEARTS = ['❤️','💛','💜','💙','💖','💕','🧡'];
+  const MOODS  = [
+    { at:   0, text: 'Котёнок скучает...',         emoji: '🐱' },
+    { at:  10, text: 'Котёнок доволен',             emoji: '😺' },
+    { at:  30, text: 'Котёнок счастлив!',           emoji: '😸' },
+    { at:  60, text: 'Котёнок в восторге! ✨',      emoji: '😻' },
+    { at: 100, text: 'Котёнок обожает тебя! 💖',   emoji: '😻' },
+  ];
+  const ACHIEVEMENTS = {
+    1:   '🐾 Первое прикосновение!',
+    10:  '🐾 Котёнок запомнил тебя',
+    25:  '💛 Лучший друг котёнка',
+    50:  '🌟 Мастер глажки',
+    100: '👑 Повелитель котят',
+    200: '🚀 Легенда глажки',
+    500: '🌈 Бог котят',
+  };
+
+  const LS_KEY = 'kitten_leaderboard';
+  let count = 0;
+  let happiness = 0;
+  let purrTimeout;
+
+  function pet(e) {
+    count++;
+    happiness = Math.min(100, happiness + (happiness < 50 ? 4 : 2));
+    document.getElementById('num').textContent = count;
+    updateBar();
+    updateMood();
+    animateKitten();
+    spawnHeart();
+    showPurr();
+    checkAchievement();
+    if (count >= 10) document.getElementById('save-form').classList.add('visible');
+  }
+
+  function updateBar() {
+    document.getElementById('bar').style.width = happiness + '%';
+  }
+
+  function updateMood() {
+    let mood = MOODS[0];
+    for (const m of MOODS) { if (count >= m.at) mood = m; }
+    document.getElementById('mood-label').textContent = mood.text;
+    document.getElementById('kitten').textContent = mood.emoji;
+  }
+
+  function animateKitten() {
+    const k = document.getElementById('kitten');
+    k.classList.remove('petting');
+    void k.offsetWidth;
+    k.classList.add('petting');
+  }
+
+  function spawnHeart() {
+    const wrap = document.getElementById('kitten-wrap');
+    const heart = document.createElement('div');
+    heart.className = 'heart';
+    heart.textContent = HEARTS[Math.floor(Math.random() * HEARTS.length)];
+    heart.style.left = (Math.random() * 160 + 20) + 'px';
+    wrap.appendChild(heart);
+    heart.addEventListener('animationend', () => heart.remove());
+  }
+
+  function showPurr() {
+    const el = document.getElementById('purr');
+    el.textContent = PURRS[Math.floor(Math.random() * PURRS.length)];
+    el.classList.add('visible');
+    clearTimeout(purrTimeout);
+    purrTimeout = setTimeout(() => el.classList.remove('visible'), 900);
+  }
+
+  function checkAchievement() {
+    if (ACHIEVEMENTS[count]) {
+      const el = document.getElementById('achievement');
+      el.textContent = ACHIEVEMENTS[count];
+      el.classList.add('show');
+      setTimeout(() => el.classList.remove('show'), 2500);
+    }
+  }
+
+  function saveScore() {
+    const name = document.getElementById('player-name').value.trim() || 'Аноним';
+    const scores = getScores();
+    scores[name] = Math.max(scores[name] || 0, count);
+    localStorage.setItem(LS_KEY, JSON.stringify(scores));
+    renderLeaderboard();
+    document.getElementById('player-name').value = '';
+    showAchievementText('✅ Рекорд сохранён!');
+  }
+
+  function getScores() {
+    try { return JSON.parse(localStorage.getItem(LS_KEY) || '{}'); }
+    catch { return {}; }
+  }
+
+  function renderLeaderboard() {
+    const scores = getScores();
+    const top = Object.entries(scores)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 10);
+    const ul = document.getElementById('lb-list');
+    if (!top.length) {
+      ul.innerHTML = '<li class="empty">Пока никого нет...</li>';
+      return;
+    }
+    ul.innerHTML = top.map(([n, c], i) =>
+      `<li><span>${i + 1}. ${escHtml(n)}</span><span class="score">${c} раз</span></li>`
+    ).join('');
+  }
+
+  function escHtml(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function showAchievementText(text) {
+    const el = document.getElementById('achievement');
+    el.textContent = text;
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 2000);
+  }
+
+  renderLeaderboard();
+</script>
+</body>
+</html>
