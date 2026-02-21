@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Погладь котёнка</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #1a1a2e;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      color: #eee;
+      user-select: none;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 12px;
+      letter-spacing: 2px;
+      color: #f5a623;
+    }
+
+    #mood-label {
+      font-size: 1.1rem;
+      margin-bottom: 24px;
+      color: #ccc;
+      min-height: 1.4em;
+      transition: color 0.3s;
+    }
+
+    /* Progress bar */
+    #bar-wrap {
+      width: 320px;
+      height: 18px;
+      background: #333;
+      border-radius: 9px;
+      margin-bottom: 32px;
+      overflow: hidden;
+    }
+    #bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #f5a623, #f76b8a);
+      border-radius: 9px;
+      transition: width 0.3s ease;
+    }
+
+    /* Kitten area */
+    #kitten-wrap {
+      position: relative;
+      cursor: pointer;
+      width: 220px;
+      height: 220px;
+    }
+
+    #kitten {
+      font-size: 130px;
+      line-height: 220px;
+      text-align: center;
+      display: block;
+      transition: transform 0.15s ease;
+      filter: drop-shadow(0 0 12px rgba(245,166,35,0));
+    }
+
+    #kitten-wrap:hover #kitten {
+      transform: scale(1.06);
+    }
+
+    #kitten-wrap:active #kitten {
+      transform: scale(0.92);
+    }
+
+    #kitten.petting {
+      animation: pet 0.35s ease;
+      filter: drop-shadow(0 0 22px rgba(245,166,35,0.9));
+    }
+
+    @keyframes pet {
+      0%   { transform: scale(1); }
+      30%  { transform: scale(1.18) rotate(-6deg); }
+      60%  { transform: scale(1.18) rotate(6deg); }
+      100% { transform: scale(1); }
+    }
+
+    /* Hearts */
+    .heart {
+      position: absolute;
+      font-size: 24px;
+      pointer-events: none;
+      animation: float-up 1s ease forwards;
+      top: 20px;
+    }
+
+    @keyframes float-up {
+      0%   { opacity: 1; transform: translateY(0) scale(1); }
+      100% { opacity: 0; transform: translateY(-90px) scale(1.4); }
+    }
+
+    /* Purr text */
+    #purr {
+      margin-top: 28px;
+      font-size: 1.3rem;
+      color: #f76b8a;
+      min-height: 1.6em;
+      letter-spacing: 3px;
+      transition: opacity 0.5s;
+      opacity: 0;
+    }
+
+    #purr.visible { opacity: 1; }
+
+    #count {
+      margin-top: 16px;
+      color: #888;
+      font-size: 0.9rem;
+    }
+
+    /* Achievement */
+    #achievement {
+      position: fixed;
+      bottom: -80px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #f5a623;
+      color: #1a1a2e;
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-weight: bold;
+      font-size: 1rem;
+      transition: bottom 0.5s ease;
+      white-space: nowrap;
+    }
+    #achievement.show { bottom: 32px; }
+  </style>
+</head>
+<body>
+
+  <h1>Погладь котёнка</h1>
+  <div id="mood-label">Котёнок скучает...</div>
+
+  <div id="bar-wrap"><div id="bar"></div></div>
+
+  <div id="kitten-wrap" onclick="pet(event)">
+    <span id="kitten">🐱</span>
+  </div>
+
+  <div id="purr"></div>
+  <div id="count">Погладили: <b id="num">0</b> раз</div>
+
+  <div id="achievement"></div>
+
+<script>
+  const EMOJIS   = ['🐱','😺','😸','😻'];
+  const PURRS    = ['мурр...','мур-мур','пурр~','мяу!','мур!'];
+  const MOODS    = [
+    { at:  0, text: 'Котёнок скучает...',          emoji: '🐱' },
+    { at: 10, text: 'Котёнок доволен',              emoji: '😺' },
+    { at: 30, text: 'Котёнок счастлив!',            emoji: '😸' },
+    { at: 60, text: 'Котёнок в восторге! ✨',       emoji: '😻' },
+    { at:100, text: 'Котёнок обожает тебя! 💖',    emoji: '😻' },
+  ];
+  const ACHIEVEMENTS = {
+    1:   '🐾 Первое прикосновение!',
+    10:  '🐾 Котёнок запомнил тебя',
+    25:  '💛 Лучший друг котёнка',
+    50:  '🌟 Мастер глажки',
+    100: '👑 Повелитель котят',
+  };
+
+  let count = 0;
+  let happiness = 0;
+  let purrTimeout;
+
+  function pet(e) {
+    count++;
+    happiness = Math.min(100, happiness + (happiness < 50 ? 4 : 2));
+
+    document.getElementById('num').textContent = count;
+    updateBar();
+    updateMood();
+    animateKitten();
+    spawnHeart(e);
+    showPurr();
+    checkAchievement();
+  }
+
+  function updateBar() {
+    document.getElementById('bar').style.width = happiness + '%';
+  }
+
+  function updateMood() {
+    let mood = MOODS[0];
+    for (const m of MOODS) {
+      if (count >= m.at) mood = m;
+    }
+    document.getElementById('mood-label').textContent = mood.text;
+    document.getElementById('kitten').textContent = mood.emoji;
+  }
+
+  function animateKitten() {
+    const k = document.getElementById('kitten');
+    k.classList.remove('petting');
+    void k.offsetWidth;
+    k.classList.add('petting');
+  }
+
+  function spawnHeart(e) {
+    const wrap = document.getElementById('kitten-wrap');
+    const rect = wrap.getBoundingClientRect();
+    const heart = document.createElement('div');
+    heart.className = 'heart';
+    const hearts = ['❤️','💛','💜','💙','💖','💕'];
+    heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+    const x = Math.random() * 160 + 20;
+    heart.style.left = x + 'px';
+    wrap.appendChild(heart);
+    heart.addEventListener('animationend', () => heart.remove());
+  }
+
+  function showPurr() {
+    const el = document.getElementById('purr');
+    el.textContent = PURRS[Math.floor(Math.random() * PURRS.length)];
+    el.classList.add('visible');
+    clearTimeout(purrTimeout);
+    purrTimeout = setTimeout(() => el.classList.remove('visible'), 900);
+  }
+
+  function checkAchievement() {
+    if (ACHIEVEMENTS[count]) {
+      const el = document.getElementById('achievement');
+      el.textContent = ACHIEVEMENTS[count];
+      el.classList.add('show');
+      setTimeout(() => el.classList.remove('show'), 2500);
+    }
+  }
+</script>
+</body>
+</html>
