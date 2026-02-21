@@ -18,39 +18,35 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  deploy:
+  # Job 1: Push to gh-pages branch (works even without Pages enabled in Settings)
+  push-to-gh-pages:
     runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./kitten-game-static
+          publish_branch: gh-pages
+          commit_message: "Deploy kitten game"
+          force_orphan: true
+
+  # Job 2: Try GitHub Actions Pages deployment (works if Pages is configured)
+  deploy-via-actions:
+    runs-on: ubuntu-latest
+    needs: push-to-gh-pages
+    continue-on-error: true
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    env:
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Enable GitHub Pages (if needed)
-        run: |
-          echo "=== Checking Pages status ==="
-          STATUS=$(gh api "repos/${{ github.repository }}/pages" -q '.status' 2>&1 || echo "NOT_FOUND")
-          echo "Pages status: $STATUS"
-
-          if echo "$STATUS" | grep -q "NOT_FOUND\|Not Found"; then
-            echo "=== Creating GitHub Pages site ==="
-            gh api "repos/${{ github.repository }}/pages" \
-              --method POST \
-              --field build_type=workflow \
-              --jq '.' || echo "WARNING: Could not create Pages site automatically"
-          else
-            echo "=== Ensuring build type is workflow ==="
-            gh api "repos/${{ github.repository }}/pages" \
-              --method PUT \
-              --field build_type=workflow \
-              --jq '.' 2>&1 || echo "Pages already configured"
-          fi
+      - uses: actions/checkout@v4
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
+        continue-on-error: true
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
