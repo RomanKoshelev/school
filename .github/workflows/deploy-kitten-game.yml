@@ -23,36 +23,30 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Enable GitHub Pages via API
+      - name: Enable GitHub Pages (if needed)
         run: |
-          # Try to enable Pages if it's not already enabled
-          STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/vnd.github+json" \
-            https://api.github.com/repos/${{ github.repository }}/pages)
-          echo "Pages API status: $STATUS"
-          if [ "$STATUS" = "404" ]; then
-            echo "Pages not enabled. Creating GitHub Pages site..."
-            RESULT=$(curl -s -X POST \
-              -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-              -H "Accept: application/vnd.github+json" \
-              -H "X-GitHub-Api-Version: 2022-11-28" \
-              https://api.github.com/repos/${{ github.repository }}/pages \
-              -d '{"build_type":"workflow"}')
-            echo "Result: $RESULT"
+          echo "=== Checking Pages status ==="
+          STATUS=$(gh api "repos/${{ github.repository }}/pages" -q '.status' 2>&1 || echo "NOT_FOUND")
+          echo "Pages status: $STATUS"
+
+          if echo "$STATUS" | grep -q "NOT_FOUND\|Not Found"; then
+            echo "=== Creating GitHub Pages site ==="
+            gh api "repos/${{ github.repository }}/pages" \
+              --method POST \
+              --field build_type=workflow \
+              --jq '.' || echo "WARNING: Could not create Pages site automatically"
           else
-            echo "Pages already enabled or unexpected status."
-            # Ensure build type is workflow
-            curl -s -X PUT \
-              -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-              -H "Accept: application/vnd.github+json" \
-              -H "X-GitHub-Api-Version: 2022-11-28" \
-              https://api.github.com/repos/${{ github.repository }}/pages \
-              -d '{"build_type":"workflow"}' || true
+            echo "=== Ensuring build type is workflow ==="
+            gh api "repos/${{ github.repository }}/pages" \
+              --method PUT \
+              --field build_type=workflow \
+              --jq '.' 2>&1 || echo "Pages already configured"
           fi
 
       - name: Setup Pages
