@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#167;</text></svg>">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>РуЮрист — ИИ Юрист РФ</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            height: 100dvh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: #1e293b;
+            border-bottom: 1px solid #334155;
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .logo h1 { font-size: 20px; font-weight: 600; color: #f1f5f9; }
+        .logo span { font-size: 13px; color: #94a3b8; }
+
+        .btn {
+            background: #334155;
+            color: #94a3b8;
+            border: 1px solid #475569;
+            padding: 8px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all .2s;
+        }
+        .btn:hover { background: #475569; color: #e2e8f0; }
+
+        /* API key bar */
+        .key-bar {
+            background: #1e293b;
+            border-bottom: 1px solid #334155;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+        }
+
+        .key-bar label { font-size: 13px; color: #94a3b8; white-space: nowrap; }
+
+        #apiKey {
+            width: 320px;
+            max-width: 60vw;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            background: #0f172a;
+            color: #e2e8f0;
+            font-size: 13px;
+            font-family: monospace;
+            outline: none;
+        }
+        #apiKey:focus { border-color: #3b82f6; }
+        #apiKey::placeholder { color: #475569; }
+
+        .key-dot {
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            background: #475569;
+            flex-shrink: 0;
+            transition: background .3s;
+        }
+        .key-dot.ok { background: #22c55e; }
+        .key-dot.err { background: #ef4444; }
+
+        /* Chat */
+        .chat {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .welcome {
+            text-align: center;
+            margin: auto;
+            max-width: 480px;
+        }
+        .welcome h2 { font-size: 22px; margin-bottom: 10px; color: #f1f5f9; }
+        .welcome p { color: #94a3b8; line-height: 1.6; margin-bottom: 18px; font-size: 15px; }
+
+        .examples { display: flex; flex-direction: column; gap: 8px; }
+
+        .ex-btn {
+            background: #1e293b;
+            border: 1px solid #334155;
+            color: #cbd5e1;
+            padding: 12px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            text-align: left;
+            transition: all .2s;
+        }
+        .ex-btn:hover { background: #334155; border-color: #3b82f6; }
+
+        .msg {
+            display: flex;
+            gap: 10px;
+            max-width: 780px;
+            width: 100%;
+            margin: 0 auto;
+            animation: fadeIn .3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .msg.user { flex-direction: row-reverse; }
+
+        .ava {
+            width: 34px; height: 34px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 15px; flex-shrink: 0; font-weight: 600;
+        }
+        .msg.user .ava { background: #3b82f6; }
+        .msg.bot .ava { background: linear-gradient(135deg, #8b5cf6, #3b82f6); }
+
+        .bub {
+            padding: 12px 16px;
+            border-radius: 16px;
+            line-height: 1.65;
+            font-size: 15px;
+            max-width: 660px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .msg.user .bub {
+            background: #3b82f6; color: #fff;
+            border-bottom-right-radius: 4px;
+        }
+        .msg.bot .bub {
+            background: #1e293b; border: 1px solid #334155; color: #e2e8f0;
+            border-bottom-left-radius: 4px;
+        }
+
+        .typing .bub::after {
+            content: "";
+            display: inline-block;
+            width: 6px; height: 16px;
+            background: #94a3b8;
+            margin-left: 4px;
+            animation: blink 1s steps(2) infinite;
+            vertical-align: text-bottom;
+        }
+        @keyframes blink { 0%{opacity:1} 50%{opacity:0} }
+
+        /* Input */
+        .input-bar {
+            padding: 14px 20px;
+            background: #1e293b;
+            border-top: 1px solid #334155;
+            flex-shrink: 0;
+        }
+        .input-wrap {
+            max-width: 780px;
+            margin: 0 auto;
+            display: flex;
+            gap: 10px;
+        }
+
+        #question {
+            flex: 1;
+            padding: 13px 16px;
+            border-radius: 12px;
+            border: 1px solid #334155;
+            background: #0f172a;
+            color: #e2e8f0;
+            font-size: 15px;
+            outline: none;
+            resize: none;
+            min-height: 46px;
+            max-height: 140px;
+            font-family: inherit;
+        }
+        #question:focus { border-color: #3b82f6; }
+        #question::placeholder { color: #64748b; }
+
+        .btn-send {
+            width: 46px; height: 46px;
+            border-radius: 12px;
+            background: #3b82f6;
+            border: none; color: #fff;
+            font-size: 20px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: background .2s;
+            align-self: flex-end;
+        }
+        .btn-send:hover { background: #2563eb; }
+        .btn-send:disabled { background: #334155; cursor: not-allowed; }
+
+        .footer {
+            text-align: center;
+            font-size: 11px;
+            color: #475569;
+            padding: 6px;
+            background: #1e293b;
+        }
+
+        @media (max-width: 600px) {
+            header { padding: 10px 14px; }
+            .key-bar { padding: 8px 14px; }
+            #apiKey { width: 100%; max-width: 100%; }
+            .chat { padding: 14px; }
+            .input-bar { padding: 10px 14px; }
+            .logo h1 { font-size: 17px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <div class="logo-icon">&sect;</div>
+            <div>
+                <h1>РуЮрист</h1>
+                <span>ИИ-помощник по праву РФ</span>
+            </div>
+        </div>
+        <button class="btn" onclick="clearChat()">Новый диалог</button>
+    </header>
+
+    <div class="key-bar">
+        <label for="apiKey">Ключ OpenRouter:</label>
+        <input type="password" id="apiKey" placeholder="sk-or-v1-..." autocomplete="off">
+        <div class="key-dot" id="keyDot" title="Статус ключа"></div>
+    </div>
+
+    <div class="chat" id="chat">
+        <div class="welcome" id="welcome">
+            <h2>Юридическая консультация</h2>
+            <p>Введите API-ключ OpenRouter выше и задайте вопрос по законодательству Российской Федерации.</p>
+            <div class="examples">
+                <button class="ex-btn" onclick="askEx(this)">Какие права имеет работник при увольнении по сокращению?</button>
+                <button class="ex-btn" onclick="askEx(this)">Как оформить возврат товара в течение 14 дней?</button>
+                <button class="ex-btn" onclick="askEx(this)">Какие документы нужны для регистрации ИП?</button>
+                <button class="ex-btn" onclick="askEx(this)">Сосед затопил квартиру — что делать?</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">Ответы носят информационный характер и не являются официальной юридической консультацией</div>
+
+    <div class="input-bar">
+        <div class="input-wrap">
+            <textarea id="question" rows="1" placeholder="Задайте юридический вопрос..." onkeydown="onKey(event)"></textarea>
+            <button class="btn-send" id="sendBtn" onclick="send()">&#10148;</button>
+        </div>
+    </div>
+
+<script>
+const SYSTEM = `Ты — опытный юрист Российской Федерации с 20-летним стажем.
+Ты специализируешься на всех отраслях российского права: гражданском, уголовном, трудовом, семейном, административном, налоговом и других.
+
+Правила:
+1. Отвечай на вопросы строго в рамках законодательства РФ.
+2. Ссылайся на конкретные статьи законов, кодексов и нормативных актов (ГК РФ, УК РФ, ТК РФ, СК РФ, КоАП РФ, НК РФ и др.).
+3. Объясняй простым и понятным языком, избегая излишнего юридического жаргона.
+4. Если вопрос выходит за рамки твоей компетенции, честно скажи об этом и порекомендуй обратиться к профильному специалисту.
+5. Всегда напоминай, что твои ответы носят информационный характер и не являются официальной юридической консультацией.
+6. При необходимости задавай уточняющие вопросы для более точного ответа.
+7. Отвечай на русском языке.`;
+
+const MODEL = "anthropic/claude-sonnet-4";
+const API_URL = "https://openrouter.ai/api/v1/chat/completions";
+
+const chat = document.getElementById("chat");
+const input = document.getElementById("question");
+const sendBtn = document.getElementById("sendBtn");
+const apiKeyInput = document.getElementById("apiKey");
+const keyDot = document.getElementById("keyDot");
+
+let history = [];
+let busy = false;
+
+// Restore saved key
+const saved = localStorage.getItem("openrouter_key");
+if (saved) apiKeyInput.value = saved;
+
+apiKeyInput.addEventListener("input", function () {
+    localStorage.setItem("openrouter_key", this.value);
+    keyDot.className = "key-dot";
+});
+
+input.addEventListener("input", function () {
+    this.style.height = "auto";
+    this.style.height = Math.min(this.scrollHeight, 140) + "px";
+});
+
+function onKey(e) {
+    if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); }
+}
+
+function askEx(btn) { input.value = btn.textContent; send(); }
+
+function addMsg(role, text) {
+    const w = document.getElementById("welcome");
+    if (w) w.remove();
+    const div = document.createElement("div");
+    div.className = "msg " + (role === "user" ? "user" : "bot");
+    const ava = document.createElement("div");
+    ava.className = "ava";
+    ava.textContent = role === "user" ? "?" : "\u00A7";
+    const bub = document.createElement("div");
+    bub.className = "bub";
+    bub.textContent = text;
+    div.appendChild(ava);
+    div.appendChild(bub);
+    chat.appendChild(div);
+    chat.scrollTop = chat.scrollHeight;
+    return div;
+}
+
+async function send() {
+    if (busy) return;
+    const key = apiKeyInput.value.trim();
+    if (!key) {
+        apiKeyInput.focus();
+        apiKeyInput.style.borderColor = "#ef4444";
+        setTimeout(() => apiKeyInput.style.borderColor = "", 1500);
+        return;
+    }
+    const q = input.value.trim();
+    if (!q) return;
+
+    input.value = "";
+    input.style.height = "auto";
+    addMsg("user", q);
+
+    history.push({ role: "user", content: q });
+
+    const typing = addMsg("assistant", "");
+    typing.classList.add("typing");
+    busy = true;
+    sendBtn.disabled = true;
+
+    try {
+        const msgs = [{ role: "system", content: SYSTEM }, ...history];
+        const res = await fetch(API_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + key
+            },
+            body: JSON.stringify({
+                model: MODEL,
+                max_tokens: 4096,
+                messages: msgs
+            })
+        });
+
+        const data = await res.json();
+        typing.classList.remove("typing");
+
+        if (data.choices && data.choices[0]) {
+            const answer = data.choices[0].message.content;
+            typing.querySelector(".bub").textContent = answer;
+            history.push({ role: "assistant", content: answer });
+            keyDot.className = "key-dot ok";
+        } else {
+            const errMsg = data.error?.message || JSON.stringify(data);
+            typing.querySelector(".bub").textContent = "Ошибка: " + errMsg;
+            keyDot.className = "key-dot err";
+        }
+    } catch (err) {
+        typing.classList.remove("typing");
+        typing.querySelector(".bub").textContent = "Ошибка соединения: " + err.message;
+        keyDot.className = "key-dot err";
+    }
+
+    busy = false;
+    sendBtn.disabled = false;
+    chat.scrollTop = chat.scrollHeight;
+    input.focus();
+}
+
+function clearChat() {
+    history = [];
+    keyDot.className = "key-dot";
+    chat.innerHTML = `
+        <div class="welcome" id="welcome">
+            <h2>Юридическая консультация</h2>
+            <p>Введите API-ключ OpenRouter выше и задайте вопрос по законодательству Российской Федерации.</p>
+            <div class="examples">
+                <button class="ex-btn" onclick="askEx(this)">Какие права имеет работник при увольнении по сокращению?</button>
+                <button class="ex-btn" onclick="askEx(this)">Как оформить возврат товара в течение 14 дней?</button>
+                <button class="ex-btn" onclick="askEx(this)">Какие документы нужны для регистрации ИП?</button>
+                <button class="ex-btn" onclick="askEx(this)">Сосед затопил квартиру — что делать?</button>
+            </div>
+        </div>`;
+    input.focus();
+}
+
+input.focus();
+</script>
+</body>
+</html>

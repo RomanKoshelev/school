@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>РуЮрист — ИИ Юрист РФ</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: #1e293b;
+            border-bottom: 1px solid #334155;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .logo h1 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #f1f5f9;
+        }
+
+        .logo span {
+            font-size: 13px;
+            color: #94a3b8;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-clear {
+            background: #334155;
+            color: #94a3b8;
+            border: 1px solid #475569;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all .2s;
+        }
+
+        .btn-clear:hover {
+            background: #475569;
+            color: #e2e8f0;
+        }
+
+        /* API key bar */
+        .key-bar {
+            background: #1e293b;
+            border-bottom: 1px solid #334155;
+            padding: 10px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .key-bar label {
+            font-size: 13px;
+            color: #94a3b8;
+            white-space: nowrap;
+        }
+
+        #apiKey {
+            width: 340px;
+            max-width: 50vw;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            background: #0f172a;
+            color: #e2e8f0;
+            font-size: 13px;
+            font-family: monospace;
+            outline: none;
+        }
+
+        #apiKey:focus {
+            border-color: #3b82f6;
+        }
+
+        #apiKey::placeholder {
+            color: #475569;
+        }
+
+        .key-status {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #475569;
+            flex-shrink: 0;
+        }
+
+        .key-status.ok { background: #22c55e; }
+
+        .chat-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .welcome {
+            text-align: center;
+            margin: auto;
+            max-width: 500px;
+        }
+
+        .welcome h2 {
+            font-size: 24px;
+            margin-bottom: 12px;
+            color: #f1f5f9;
+        }
+
+        .welcome p {
+            color: #94a3b8;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .examples {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .example-btn {
+            background: #1e293b;
+            border: 1px solid #334155;
+            color: #cbd5e1;
+            padding: 12px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            text-align: left;
+            transition: all .2s;
+        }
+
+        .example-btn:hover {
+            background: #334155;
+            border-color: #3b82f6;
+        }
+
+        .message {
+            display: flex;
+            gap: 12px;
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            animation: fadeIn .3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.user { flex-direction: row-reverse; }
+
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .message.user .avatar {
+            background: #3b82f6;
+        }
+
+        .message.assistant .avatar {
+            background: linear-gradient(135deg, #8b5cf6, #3b82f6);
+        }
+
+        .bubble {
+            padding: 12px 16px;
+            border-radius: 16px;
+            line-height: 1.6;
+            font-size: 15px;
+            max-width: 680px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .message.user .bubble {
+            background: #3b82f6;
+            color: #fff;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message.assistant .bubble {
+            background: #1e293b;
+            border: 1px solid #334155;
+            color: #e2e8f0;
+            border-bottom-left-radius: 4px;
+        }
+
+        .typing .bubble::after {
+            content: "";
+            display: inline-block;
+            width: 6px;
+            height: 16px;
+            background: #94a3b8;
+            margin-left: 4px;
+            animation: blink 1s steps(2) infinite;
+            vertical-align: text-bottom;
+        }
+
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .input-area {
+            padding: 16px 24px;
+            background: #1e293b;
+            border-top: 1px solid #334155;
+            flex-shrink: 0;
+        }
+
+        .input-wrap {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            gap: 10px;
+        }
+
+        #question {
+            flex: 1;
+            padding: 14px 18px;
+            border-radius: 12px;
+            border: 1px solid #334155;
+            background: #0f172a;
+            color: #e2e8f0;
+            font-size: 15px;
+            outline: none;
+            resize: none;
+            min-height: 48px;
+            max-height: 150px;
+            font-family: inherit;
+        }
+
+        #question:focus {
+            border-color: #3b82f6;
+        }
+
+        #question::placeholder {
+            color: #64748b;
+        }
+
+        .btn-send {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: #3b82f6;
+            border: none;
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background .2s;
+            align-self: flex-end;
+        }
+
+        .btn-send:hover { background: #2563eb; }
+        .btn-send:disabled { background: #334155; cursor: not-allowed; }
+
+        .disclaimer {
+            text-align: center;
+            font-size: 12px;
+            color: #64748b;
+            padding: 8px;
+            background: #1e293b;
+        }
+
+        @media (max-width: 600px) {
+            header { padding: 12px 16px; }
+            .key-bar { padding: 8px 16px; flex-wrap: wrap; }
+            #apiKey { width: 100%; max-width: 100%; }
+            .chat-area { padding: 16px; }
+            .input-area { padding: 12px 16px; }
+            .logo h1 { font-size: 17px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <div class="logo-icon">&sect;</div>
+            <div>
+                <h1>РуЮрист</h1>
+                <span>ИИ-помощник по праву РФ</span>
+            </div>
+        </div>
+        <div class="header-actions">
+            <button class="btn-clear" onclick="clearChat()">Новый диалог</button>
+        </div>
+    </header>
+
+    <div class="key-bar">
+        <label for="apiKey">API-ключ Anthropic:</label>
+        <input type="password" id="apiKey" placeholder="sk-ant-api03-..." autocomplete="off">
+        <div class="key-status" id="keyStatus" title="Статус ключа"></div>
+    </div>
+
+    <div class="chat-area" id="chat">
+        <div class="welcome" id="welcome">
+            <h2>Юридическая консультация</h2>
+            <p>Введите ваш API-ключ Anthropic в поле выше, затем задайте вопрос по законодательству РФ.</p>
+            <div class="examples">
+                <button class="example-btn" onclick="askExample(this)">Какие права имеет работник при увольнении по сокращению?</button>
+                <button class="example-btn" onclick="askExample(this)">Как оформить возврат товара в течение 14 дней?</button>
+                <button class="example-btn" onclick="askExample(this)">Какие документы нужны для регистрации ИП?</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="disclaimer">Ответы носят информационный характер и не являются официальной юридической консультацией</div>
+
+    <div class="input-area">
+        <div class="input-wrap">
+            <textarea id="question" rows="1" placeholder="Задайте юридический вопрос..." onkeydown="handleKey(event)"></textarea>
+            <button class="btn-send" id="sendBtn" onclick="send()">&#10148;</button>
+        </div>
+    </div>
+
+    <script>
+        const chat = document.getElementById("chat");
+        const input = document.getElementById("question");
+        const sendBtn = document.getElementById("sendBtn");
+        const apiKeyInput = document.getElementById("apiKey");
+        const keyStatus = document.getElementById("keyStatus");
+        let busy = false;
+
+        // Сохраняем/загружаем ключ из localStorage
+        const savedKey = localStorage.getItem("anthropic_api_key");
+        if (savedKey) apiKeyInput.value = savedKey;
+
+        apiKeyInput.addEventListener("input", function () {
+            localStorage.setItem("anthropic_api_key", this.value);
+            keyStatus.className = "key-status";
+        });
+
+        input.addEventListener("input", function () {
+            this.style.height = "auto";
+            this.style.height = Math.min(this.scrollHeight, 150) + "px";
+        });
+
+        function handleKey(e) {
+            if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                send();
+            }
+        }
+
+        function getApiKey() {
+            return apiKeyInput.value.trim();
+        }
+
+        function askExample(btn) {
+            input.value = btn.textContent;
+            send();
+        }
+
+        function addMessage(role, text) {
+            const welcome = document.getElementById("welcome");
+            if (welcome) welcome.remove();
+
+            const div = document.createElement("div");
+            div.className = "message " + role;
+
+            const avatar = document.createElement("div");
+            avatar.className = "avatar";
+            avatar.textContent = role === "user" ? "?" : "\u00A7";
+
+            const bubble = document.createElement("div");
+            bubble.className = "bubble";
+            bubble.textContent = text;
+
+            div.appendChild(avatar);
+            div.appendChild(bubble);
+            chat.appendChild(div);
+            chat.scrollTop = chat.scrollHeight;
+            return div;
+        }
+
+        async function send() {
+            if (busy) return;
+
+            const key = getApiKey();
+            if (!key) {
+                apiKeyInput.focus();
+                apiKeyInput.style.borderColor = "#ef4444";
+                setTimeout(() => apiKeyInput.style.borderColor = "", 2000);
+                return;
+            }
+
+            const q = input.value.trim();
+            if (!q) return;
+
+            input.value = "";
+            input.style.height = "auto";
+
+            addMessage("user", q);
+
+            const typing = addMessage("assistant", "");
+            typing.classList.add("typing");
+            busy = true;
+            sendBtn.disabled = true;
+
+            try {
+                const res = await fetch("/api/ask", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ question: q, api_key: key }),
+                });
+                const data = await res.json();
+                typing.classList.remove("typing");
+
+                if (data.answer) {
+                    typing.querySelector(".bubble").textContent = data.answer;
+                    keyStatus.className = "key-status ok";
+                } else {
+                    typing.querySelector(".bubble").textContent = data.error || "Ошибка";
+                    keyStatus.className = "key-status";
+                }
+            } catch (err) {
+                typing.classList.remove("typing");
+                typing.querySelector(".bubble").textContent = "Ошибка соединения: " + err.message;
+            }
+
+            busy = false;
+            sendBtn.disabled = false;
+            chat.scrollTop = chat.scrollHeight;
+            input.focus();
+        }
+
+        async function clearChat() {
+            await fetch("/api/clear", { method: "POST" });
+            keyStatus.className = "key-status";
+            chat.innerHTML = `
+                <div class="welcome" id="welcome">
+                    <h2>Юридическая консультация</h2>
+                    <p>Введите ваш API-ключ Anthropic в поле выше, затем задайте вопрос по законодательству РФ.</p>
+                    <div class="examples">
+                        <button class="example-btn" onclick="askExample(this)">Какие права имеет работник при увольнении по сокращению?</button>
+                        <button class="example-btn" onclick="askExample(this)">Как оформить возврат товара в течение 14 дней?</button>
+                        <button class="example-btn" onclick="askExample(this)">Какие документы нужны для регистрации ИП?</button>
+                    </div>
+                </div>`;
+            input.focus();
+        }
+
+        input.focus();
+    </script>
+</body>
+</html>
