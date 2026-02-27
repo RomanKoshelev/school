@@ -6,44 +6,62 @@ on:
     paths: [".github/workflows/enable-pages.yml", "docs/**"]
 
 permissions:
-  contents: read
+  contents: write
   pages: write
-  id-token: write
 
 jobs:
-  setup-and-deploy:
+  configure-pages:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Enable Pages via API
+      - name: Configure Pages to use gh-pages branch
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Try to enable Pages (may already be enabled)
-          curl -s -X POST \
-            -H "Authorization: Bearer $GH_TOKEN" \
-            -H "Accept: application/vnd.github+json" \
-            "https://api.github.com/repos/${{ github.repository }}/pages" \
-            -d '{"build_type":"workflow"}' || true
+          REPO="${{ github.repository }}"
+          API="https://api.github.com/repos/$REPO/pages"
+          AUTH="Authorization: Bearer $GH_TOKEN"
+          ACCEPT="Accept: application/vnd.github+json"
 
-          # Check status
-          curl -s \
-            -H "Authorization: Bearer $GH_TOKEN" \
-            -H "Accept: application/vnd.github+json" \
-            "https://api.github.com/repos/${{ github.repository }}/pages" || true
+          echo "=== Current Pages config ==="
+          curl -s -H "$AUTH" -H "$ACCEPT" "$API" || true
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
+          echo ""
+          echo "=== Setting source to gh-pages branch ==="
+          # Try to update existing Pages config
+          RESULT=$(curl -s -w "\n%{http_code}" -X PUT \
+            -H "$AUTH" -H "$ACCEPT" \
+            "$API" \
+            -d '{"source":{"branch":"gh-pages","path":"/"}}')
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+          HTTP_CODE=$(echo "$RESULT" | tail -1)
+          BODY=$(echo "$RESULT" | head -n -1)
+          echo "HTTP $HTTP_CODE"
+          echo "$BODY"
+
+          # If 404, Pages doesn't exist yet - create it
+          if [ "$HTTP_CODE" = "404" ]; then
+            echo ""
+            echo "=== Creating Pages site ==="
+            curl -s -X POST \
+              -H "$AUTH" -H "$ACCEPT" \
+              "$API" \
+              -d '{"source":{"branch":"gh-pages","path":"/"}}'
+          fi
+
+          echo ""
+          echo "=== Final Pages config ==="
+          curl -s -H "$AUTH" -H "$ACCEPT" "$API"
+
+  deploy-content:
+    needs: configure-pages
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
         with:
-          path: docs
+          ref: gh-pages
 
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .
+          publish_branch: gh-pages
