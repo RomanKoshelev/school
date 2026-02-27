@@ -1,285 +1,438 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Погладь котёнка</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#167;</text></svg>">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>РуЮрист — ИИ Юрист РФ</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    body {
-      background: #1a1a2e;
-      font-family: 'Segoe UI', Tahoma, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      min-height: 100vh;
-      padding: 32px 16px 48px;
-      color: #eee;
-      user-select: none;
-    }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            height: 100dvh;
+            display: flex;
+            flex-direction: column;
+        }
 
-    h1 { font-size: 2rem; margin-bottom: 12px; letter-spacing: 2px; color: #f5a623; }
+        header {
+            background: #1e293b;
+            border-bottom: 1px solid #334155;
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
 
-    #mood-label {
-      font-size: 1.1rem; margin-bottom: 24px; color: #ccc; min-height: 1.4em;
-    }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
 
-    #bar-wrap {
-      width: 320px; height: 18px; background: #333;
-      border-radius: 9px; margin-bottom: 32px; overflow: hidden;
-    }
-    #bar {
-      height: 100%; width: 0%;
-      background: linear-gradient(90deg, #f5a623, #f76b8a);
-      border-radius: 9px; transition: width 0.3s ease;
-    }
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+        }
 
-    #kitten-wrap {
-      position: relative; cursor: pointer; width: 220px; height: 220px;
-    }
-    #kitten {
-      font-size: 130px; line-height: 220px; text-align: center;
-      display: block; transition: transform 0.15s ease;
-    }
-    #kitten-wrap:hover #kitten { transform: scale(1.06); }
-    #kitten-wrap:active #kitten { transform: scale(0.92); }
-    #kitten.petting {
-      animation: pet 0.35s ease;
-      filter: drop-shadow(0 0 22px rgba(245,166,35,0.9));
-    }
-    @keyframes pet {
-      0%   { transform: scale(1); }
-      30%  { transform: scale(1.18) rotate(-6deg); }
-      60%  { transform: scale(1.18) rotate(6deg); }
-      100% { transform: scale(1); }
-    }
+        .logo h1 { font-size: 20px; font-weight: 600; color: #f1f5f9; }
+        .logo span { font-size: 13px; color: #94a3b8; }
 
-    .heart {
-      position: absolute; font-size: 24px; pointer-events: none;
-      animation: float-up 1s ease forwards; top: 20px;
-    }
-    @keyframes float-up {
-      0%   { opacity: 1; transform: translateY(0) scale(1); }
-      100% { opacity: 0; transform: translateY(-90px) scale(1.4); }
-    }
+        .btn {
+            background: #334155;
+            color: #94a3b8;
+            border: 1px solid #475569;
+            padding: 8px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all .2s;
+        }
+        .btn:hover { background: #475569; color: #e2e8f0; }
 
-    #purr {
-      margin-top: 28px; font-size: 1.3rem; color: #f76b8a;
-      min-height: 1.6em; letter-spacing: 3px;
-      transition: opacity 0.5s; opacity: 0;
-    }
-    #purr.visible { opacity: 1; }
+        /* API key bar */
+        .key-bar {
+            background: #1e293b;
+            border-bottom: 1px solid #334155;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+        }
 
-    #count { margin-top: 16px; color: #888; font-size: 0.9rem; }
+        .key-bar label { font-size: 13px; color: #94a3b8; white-space: nowrap; }
 
-    /* Save score form */
-    #save-form {
-      margin-top: 24px;
-      display: flex; gap: 8px; align-items: center;
-      opacity: 0; pointer-events: none; transition: opacity 0.4s;
-    }
-    #save-form.visible { opacity: 1; pointer-events: all; }
-    #save-form input {
-      background: #2a2a45; border: 1px solid #444; color: #eee;
-      padding: 8px 12px; border-radius: 20px; font-size: 0.95rem;
-      outline: none; width: 160px;
-    }
-    #save-form button {
-      background: #f5a623; color: #1a1a2e; border: none;
-      padding: 8px 16px; border-radius: 20px; font-weight: bold;
-      cursor: pointer; font-size: 0.95rem;
-    }
-    #save-form button:hover { background: #f76b8a; color: #fff; }
+        #apiKey {
+            width: 320px;
+            max-width: 60vw;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            background: #0f172a;
+            color: #e2e8f0;
+            font-size: 13px;
+            font-family: monospace;
+            outline: none;
+        }
+        #apiKey:focus { border-color: #3b82f6; }
+        #apiKey::placeholder { color: #475569; }
 
-    /* Leaderboard */
-    #leaderboard {
-      margin-top: 28px; width: 320px;
-      background: #16213e; border-radius: 12px; overflow: hidden;
-    }
-    #leaderboard h2 {
-      font-size: 1rem; padding: 10px 16px;
-      background: #0f3460; color: #f5a623; letter-spacing: 1px;
-    }
-    #lb-list { list-style: none; }
-    #lb-list li {
-      display: flex; justify-content: space-between;
-      padding: 7px 16px; border-bottom: 1px solid #1e2a45;
-      font-size: 0.9rem; color: #ccc;
-    }
-    #lb-list li:last-child { border-bottom: none; }
-    #lb-list li span.score { color: #f5a623; font-weight: bold; }
-    #lb-list .empty { color: #555; font-style: italic; justify-content: center; }
+        .key-dot {
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            background: #475569;
+            flex-shrink: 0;
+            transition: background .3s;
+        }
+        .key-dot.ok { background: #22c55e; }
+        .key-dot.err { background: #ef4444; }
 
-    /* Achievement */
-    #achievement {
-      position: fixed; bottom: -80px; left: 50%;
-      transform: translateX(-50%);
-      background: #f5a623; color: #1a1a2e;
-      padding: 12px 28px; border-radius: 30px;
-      font-weight: bold; font-size: 1rem;
-      transition: bottom 0.5s ease; white-space: nowrap; z-index: 100;
-    }
-    #achievement.show { bottom: 32px; }
+        /* Chat */
+        .chat {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
 
-    #lb-note {
-      margin-top: 6px; font-size: 0.75rem; color: #555; text-align: center; width: 320px;
-    }
-  </style>
+        .welcome {
+            text-align: center;
+            margin: auto;
+            max-width: 480px;
+        }
+        .welcome h2 { font-size: 22px; margin-bottom: 10px; color: #f1f5f9; }
+        .welcome p { color: #94a3b8; line-height: 1.6; margin-bottom: 18px; font-size: 15px; }
+
+        .examples { display: flex; flex-direction: column; gap: 8px; }
+
+        .ex-btn {
+            background: #1e293b;
+            border: 1px solid #334155;
+            color: #cbd5e1;
+            padding: 12px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            text-align: left;
+            transition: all .2s;
+        }
+        .ex-btn:hover { background: #334155; border-color: #3b82f6; }
+
+        .msg {
+            display: flex;
+            gap: 10px;
+            max-width: 780px;
+            width: 100%;
+            margin: 0 auto;
+            animation: fadeIn .3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .msg.user { flex-direction: row-reverse; }
+
+        .ava {
+            width: 34px; height: 34px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 15px; flex-shrink: 0; font-weight: 600;
+        }
+        .msg.user .ava { background: #3b82f6; }
+        .msg.bot .ava { background: linear-gradient(135deg, #8b5cf6, #3b82f6); }
+
+        .bub {
+            padding: 12px 16px;
+            border-radius: 16px;
+            line-height: 1.65;
+            font-size: 15px;
+            max-width: 660px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .msg.user .bub {
+            background: #3b82f6; color: #fff;
+            border-bottom-right-radius: 4px;
+        }
+        .msg.bot .bub {
+            background: #1e293b; border: 1px solid #334155; color: #e2e8f0;
+            border-bottom-left-radius: 4px;
+        }
+
+        .typing .bub::after {
+            content: "";
+            display: inline-block;
+            width: 6px; height: 16px;
+            background: #94a3b8;
+            margin-left: 4px;
+            animation: blink 1s steps(2) infinite;
+            vertical-align: text-bottom;
+        }
+        @keyframes blink { 0%{opacity:1} 50%{opacity:0} }
+
+        /* Input */
+        .input-bar {
+            padding: 14px 20px;
+            background: #1e293b;
+            border-top: 1px solid #334155;
+            flex-shrink: 0;
+        }
+        .input-wrap {
+            max-width: 780px;
+            margin: 0 auto;
+            display: flex;
+            gap: 10px;
+        }
+
+        #question {
+            flex: 1;
+            padding: 13px 16px;
+            border-radius: 12px;
+            border: 1px solid #334155;
+            background: #0f172a;
+            color: #e2e8f0;
+            font-size: 15px;
+            outline: none;
+            resize: none;
+            min-height: 46px;
+            max-height: 140px;
+            font-family: inherit;
+        }
+        #question:focus { border-color: #3b82f6; }
+        #question::placeholder { color: #64748b; }
+
+        .btn-send {
+            width: 46px; height: 46px;
+            border-radius: 12px;
+            background: #3b82f6;
+            border: none; color: #fff;
+            font-size: 20px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: background .2s;
+            align-self: flex-end;
+        }
+        .btn-send:hover { background: #2563eb; }
+        .btn-send:disabled { background: #334155; cursor: not-allowed; }
+
+        .footer {
+            text-align: center;
+            font-size: 11px;
+            color: #475569;
+            padding: 6px;
+            background: #1e293b;
+        }
+
+        @media (max-width: 600px) {
+            header { padding: 10px 14px; }
+            .key-bar { padding: 8px 14px; }
+            #apiKey { width: 100%; max-width: 100%; }
+            .chat { padding: 14px; }
+            .input-bar { padding: 10px 14px; }
+            .logo h1 { font-size: 17px; }
+        }
+    </style>
 </head>
 <body>
+    <header>
+        <div class="logo">
+            <div class="logo-icon">&sect;</div>
+            <div>
+                <h1>РуЮрист</h1>
+                <span>ИИ-помощник по праву РФ</span>
+            </div>
+        </div>
+        <button class="btn" onclick="clearChat()">Новый диалог</button>
+    </header>
 
-  <h1>Погладь котёнка</h1>
-  <div id="mood-label">Котёнок скучает...</div>
+    <div class="key-bar">
+        <label for="apiKey">Ключ Anthropic API:</label>
+        <input type="password" id="apiKey" placeholder="sk-ant-api03-..." autocomplete="off">
+        <div class="key-dot" id="keyDot" title="Статус ключа"></div>
+    </div>
 
-  <div id="bar-wrap"><div id="bar"></div></div>
+    <div class="chat" id="chat">
+        <div class="welcome" id="welcome">
+            <h2>Юридическая консультация</h2>
+            <p>Введите API-ключ Anthropic выше и задайте вопрос по законодательству Российской Федерации.</p>
+            <div class="examples">
+                <button class="ex-btn" onclick="askEx(this)">Какие права имеет работник при увольнении по сокращению?</button>
+                <button class="ex-btn" onclick="askEx(this)">Как оформить возврат товара в течение 14 дней?</button>
+                <button class="ex-btn" onclick="askEx(this)">Какие документы нужны для регистрации ИП?</button>
+                <button class="ex-btn" onclick="askEx(this)">Сосед затопил квартиру — что делать?</button>
+            </div>
+        </div>
+    </div>
 
-  <div id="kitten-wrap" onclick="pet(event)">
-    <span id="kitten">🐱</span>
-  </div>
+    <div class="footer">Ответы носят информационный характер и не являются официальной юридической консультацией</div>
 
-  <div id="purr"></div>
-  <div id="count">Погладили: <b id="num">0</b> раз</div>
-
-  <div id="save-form">
-    <input id="player-name" type="text" placeholder="Ваше имя" maxlength="30" />
-    <button onclick="saveScore()">Сохранить</button>
-  </div>
-
-  <div id="leaderboard">
-    <h2>🏆 Таблица лидеров</h2>
-    <ul id="lb-list"><li class="empty">Пока никого нет...</li></ul>
-  </div>
-  <div id="lb-note">Рекорды хранятся в браузере</div>
-
-  <div id="achievement"></div>
+    <div class="input-bar">
+        <div class="input-wrap">
+            <textarea id="question" rows="1" placeholder="Задайте юридический вопрос..." onkeydown="onKey(event)"></textarea>
+            <button class="btn-send" id="sendBtn" onclick="send()">&#10148;</button>
+        </div>
+    </div>
 
 <script>
-  const PURRS  = ['мурр...','мур-мур','пурр~','мяу!','мур!','мррр','пррр...'];
-  const HEARTS = ['❤️','💛','💜','💙','💖','💕','🧡'];
-  const MOODS  = [
-    { at:   0, text: 'Котёнок скучает...',         emoji: '🐱' },
-    { at:  10, text: 'Котёнок доволен',             emoji: '😺' },
-    { at:  30, text: 'Котёнок счастлив!',           emoji: '😸' },
-    { at:  60, text: 'Котёнок в восторге! ✨',      emoji: '😻' },
-    { at: 100, text: 'Котёнок обожает тебя! 💖',   emoji: '😻' },
-  ];
-  const ACHIEVEMENTS = {
-    1:   '🐾 Первое прикосновение!',
-    10:  '🐾 Котёнок запомнил тебя',
-    25:  '💛 Лучший друг котёнка',
-    50:  '🌟 Мастер глажки',
-    100: '👑 Повелитель котят',
-    200: '🚀 Легенда глажки',
-    500: '🌈 Бог котят',
-  };
+const SYSTEM = `Ты — опытный юрист Российской Федерации с 20-летним стажем.
+Ты специализируешься на всех отраслях российского права: гражданском, уголовном, трудовом, семейном, административном, налоговом и других.
 
-  const LS_KEY = 'kitten_leaderboard';
-  let count = 0;
-  let happiness = 0;
-  let purrTimeout;
+Правила:
+1. Отвечай на вопросы строго в рамках законодательства РФ.
+2. Ссылайся на конкретные статьи законов, кодексов и нормативных актов (ГК РФ, УК РФ, ТК РФ, СК РФ, КоАП РФ, НК РФ и др.).
+3. Объясняй простым и понятным языком, избегая излишнего юридического жаргона.
+4. Если вопрос выходит за рамки твоей компетенции, честно скажи об этом и порекомендуй обратиться к профильному специалисту.
+5. Всегда напоминай, что твои ответы носят информационный характер и не являются официальной юридической консультацией.
+6. При необходимости задавай уточняющие вопросы для более точного ответа.
+7. Отвечай на русском языке.`;
 
-  function pet(e) {
-    count++;
-    happiness = Math.min(100, happiness + (happiness < 50 ? 4 : 2));
-    document.getElementById('num').textContent = count;
-    updateBar();
-    updateMood();
-    animateKitten();
-    spawnHeart();
-    showPurr();
-    checkAchievement();
-    if (count >= 10) document.getElementById('save-form').classList.add('visible');
-  }
+const MODEL = "claude-sonnet-4-20250514";
+const API_URL = "https://api.anthropic.com/v1/messages";
 
-  function updateBar() {
-    document.getElementById('bar').style.width = happiness + '%';
-  }
+const chat = document.getElementById("chat");
+const input = document.getElementById("question");
+const sendBtn = document.getElementById("sendBtn");
+const apiKeyInput = document.getElementById("apiKey");
+const keyDot = document.getElementById("keyDot");
 
-  function updateMood() {
-    let mood = MOODS[0];
-    for (const m of MOODS) { if (count >= m.at) mood = m; }
-    document.getElementById('mood-label').textContent = mood.text;
-    document.getElementById('kitten').textContent = mood.emoji;
-  }
+let history = [];
+let busy = false;
 
-  function animateKitten() {
-    const k = document.getElementById('kitten');
-    k.classList.remove('petting');
-    void k.offsetWidth;
-    k.classList.add('petting');
-  }
+// Restore saved key
+const saved = localStorage.getItem("anth_key");
+if (saved) apiKeyInput.value = saved;
 
-  function spawnHeart() {
-    const wrap = document.getElementById('kitten-wrap');
-    const heart = document.createElement('div');
-    heart.className = 'heart';
-    heart.textContent = HEARTS[Math.floor(Math.random() * HEARTS.length)];
-    heart.style.left = (Math.random() * 160 + 20) + 'px';
-    wrap.appendChild(heart);
-    heart.addEventListener('animationend', () => heart.remove());
-  }
+apiKeyInput.addEventListener("input", function () {
+    localStorage.setItem("anth_key", this.value);
+    keyDot.className = "key-dot";
+});
 
-  function showPurr() {
-    const el = document.getElementById('purr');
-    el.textContent = PURRS[Math.floor(Math.random() * PURRS.length)];
-    el.classList.add('visible');
-    clearTimeout(purrTimeout);
-    purrTimeout = setTimeout(() => el.classList.remove('visible'), 900);
-  }
+input.addEventListener("input", function () {
+    this.style.height = "auto";
+    this.style.height = Math.min(this.scrollHeight, 140) + "px";
+});
 
-  function checkAchievement() {
-    if (ACHIEVEMENTS[count]) {
-      const el = document.getElementById('achievement');
-      el.textContent = ACHIEVEMENTS[count];
-      el.classList.add('show');
-      setTimeout(() => el.classList.remove('show'), 2500);
+function onKey(e) {
+    if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); }
+}
+
+function askEx(btn) { input.value = btn.textContent; send(); }
+
+function addMsg(role, text) {
+    const w = document.getElementById("welcome");
+    if (w) w.remove();
+    const div = document.createElement("div");
+    div.className = "msg " + (role === "user" ? "user" : "bot");
+    const ava = document.createElement("div");
+    ava.className = "ava";
+    ava.textContent = role === "user" ? "?" : "\u00A7";
+    const bub = document.createElement("div");
+    bub.className = "bub";
+    bub.textContent = text;
+    div.appendChild(ava);
+    div.appendChild(bub);
+    chat.appendChild(div);
+    chat.scrollTop = chat.scrollHeight;
+    return div;
+}
+
+async function send() {
+    if (busy) return;
+    const key = apiKeyInput.value.trim();
+    if (!key) {
+        apiKeyInput.focus();
+        apiKeyInput.style.borderColor = "#ef4444";
+        setTimeout(() => apiKeyInput.style.borderColor = "", 1500);
+        return;
     }
-  }
+    const q = input.value.trim();
+    if (!q) return;
 
-  function saveScore() {
-    const name = document.getElementById('player-name').value.trim() || 'Аноним';
-    const scores = getScores();
-    scores[name] = Math.max(scores[name] || 0, count);
-    localStorage.setItem(LS_KEY, JSON.stringify(scores));
-    renderLeaderboard();
-    document.getElementById('player-name').value = '';
-    showAchievementText('✅ Рекорд сохранён!');
-  }
+    input.value = "";
+    input.style.height = "auto";
+    addMsg("user", q);
 
-  function getScores() {
-    try { return JSON.parse(localStorage.getItem(LS_KEY) || '{}'); }
-    catch { return {}; }
-  }
+    history.push({ role: "user", content: q });
 
-  function renderLeaderboard() {
-    const scores = getScores();
-    const top = Object.entries(scores)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 10);
-    const ul = document.getElementById('lb-list');
-    if (!top.length) {
-      ul.innerHTML = '<li class="empty">Пока никого нет...</li>';
-      return;
+    const typing = addMsg("assistant", "");
+    typing.classList.add("typing");
+    busy = true;
+    sendBtn.disabled = true;
+
+    try {
+        const res = await fetch(API_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "x-api-key": key,
+                "anthropic-version": "2023-06-01",
+                "anthropic-dangerous-direct-browser-access": "true"
+            },
+            body: JSON.stringify({
+                model: MODEL,
+                max_tokens: 4096,
+                system: SYSTEM,
+                messages: history
+            })
+        });
+
+        const data = await res.json();
+        typing.classList.remove("typing");
+
+        if (data.content && data.content[0]) {
+            const answer = data.content[0].text;
+            typing.querySelector(".bub").textContent = answer;
+            history.push({ role: "assistant", content: answer });
+            keyDot.className = "key-dot ok";
+        } else {
+            const errMsg = data.error?.message || JSON.stringify(data);
+            typing.querySelector(".bub").textContent = "Ошибка: " + errMsg;
+            keyDot.className = "key-dot err";
+        }
+    } catch (err) {
+        typing.classList.remove("typing");
+        typing.querySelector(".bub").textContent = "Ошибка соединения: " + err.message;
+        keyDot.className = "key-dot err";
     }
-    ul.innerHTML = top.map(([n, c], i) =>
-      `<li><span>${i + 1}. ${escHtml(n)}</span><span class="score">${c} раз</span></li>`
-    ).join('');
-  }
 
-  function escHtml(s) {
-    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  }
+    busy = false;
+    sendBtn.disabled = false;
+    chat.scrollTop = chat.scrollHeight;
+    input.focus();
+}
 
-  function showAchievementText(text) {
-    const el = document.getElementById('achievement');
-    el.textContent = text;
-    el.classList.add('show');
-    setTimeout(() => el.classList.remove('show'), 2000);
-  }
+function clearChat() {
+    history = [];
+    keyDot.className = "key-dot";
+    chat.innerHTML = `
+        <div class="welcome" id="welcome">
+            <h2>Юридическая консультация</h2>
+            <p>Введите API-ключ Anthropic выше и задайте вопрос по законодательству Российской Федерации.</p>
+            <div class="examples">
+                <button class="ex-btn" onclick="askEx(this)">Какие права имеет работник при увольнении по сокращению?</button>
+                <button class="ex-btn" onclick="askEx(this)">Как оформить возврат товара в течение 14 дней?</button>
+                <button class="ex-btn" onclick="askEx(this)">Какие документы нужны для регистрации ИП?</button>
+                <button class="ex-btn" onclick="askEx(this)">Сосед затопил квартиру — что делать?</button>
+            </div>
+        </div>`;
+    input.focus();
+}
 
-  renderLeaderboard();
+input.focus();
 </script>
 </body>
 </html>
