@@ -11,7 +11,7 @@
 """
 
 import sys
-from config import ANTHROPIC_API_KEY
+import os
 from lawyer import LawyerBot
 
 BANNER = """
@@ -33,7 +33,8 @@ DISCLAIMER = (
 
 
 def main():
-    if not ANTHROPIC_API_KEY:
+    api_key = os.environ.get("ANTHROPIC_API_KEY", "")
+    if not api_key:
         print("Ошибка: не задан ANTHROPIC_API_KEY.")
         print("Установите переменную окружения:")
         print('  export ANTHROPIC_API_KEY="sk-ant-..."')
@@ -42,7 +43,7 @@ def main():
     print(BANNER)
     print(DISCLAIMER)
 
-    bot = LawyerBot()
+    bot = LawyerBot(api_key)
 
     while True:
         try:

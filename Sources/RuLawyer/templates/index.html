@@ -54,6 +54,12 @@
             color: #94a3b8;
         }
 
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
         .btn-clear {
             background: #334155;
             color: #94a3b8;
@@ -69,6 +75,55 @@
             background: #475569;
             color: #e2e8f0;
         }
+
+        /* API key bar */
+        .key-bar {
+            background: #1e293b;
+            border-bottom: 1px solid #334155;
+            padding: 10px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .key-bar label {
+            font-size: 13px;
+            color: #94a3b8;
+            white-space: nowrap;
+        }
+
+        #apiKey {
+            width: 340px;
+            max-width: 50vw;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            background: #0f172a;
+            color: #e2e8f0;
+            font-size: 13px;
+            font-family: monospace;
+            outline: none;
+        }
+
+        #apiKey:focus {
+            border-color: #3b82f6;
+        }
+
+        #apiKey::placeholder {
+            color: #475569;
+        }
+
+        .key-status {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #475569;
+            flex-shrink: 0;
+        }
+
+        .key-status.ok { background: #22c55e; }
 
         .chat-area {
             flex: 1;
@@ -260,6 +315,8 @@
 
         @media (max-width: 600px) {
             header { padding: 12px 16px; }
+            .key-bar { padding: 8px 16px; flex-wrap: wrap; }
+            #apiKey { width: 100%; max-width: 100%; }
             .chat-area { padding: 16px; }
             .input-area { padding: 12px 16px; }
             .logo h1 { font-size: 17px; }
@@ -275,13 +332,21 @@
                 <span>ИИ-помощник по праву РФ</span>
             </div>
         </div>
-        <button class="btn-clear" onclick="clearChat()">Новый диалог</button>
+        <div class="header-actions">
+            <button class="btn-clear" onclick="clearChat()">Новый диалог</button>
+        </div>
     </header>
+
+    <div class="key-bar">
+        <label for="apiKey">API-ключ Anthropic:</label>
+        <input type="password" id="apiKey" placeholder="sk-ant-api03-..." autocomplete="off">
+        <div class="key-status" id="keyStatus" title="Статус ключа"></div>
+    </div>
 
     <div class="chat-area" id="chat">
         <div class="welcome" id="welcome">
             <h2>Юридическая консультация</h2>
-            <p>Задайте вопрос по законодательству Российской Федерации, и я помогу разобраться, ссылаясь на конкретные статьи законов.</p>
+            <p>Введите ваш API-ключ Anthropic в поле выше, затем задайте вопрос по законодательству РФ.</p>
             <div class="examples">
                 <button class="example-btn" onclick="askExample(this)">Какие права имеет работник при увольнении по сокращению?</button>
                 <button class="example-btn" onclick="askExample(this)">Как оформить возврат товара в течение 14 дней?</button>
@@ -303,7 +368,18 @@
         const chat = document.getElementById("chat");
         const input = document.getElementById("question");
         const sendBtn = document.getElementById("sendBtn");
+        const apiKeyInput = document.getElementById("apiKey");
+        const keyStatus = document.getElementById("keyStatus");
         let busy = false;
+
+        // Сохраняем/загружаем ключ из localStorage
+        const savedKey = localStorage.getItem("anthropic_api_key");
+        if (savedKey) apiKeyInput.value = savedKey;
+
+        apiKeyInput.addEventListener("input", function () {
+            localStorage.setItem("anthropic_api_key", this.value);
+            keyStatus.className = "key-status";
+        });
 
         input.addEventListener("input", function () {
             this.style.height = "auto";
@@ -315,6 +391,10 @@
                 e.preventDefault();
                 send();
             }
+        }
+
+        function getApiKey() {
+            return apiKeyInput.value.trim();
         }
 
         function askExample(btn) {
@@ -331,7 +411,7 @@
 
             const avatar = document.createElement("div");
             avatar.className = "avatar";
-            avatar.textContent = role === "user" ? "?" : "§";
+            avatar.textContent = role === "user" ? "?" : "\u00A7";
 
             const bubble = document.createElement("div");
             bubble.className = "bubble";
@@ -346,6 +426,15 @@
 
         async function send() {
             if (busy) return;
+
+            const key = getApiKey();
+            if (!key) {
+                apiKeyInput.focus();
+                apiKeyInput.style.borderColor = "#ef4444";
+                setTimeout(() => apiKeyInput.style.borderColor = "", 2000);
+                return;
+            }
+
             const q = input.value.trim();
             if (!q) return;
 
@@ -363,11 +452,18 @@
                 const res = await fetch("/api/ask", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ question: q }),
+                    body: JSON.stringify({ question: q, api_key: key }),
                 });
                 const data = await res.json();
                 typing.classList.remove("typing");
-                typing.querySelector(".bubble").textContent = data.answer || data.error || "Ошибка";
+
+                if (data.answer) {
+                    typing.querySelector(".bubble").textContent = data.answer;
+                    keyStatus.className = "key-status ok";
+                } else {
+                    typing.querySelector(".bubble").textContent = data.error || "Ошибка";
+                    keyStatus.className = "key-status";
+                }
             } catch (err) {
                 typing.classList.remove("typing");
                 typing.querySelector(".bubble").textContent = "Ошибка соединения: " + err.message;
@@ -381,10 +477,11 @@
 
         async function clearChat() {
             await fetch("/api/clear", { method: "POST" });
+            keyStatus.className = "key-status";
             chat.innerHTML = `
                 <div class="welcome" id="welcome">
                     <h2>Юридическая консультация</h2>
-                    <p>Задайте вопрос по законодательству Российской Федерации, и я помогу разобраться, ссылаясь на конкретные статьи законов.</p>
+                    <p>Введите ваш API-ключ Anthropic в поле выше, затем задайте вопрос по законодательству РФ.</p>
                     <div class="examples">
                         <button class="example-btn" onclick="askExample(this)">Какие права имеет работник при увольнении по сокращению?</button>
                         <button class="example-btn" onclick="askExample(this)">Как оформить возврат товара в течение 14 дней?</button>
