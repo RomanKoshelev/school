@@ -260,15 +260,15 @@
     </header>
 
     <div class="key-bar">
-        <label for="apiKey">Ключ Anthropic API:</label>
-        <input type="password" id="apiKey" placeholder="sk-ant-api03-..." autocomplete="off">
+        <label for="apiKey">Ключ OpenRouter:</label>
+        <input type="password" id="apiKey" placeholder="sk-or-v1-..." autocomplete="off">
         <div class="key-dot" id="keyDot" title="Статус ключа"></div>
     </div>
 
     <div class="chat" id="chat">
         <div class="welcome" id="welcome">
             <h2>Юридическая консультация</h2>
-            <p>Введите API-ключ Anthropic выше и задайте вопрос по законодательству Российской Федерации.</p>
+            <p>Введите API-ключ OpenRouter выше и задайте вопрос по законодательству Российской Федерации.</p>
             <div class="examples">
                 <button class="ex-btn" onclick="askEx(this)">Какие права имеет работник при увольнении по сокращению?</button>
                 <button class="ex-btn" onclick="askEx(this)">Как оформить возврат товара в течение 14 дней?</button>
@@ -300,8 +300,8 @@ const SYSTEM = `Ты — опытный юрист Российской Феде
 6. При необходимости задавай уточняющие вопросы для более точного ответа.
 7. Отвечай на русском языке.`;
 
-const MODEL = "claude-sonnet-4-20250514";
-const API_URL = "https://api.anthropic.com/v1/messages";
+const MODEL = "anthropic/claude-sonnet-4";
+const API_URL = "https://openrouter.ai/api/v1/chat/completions";
 
 const chat = document.getElementById("chat");
 const input = document.getElementById("question");
@@ -313,11 +313,11 @@ let history = [];
 let busy = false;
 
 // Restore saved key
-const saved = localStorage.getItem("anth_key");
+const saved = localStorage.getItem("openrouter_key");
 if (saved) apiKeyInput.value = saved;
 
 apiKeyInput.addEventListener("input", function () {
-    localStorage.setItem("anth_key", this.value);
+    localStorage.setItem("openrouter_key", this.value);
     keyDot.className = "key-dot";
 });
 
@@ -374,27 +374,25 @@ async function send() {
     sendBtn.disabled = true;
 
     try {
+        const msgs = [{ role: "system", content: SYSTEM }, ...history];
         const res = await fetch(API_URL, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "x-api-key": key,
-                "anthropic-version": "2023-06-01",
-                "anthropic-dangerous-direct-browser-access": "true"
+                "Authorization": "Bearer " + key
             },
             body: JSON.stringify({
                 model: MODEL,
                 max_tokens: 4096,
-                system: SYSTEM,
-                messages: history
+                messages: msgs
             })
         });
 
         const data = await res.json();
         typing.classList.remove("typing");
 
-        if (data.content && data.content[0]) {
-            const answer = data.content[0].text;
+        if (data.choices && data.choices[0]) {
+            const answer = data.choices[0].message.content;
             typing.querySelector(".bub").textContent = answer;
             history.push({ role: "assistant", content: answer });
             keyDot.className = "key-dot ok";
@@ -421,7 +419,7 @@ function clearChat() {
     chat.innerHTML = `
         <div class="welcome" id="welcome">
             <h2>Юридическая консультация</h2>
-            <p>Введите API-ключ Anthropic выше и задайте вопрос по законодательству Российской Федерации.</p>
+            <p>Введите API-ключ OpenRouter выше и задайте вопрос по законодательству Российской Федерации.</p>
             <div class="examples">
                 <button class="ex-btn" onclick="askEx(this)">Какие права имеет работник при увольнении по сокращению?</button>
                 <button class="ex-btn" onclick="askEx(this)">Как оформить возврат товара в течение 14 дней?</button>
